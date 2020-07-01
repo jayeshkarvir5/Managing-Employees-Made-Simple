@@ -1,0 +1,1 @@
+SELECT * from employee where id in (select mang_id from empmapper where emp_id = 5); 
