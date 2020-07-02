@@ -86,9 +86,9 @@ public class EmployeeRestController {
 		return employeeservice.getEmployeeByQuery(query);
 	}
 	
-	@GetMapping("employees/{employeeId}/heirarchy")
-	public Map<Integer,List<Integer>> getEmployeeHeirarchy(@PathVariable int employeeId){
-		return employeeservice.getEmployeeHeirarchy(employeeId);
+	@GetMapping("employees/{employeeId}/hierarchy")
+	public Map<Integer,List<Integer>> getEmployeeHierarchy(@PathVariable int employeeId){
+		return employeeservice.getEmployeeHierarchy(employeeId);
 	}
 	
 }

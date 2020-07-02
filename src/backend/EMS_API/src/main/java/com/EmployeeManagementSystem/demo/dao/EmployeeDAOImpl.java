@@ -88,35 +88,57 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	@Override
-	public Map<Integer,List<Integer>> getEmployeeHeirarchy(int employeeId) {
+	public Map<Integer,List<Integer>> getEmployeeHierarchy(int employeeId) {
 		
 		Session currentSession = entityManager.unwrap(Session.class);
 		
 		Map<Integer,List<Integer>> mappings = new HashMap<Integer,List<Integer>>();
-		
-		mappings = getHeirarchy(currentSession,mappings,employeeId);
+		int level = 3;
+
+		mappings = getHierarchy(currentSession,mappings,employeeId, level);
+
 		System.out.println(mappings);
-		
+
+
 		return mappings;
 	}
 	
-	public Map<Integer,List<Integer>> getHeirarchy(Session currentSession, Map<Integer,List<Integer>> mappings,int empId) {
-	
-		Query<EmployeeMapper> query = currentSession.createQuery("from EmployeeMapper where emp_id like :empId",EmployeeMapper.class);
-		query.setParameter("empId", empId);
-		List<EmployeeMapper> employeeMapper = query.getResultList();
-		
-		for(int i=0;i<employeeMapper.size();i++) {
-			int managerId = employeeMapper.get(i).getManager_id();
-			if(!mappings.containsKey(empId)) {
-				mappings.put(empId,new ArrayList<Integer>());
+	public Map<Integer,List<Integer>> getHierarchy(Session currentSession, Map<Integer,List<Integer>> mappings,
+												   int empId, int level) {
+		/**
+		 * levels not over and nor already mapped
+		 * call recursively for 3 levels
+		 * when empid and managerid matches CEO level is reached
+		 **/
+		if(level>0 && !mappings.containsKey(empId)) {
+
+			Query<EmployeeMapper> query = currentSession.createQuery("from EmployeeMapper where emp_id = :empId", EmployeeMapper.class);
+			query.setParameter("empId", empId);
+
+			List<EmployeeMapper> employeeMapper = query.getResultList();
+
+			for (int i = 0; i < employeeMapper.size(); i++) {
+				int managerId = employeeMapper.get(i).getManager_id();
+				List<Integer> arr;
+
+				if(managerId != empId) {
+					if (!mappings.containsKey(empId)) {
+						arr = new ArrayList<Integer>();
+					}else{
+						arr = mappings.get(empId);
+					}
+
+					arr.add(managerId);
+					mappings.put(empId, arr);
+
+					System.out.println("here in else " + mappings);
+
+					getHierarchy(currentSession,mappings,managerId, level-1);
+				}else{  // CEO
+					getHierarchy(currentSession,mappings,managerId, 0);
+				}
 			}
-			mappings.get(empId).add(managerId);
-			System.out.println("here in else "+mappings);
-				
-			getHeirarchy(currentSession,mappings,managerId);
 		}
-		
 		return mappings;
 	}
 	

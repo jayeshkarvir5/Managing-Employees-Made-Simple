@@ -32,8 +32,10 @@ CREATE TABLE `employee` (
 DROP TABLE IF EXISTS `empmapper`;
 
 CREATE TABLE `empmapper` (
+	`id` int(10) NOT NULL AUTO_INCREMENT,
 	`emp_id` int(10) NOT NULL,
     `mang_id` int(10) NOT NULL,
     FOREIGN KEY (`emp_id`) REFERENCES employee(`id`),
-    FOREIGN KEY (`mang_id`) REFERENCES employee(`id`)
+    FOREIGN KEY (`mang_id`) REFERENCES employee(`id`),
+    PRIMARY KEY (`id`)
 );

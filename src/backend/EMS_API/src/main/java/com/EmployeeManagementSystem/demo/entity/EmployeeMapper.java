@@ -1,25 +1,21 @@
 package com.EmployeeManagementSystem.demo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name="employee_mapper")
-public class EmployeeMapper {
+@Table(name="empmapper")
+public class EmployeeMapper{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
-	
+
 	@Column(name="emp_id")
 	private int emp_id;
-	
-	@Column(name="manager_id")
+
+	@Column(name="mang_id")
 	private int manager_id;
 	
 	public EmployeeMapper() { }
@@ -44,6 +40,5 @@ public class EmployeeMapper {
 	public void setManager_id(int manager_id) {
 		this.manager_id = manager_id;
 	}
-	
-	
+
 }

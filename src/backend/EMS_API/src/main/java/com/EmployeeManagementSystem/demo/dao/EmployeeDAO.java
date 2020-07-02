@@ -16,6 +16,6 @@ public interface EmployeeDAO {
 	
 	public List<Employee> getEmployeeByQuery(String searchQuery);
 	
-	public Map<Integer,List<Integer>> getEmployeeHeirarchy(int employeeId);
+	public Map<Integer,List<Integer>> getEmployeeHierarchy(int employeeId);
 	
 }
