@@ -7,6 +7,8 @@ import com.EmployeeManagementSystem.demo.entity.Employee;
 public interface EmployeeDAO {
 
 	public List<Employee> getAll();
+
+	public List<Integer> empLeave(int theId);
 		
 	public Employee getEmployee(int theId);
 	

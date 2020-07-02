@@ -38,6 +38,36 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return employees;
 	}
 
+	@Override
+	public List<Integer> empLeave(int managerId) {
+
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		//reverse hierarchy
+		List<Integer> ans;
+
+		ans = getReverseHierarchy(currentSession, managerId);
+
+		return ans;
+	}
+
+	public List<Integer> getReverseHierarchy(Session currentSession, int managerId) {
+
+		String nestedQuery = "from Employee where leaveApp = true AND id in" +
+							 "(select emp_id from EmployeeMapper where manager_id = :mangId)";
+
+		Query<Employee> query = currentSession.createQuery(nestedQuery, Employee.class);
+		query.setParameter("mangId", managerId);
+
+		List<Employee> employeesLeaving = query.getResultList();
+		List<Integer> ans = new ArrayList<Integer>();
+
+		for (int i = 0; i < employeesLeaving.size(); i++) {
+			int empId = employeesLeaving.get(i).getId();
+			ans.add(empId);
+		}
+		return ans;
+	}
 
 	@Override
 	public Employee getEmployee(int Id) {

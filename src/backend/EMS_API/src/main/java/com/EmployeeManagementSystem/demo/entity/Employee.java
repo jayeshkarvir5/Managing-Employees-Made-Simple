@@ -1,5 +1,7 @@
 package com.EmployeeManagementSystem.demo.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,37 +21,37 @@ public class Employee {
 //	@Column(name="employee_id")
 //	private int employee_id;
 	
-	@Column(name="designation")
+	@Column(name = "designation")
 	private String designation;
 	
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name="address")
+	@Column(name = "address")
 	private String address;
 	
-	@Column(name="email")
+	@Column(name = "email")
 	private String email;
-	
+
+	@Column(name = "leaveapp")
+	private boolean leaveApp;
 	
 	public Employee() {
 		
 	}
 
-	public Employee(int id, String designation, String firstName, String lastName, String address, String email) {
-		super();
+	public Employee(int id, String designation, String firstName, String lastName, String address, String email, boolean leaveApp) {
 		this.id = id;
 		this.designation = designation;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.email = email;
+		this.leaveApp = leaveApp;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -109,8 +111,14 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-		
+
+	public boolean isLeaveApp() {
+		return leaveApp;
+	}
+
+	public void setLeaveApp(boolean leaveApp) {
+		this.leaveApp = leaveApp;
+	}
 }
 
 

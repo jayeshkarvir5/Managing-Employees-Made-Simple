@@ -1,6 +1,6 @@
 use `Managing-Employee-Made-Simple-Schema`;
 
-INSERT INTO `employee` VALUES 
+INSERT INTO `employee`(`id`, `designation`, `first_name`, `last_name`, `address`, `email`) VALUES 
 	(1,'CEO','Magnus','Carlsen','Norway','mc@gmail.com'),
 	(2,'MD','Fabiano','Caruana','Usa','fb@gmail.com'),
 	(3,'ED','Gary','Kasparov','Russia','gk@gmail.com'),

@@ -33,6 +33,11 @@ public class EmployeeRestController {
 	public List<Employee> getAll(){
 		return employeeservice.getAll();
 	}
+
+	@GetMapping("/employeesleave/{managerId}")
+	public List<Integer> empLeave(@PathVariable int managerId){
+		return employeeservice.empLeave(managerId);
+	}
 	
 	@GetMapping("/employees/{employeeId}")
 	public Employee getEmployee(@PathVariable int employeeId) {

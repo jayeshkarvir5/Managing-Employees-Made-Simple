@@ -24,6 +24,7 @@ CREATE TABLE `employee` (
   `last_name` varchar(50) DEFAULT NULL,
   `address` varchar(250) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
+  `leaveapp` bit DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -35,7 +36,11 @@ CREATE TABLE `empmapper` (
 	`id` int(10) NOT NULL AUTO_INCREMENT,
 	`emp_id` int(10) NOT NULL,
     `mang_id` int(10) NOT NULL,
-    FOREIGN KEY (`emp_id`) REFERENCES employee(`id`),
-    FOREIGN KEY (`mang_id`) REFERENCES employee(`id`),
+    CONSTRAINT `FK_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee`(`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+    CONSTRAINT `FK_mang_id` FOREIGN KEY (`mang_id`) REFERENCES `employee`(`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
     PRIMARY KEY (`id`)
-);
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

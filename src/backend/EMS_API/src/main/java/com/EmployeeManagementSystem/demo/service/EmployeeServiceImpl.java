@@ -25,6 +25,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public List<Employee> getAll() {
 		return this.employeeDAO.getAll();	
 	}
+
+	@Override
+	@Transactional
+	public List<Integer> empLeave(int Id) {
+		return this.employeeDAO.empLeave(Id);
+	}
 	
 	@Override
 	@Transactional

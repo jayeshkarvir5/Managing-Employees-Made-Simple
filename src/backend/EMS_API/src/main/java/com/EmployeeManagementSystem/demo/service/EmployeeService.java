@@ -8,6 +8,8 @@ import com.EmployeeManagementSystem.demo.entity.Employee;
 public interface EmployeeService {
 
 	public List<Employee> getAll();
+
+	public List<Integer> empLeave(int theId);
 	
 	public Employee getEmployee(int theId);
 	
