@@ -1,13 +1,5 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Input,
-    OnInit,
-    QueryList,
-    ViewChildren,
-} from '@angular/core';
-import { Employee } from '@app/models/employee.model';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { User } from '@modules/auth/models';
 import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives';
 import { Observable } from 'rxjs';
 
@@ -21,7 +13,7 @@ import { EmployeeService } from '../services/employee.service';
 export class EmployeesTableComponent implements OnInit {
     @Input() pageSize = 4;
 
-    employees$!: Observable<Employee[]>;
+    employees$!: Observable<User[]>;
     total$!: Observable<number>;
     sortedColumn!: string;
     sortedDirection!: string;

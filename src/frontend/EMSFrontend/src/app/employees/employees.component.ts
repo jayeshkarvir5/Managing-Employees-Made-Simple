@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '@modules/auth/services';
 
 @Component({
     selector: 'sb-employees',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-    constructor() {}
+    constructor(private userService: UserService) {
+        userService.user$.subscribe(user => {
+            console.log('user-->', user);
+        });
+    }
 
     ngOnInit(): void {}
 }

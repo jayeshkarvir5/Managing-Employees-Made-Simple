@@ -1,0 +1,35 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head *ngIf='user && user.firstName' title="{{ user.firstName }}'s Profile" [hideBreadcrumbs]="true"></sb-dashboard-head>
+    <sb-card>
+        <div class="card-header">Personal Details</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <sb-card *ngIf='user && user.id'>
+                        <div class="card-body">Employee Id: {{ user.id }}</div>
+                    </sb-card>
+                    <sb-card *ngIf='user && user.firstName'>
+                        <div class="card-body">First Name: {{ user.firstName }}</div>
+                    </sb-card>
+                    <sb-card *ngIf='user && user.lastName'>
+                        <div class="card-body">Last Name: {{ user.lastName }}</div>
+                    </sb-card>
+                    <sb-card *ngIf='user && user.email'>
+                        <div class="card-body">Email: {{ user.email }}</div>
+                    </sb-card>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <sb-card *ngIf='user && user.phoneNo'>
+                        <div class="card-body">Phone: {{ user.phoneNo }}</div>
+                    </sb-card>
+                    <sb-card *ngIf='user && user.designation'>
+                        <div class="card-body">Designation: {{ user.designation }}</div>
+                    </sb-card>
+                    <sb-card *ngIf='user && user.address'>
+                        <div class="card-body">Address: {{ user.address }}</div>
+                    </sb-card>
+                </div>
+            </div>
+        </div>
+    </sb-card>
+</sb-layout-dashboard>

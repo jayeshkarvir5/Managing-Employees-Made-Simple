@@ -10,9 +10,12 @@ export class UserService {
     constructor() {
         this.user = {
             id: '123',
-            firstName: 'Start',
-            lastName: 'Bootstrap',
+            firstName: 'John',
+            lastName: 'Doe',
             email: 'no-reply@startbootstrap.com',
+            phoneNo: '1234567890',
+            designation: 'Software Developer',
+            address: 'Earth',
         };
     }
 

@@ -1,13 +1,13 @@
 import { DecimalPipe } from '@angular/common';
 import { Injectable, PipeTransform } from '@angular/core';
-import { EMPLOYEES } from '@app/data/employee.data';
-import { Employee } from '@app/models/employee.model';
+import { USERS } from '@app/data/employee.data';
+import { User } from '@modules/auth/models';
 import { SortDirection } from '@modules/tables/directives';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 
 interface SearchResult {
-    employees: Employee[];
+    Users: User[];
     total: number;
 }
 
@@ -23,22 +23,22 @@ function compare(v1: number | string, v2: number | string) {
     return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 }
 
-function sort(employees: Employee[], column: string, direction: string): Employee[] {
+function sort(users: User[], column: string, direction: string): User[] {
     if (direction === '') {
-        return employees;
+        return users;
     } else {
-        return [...employees].sort((a, b) => {
+        return [...users].sort((a: any, b: any) => {
             const res = compare(a[column], b[column]);
             return direction === 'asc' ? res : -res;
         });
     }
 }
 
-function matches(employee: Employee, term: string, pipe: PipeTransform) {
+function matches(user: User, term: string, pipe: PipeTransform) {
     return (
-        employee.firstName.toLowerCase().includes(term.toLowerCase()) ||
-        employee.lastName.toLowerCase().includes(term.toLowerCase()) ||
-        employee.email.toLowerCase().includes(term.toLowerCase())
+        user.firstName.toLowerCase().includes(term.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(term.toLowerCase()) ||
+        user.email.toLowerCase().includes(term.toLowerCase())
     );
 }
 
@@ -46,7 +46,7 @@ function matches(employee: Employee, term: string, pipe: PipeTransform) {
 export class EmployeeService {
     private _loading$ = new BehaviorSubject<boolean>(true);
     private _search$ = new Subject<void>();
-    private _employees$ = new BehaviorSubject<Employee[]>([]);
+    private _employees$ = new BehaviorSubject<User[]>([]);
     private _total$ = new BehaviorSubject<number>(0);
 
     private _state: State = {
@@ -67,7 +67,7 @@ export class EmployeeService {
                 tap(() => this._loading$.next(false))
             )
             .subscribe(result => {
-                this._employees$.next(result.employees);
+                this._employees$.next(result.Users);
                 this._total$.next(result.total);
             });
 
@@ -117,14 +117,19 @@ export class EmployeeService {
         const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
         // 1. sort
-        let employees = sort(EMPLOYEES, sortColumn, sortDirection);
+        let Users = sort(USERS, sortColumn, sortDirection);
 
         // 2. filter
-        employees = employees.filter(country => matches(country, searchTerm, this.pipe));
-        const total = employees.length;
+        Users = Users.filter(country => matches(country, searchTerm, this.pipe));
+        const total = Users.length;
 
         // 3. paginate
-        employees = employees.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-        return of({ employees, total });
+        Users = Users.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        return of({ Users, total });
+    }
+
+    public getEmployeeFromId(id: string): Observable<User | undefined> {
+        const user = USERS.find(o => o.id === id);
+        return user ? of(user) : of(undefined);
     }
 }
