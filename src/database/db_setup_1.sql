@@ -44,3 +44,17 @@ CREATE TABLE `empmapper` (
     ON UPDATE NO ACTION,
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- leave table
+
+DROP TABLE IF EXISTS `leave_application`;
+
+CREATE TABLE `leave_application`(
+	`id` int(10) NOT NULL,
+    `emp_id` int(10) NOT NULL,
+    `days` int(10) NOT NULL,
+    CONSTRAINT `FK_emp_id_la` FOREIGN KEY (`emp_id`) REFERENCES `employee`(`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

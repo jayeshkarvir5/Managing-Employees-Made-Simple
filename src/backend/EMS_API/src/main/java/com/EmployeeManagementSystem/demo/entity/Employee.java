@@ -1,13 +1,12 @@
 package com.EmployeeManagementSystem.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="employee")
@@ -38,7 +37,12 @@ public class Employee {
 
 	@Column(name = "leaveapp")
 	private boolean leaveApp;
-	
+
+//	@JsonInclude()
+	@JsonIgnore
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	private List<EmployeeMapper> employeeMappers;
+
 	public Employee() {
 		
 	}
@@ -118,6 +122,23 @@ public class Employee {
 
 	public void setLeaveApp(boolean leaveApp) {
 		this.leaveApp = leaveApp;
+	}
+
+	public List<EmployeeMapper> getEmployeeMappers() {
+		return employeeMappers;
+	}
+
+	public void setEmployeeMappers(List<EmployeeMapper> employeeMappers) {
+		this.employeeMappers = employeeMappers;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"id=" + id +
+				", designation='" + designation + '\'' +
+				", firstName='" + firstName + '\'' +
+				'}';
 	}
 }
 

@@ -1,5 +1,8 @@
 package com.EmployeeManagementSystem.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,33 +15,57 @@ public class EmployeeMapper{
 	@Column(name="id")
 	private int id;
 
-	@Column(name="emp_id")
-	private int emp_id;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="emp_id")
+	private Employee employee;
 
-	@Column(name="mang_id")
-	private int manager_id;
-	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="mang_id")
+	private Employee manager;
+
 	public EmployeeMapper() { }
 
-	public EmployeeMapper(int emp_id, int manager_id) {
-		this.emp_id = emp_id;
-		this.manager_id = manager_id;
+	public EmployeeMapper(int id) {
+		this.id = id;
 	}
 
-	public int getEmp_id() {
-		return emp_id;
+	public int getId() {
+		return id;
 	}
 
-	public void setEmp_id(int emp_id) {
-		this.emp_id = emp_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getManager_id() {
-		return manager_id;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setManager_id(int manager_id) {
-		this.manager_id = manager_id;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
+	}
+
+	@Override
+	public String toString() {
+		return "EmployeeMapper{" +
+				"id=" + id +
+				", employee=" + employee +
+				", manager=" + manager +
+				'}';
+	}
+
+//	@Override
+//	public String toString() {
+//		return "id=" + id;
+//	}
 }
