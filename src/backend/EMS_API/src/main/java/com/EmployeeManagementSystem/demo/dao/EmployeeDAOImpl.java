@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import com.EmployeeManagementSystem.demo.entity.LeaveApplication;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.EmployeeManagementSystem.demo.entity.Employee;
 import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
 
-@Repository
+@Repository("EmployeeDAO")
 public class EmployeeDAOImpl implements EmployeeDAO {
 
 	private EntityManager entityManager;
@@ -54,8 +55,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<Integer> getReverseHierarchy(Session currentSession, int managerId) {
 
 		String nestedQuery = "from Employee where leaveApp = true AND id in" +
-							 "(select emp_id from EmployeeMapper where manager_id = :mangId)";
+							 "(select employee.id from EmployeeMapper where manager.id= :mangId)";
 
+//        String nestedQuery = "from EmployeeMapper where mang_id = :mangId";
 		Query<Employee> query = currentSession.createQuery(nestedQuery, Employee.class);
 		query.setParameter("mangId", managerId);
 
@@ -84,8 +86,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public void save(Employee employee) {
 
 		Session currentSession = entityManager.unwrap(Session.class);
-	
-		currentSession.saveOrUpdate(employee);
+		Employee newEmployee = employee;
+
+		if(newEmployee.getEmployeeMappers() == null){
+			newEmployee.setEmployeeMappers(new ArrayList<EmployeeMapper>());
+		}
+		if(newEmployee.getLeaveApplications() == null){
+			newEmployee.setLeaveApplications(new ArrayList<LeaveApplication>());
+		}
+
+		currentSession.saveOrUpdate(newEmployee);
 	}
 
 
@@ -140,15 +150,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		 * call recursively for 3 levels
 		 * when empid and managerid matches CEO level is reached
 		 **/
+
 		if(level>0 && !mappings.containsKey(empId)) {
 
-			Query<EmployeeMapper> query = currentSession.createQuery("from EmployeeMapper where emp_id = :empId", EmployeeMapper.class);
+			Query<EmployeeMapper> query = currentSession.createQuery("from EmployeeMapper where employee.id = :empId", EmployeeMapper.class);
 			query.setParameter("empId", empId);
 
 			List<EmployeeMapper> employeeMapper = query.getResultList();
 
 			for (int i = 0; i < employeeMapper.size(); i++) {
-				int managerId = employeeMapper.get(i).getManager_id();
+				int managerId = employeeMapper.get(i).getManager().getId();
 				List<Integer> arr;
 
 				if(managerId != empId) {
