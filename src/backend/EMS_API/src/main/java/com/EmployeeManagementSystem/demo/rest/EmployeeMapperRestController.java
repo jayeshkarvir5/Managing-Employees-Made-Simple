@@ -22,7 +22,7 @@ public class EmployeeMapperRestController {
     }
 
     @GetMapping("/employeeMappers")
-    public Map<Integer,List<Integer>> getAllEm(){
+    public Map<Integer,List<Integer>> getAll(){
         return employeeMapperService.getAll();
     }
 
@@ -62,7 +62,6 @@ public class EmployeeMapperRestController {
             System.out.println("****************\nNot found\n****************");
             return null;
         }else{
-            employeeMapper.setId(0);
             employeeMapper.setEmployee(employee);
             employeeMapper.setManager(manager);
             employeeMapperService.save(employee, employeeMapper);

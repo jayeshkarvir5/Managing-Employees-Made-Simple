@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import com.EmployeeManagementSystem.demo.entity.LeaveApplication;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		if(newEmployee.getEmployeeMappers() == null){
 			newEmployee.setEmployeeMappers(new ArrayList<EmployeeMapper>());
+		}
+		if(newEmployee.getLeaveApplications() == null){
+			newEmployee.setLeaveApplications(new ArrayList<LeaveApplication>());
 		}
 
 		currentSession.saveOrUpdate(newEmployee);

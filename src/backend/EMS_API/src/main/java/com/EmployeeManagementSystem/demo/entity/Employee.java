@@ -43,6 +43,10 @@ public class Employee {
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<EmployeeMapper> employeeMappers;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	private List<LeaveApplication> leaveApplications;
+
 	public Employee() {
 		
 	}
@@ -130,6 +134,14 @@ public class Employee {
 
 	public void setEmployeeMappers(List<EmployeeMapper> employeeMappers) {
 		this.employeeMappers = employeeMappers;
+	}
+
+	public List<LeaveApplication> getLeaveApplications() {
+		return leaveApplications;
+	}
+
+	public void setLeaveApplications(List<LeaveApplication> leaveApplications) {
+		this.leaveApplications = leaveApplications;
 	}
 
 	@Override
