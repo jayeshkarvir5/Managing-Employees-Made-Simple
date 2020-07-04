@@ -1,9 +1,6 @@
 package com.EmployeeManagementSystem.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -38,6 +35,12 @@ public class Employee {
 	@Column(name = "leaveapp")
 	private boolean leaveApp;
 
+	@Column(name = "experience")
+	private int experience;
+
+	@Column(name = "techstack")
+	private String techstack;
+
 //	@JsonInclude()
 	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
@@ -51,7 +54,7 @@ public class Employee {
 		
 	}
 
-	public Employee(int id, String designation, String firstName, String lastName, String address, String email, boolean leaveApp) {
+	public Employee(int id, String designation, String firstName, String lastName, String address, String email, boolean leaveApp, int experience, String techstack) {
 		this.id = id;
 		this.designation = designation;
 		this.firstName = firstName;
@@ -59,6 +62,8 @@ public class Employee {
 		this.address = address;
 		this.email = email;
 		this.leaveApp = leaveApp;
+		this.experience = experience;
+		this.techstack = techstack;
 	}
 
 	public int getId() {
@@ -126,6 +131,22 @@ public class Employee {
 
 	public void setLeaveApp(boolean leaveApp) {
 		this.leaveApp = leaveApp;
+	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public String getTechstack() {
+		return techstack;
+	}
+
+	public void setTechstack(String techstack) {
+		this.techstack = techstack;
 	}
 
 	public List<EmployeeMapper> getEmployeeMappers() {

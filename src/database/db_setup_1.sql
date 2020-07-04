@@ -25,6 +25,8 @@ CREATE TABLE `employee` (
   `address` varchar(250) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `leaveapp` bit DEFAULT 0,
+  `experience` int(10) DEFAULT 1,
+  `techstack` varchar(250) DEFAULT "java,spring",
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -53,6 +55,7 @@ CREATE TABLE `leave_application`(
 	`id` int(10) NOT NULL AUTO_INCREMENT,
     `emp_id` int(10) NOT NULL,
     `days` int(10) NOT NULL,
+    `approved` bit DEFAULT 0,
     CONSTRAINT `FK_emp_id_la` FOREIGN KEY (`emp_id`) REFERENCES `employee`(`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,

@@ -36,7 +36,9 @@ public class EmployeeMapperRestController {
 
         Employee employee = employeeservice.getEmployee(employeeMapper.getEmployee().getId());
         Employee manager = employeeservice.getEmployee(employeeMapper.getManager().getId());
+
         System.out.println("****************\n" + employee + "\n" + manager + "\n****************");
+
         if (employee == null || manager == null) {
 //            throw new RuntimeException("Not found - ");
             System.out.println("****************\nNot found\n****************");

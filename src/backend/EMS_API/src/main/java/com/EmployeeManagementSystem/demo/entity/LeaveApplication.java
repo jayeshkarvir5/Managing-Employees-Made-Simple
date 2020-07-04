@@ -14,6 +14,9 @@ public class LeaveApplication {
     @Column(name="days")
     private int days;
 
+    @Column(name = "approved")
+    private boolean approved;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="emp_id")
     private Employee employee;
@@ -21,9 +24,10 @@ public class LeaveApplication {
     public LeaveApplication() {
     }
 
-    public LeaveApplication(int id, int days) {
+    public LeaveApplication(int id, int days, boolean approved) {
         this.id = id;
         this.days = days;
+        this.approved = approved;
     }
 
     public int getId() {
@@ -40,6 +44,14 @@ public class LeaveApplication {
 
     public void setDays(int days) {
         this.days = days;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
     public Employee getEmployee() {

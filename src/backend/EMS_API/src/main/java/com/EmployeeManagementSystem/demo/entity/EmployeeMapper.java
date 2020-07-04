@@ -15,12 +15,10 @@ public class EmployeeMapper{
 	@Column(name="id")
 	private int id;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="emp_id")
 	private Employee employee;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="mang_id")
 	private Employee manager;
