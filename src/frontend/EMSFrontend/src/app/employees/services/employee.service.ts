@@ -5,9 +5,11 @@ import { User } from '@modules/auth/models';
 import { SortDirection } from '@modules/tables/directives';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
+import { EmployeedbService } from './employeedb.service';
+import { catchError, retry,map } from 'rxjs/operators';
 
 interface SearchResult {
-    Users: User[];
+    Users:User[];
     total: number;
 }
 
@@ -49,6 +51,8 @@ export class EmployeeService {
     private _employees$ = new BehaviorSubject<User[]>([]);
     private _total$ = new BehaviorSubject<number>(0);
 
+    private employeesList:User[] = [];
+
     private _state: State = {
         page: 1,
         pageSize: 4,
@@ -57,7 +61,10 @@ export class EmployeeService {
         sortDirection: '',
     };
 
-    constructor(private pipe: DecimalPipe) {
+    constructor(private pipe: DecimalPipe,private employeedbService:EmployeedbService) {
+        
+        this.loadData();
+
         this._search$
             .pipe(
                 tap(() => this._loading$.next(true)),
@@ -108,6 +115,12 @@ export class EmployeeService {
         this._set({ sortDirection });
     }
 
+    private loadData(){
+        this.employeedbService.getEmployees().pipe(map((x=>{
+            this.employeesList = x;
+        }))).subscribe();
+    }
+
     private _set(patch: Partial<State>) {
         Object.assign(this._state, patch);
         this._search$.next();
@@ -117,7 +130,7 @@ export class EmployeeService {
         const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
         // 1. sort
-        let Users = sort(USERS, sortColumn, sortDirection);
+        let Users = sort(this.employeesList, sortColumn, sortDirection);
 
         // 2. filter
         Users = Users.filter(country => matches(country, searchTerm, this.pipe));
