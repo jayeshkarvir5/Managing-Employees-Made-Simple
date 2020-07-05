@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { EmployeesTableComponent } from './employees/employees-table/employees-table.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeService } from './employees/services/employee.service';
+import { EmployeedbService } from './employees/services/employeedb.service';
 
 @NgModule({
     declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent],
@@ -31,8 +32,12 @@ import { EmployeeService } from './employees/services/employee.service';
         NavigationModule,
         ChartsModule,
         TablesModule,
+        
     ],
-    providers: [EmployeeService],
+    providers: [
+        EmployeeService,
+        EmployeedbService
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

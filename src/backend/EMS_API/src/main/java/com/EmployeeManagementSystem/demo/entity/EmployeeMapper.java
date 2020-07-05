@@ -1,7 +1,6 @@
 package com.EmployeeManagementSystem.demo.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name="empmapper")

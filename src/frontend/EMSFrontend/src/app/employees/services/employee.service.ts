@@ -1,10 +1,12 @@
 import { DecimalPipe } from '@angular/common';
 import { Injectable, PipeTransform } from '@angular/core';
-import { EMPLOYEES } from '@app/data/employee.data';
 import { Employee } from '@app/models/employee.model';
 import { SortDirection } from '@modules/tables/directives';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
+import { EmployeedbService } from './employeedb.service';
+import { EMPLOYEES } from '../../data/employee.data';
+import { catchError, retry,map } from 'rxjs/operators';
 
 interface SearchResult {
     employees: Employee[];
@@ -35,6 +37,7 @@ function sort(employees: Employee[], column: string, direction: string): Employe
 }
 
 function matches(employee: Employee, term: string, pipe: PipeTransform) {
+    console.log(employee);
     return (
         employee.firstName.toLowerCase().includes(term.toLowerCase()) ||
         employee.lastName.toLowerCase().includes(term.toLowerCase()) ||
@@ -49,6 +52,8 @@ export class EmployeeService {
     private _employees$ = new BehaviorSubject<Employee[]>([]);
     private _total$ = new BehaviorSubject<number>(0);
 
+    private employeesList:Employee[] = [];
+
     private _state: State = {
         page: 1,
         pageSize: 4,
@@ -57,7 +62,10 @@ export class EmployeeService {
         sortDirection: '',
     };
 
-    constructor(private pipe: DecimalPipe) {
+    constructor(private pipe: DecimalPipe,private employeedbService:EmployeedbService) {
+        
+        this.loadData();
+
         this._search$
             .pipe(
                 tap(() => this._loading$.next(true)),
@@ -108,6 +116,12 @@ export class EmployeeService {
         this._set({ sortDirection });
     }
 
+    private loadData(){
+        this.employeedbService.getEmployees().pipe(map((x=>{
+            this.employeesList = x;
+        }))).subscribe();
+    }
+
     private _set(patch: Partial<State>) {
         Object.assign(this._state, patch);
         this._search$.next();
@@ -115,8 +129,27 @@ export class EmployeeService {
 
     private _search(): Observable<SearchResult> {
         const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
+        console.log("--------------------- page loaded");
+        console.log(this.employeedbService.getEmployees())
+        // 1. sort
+        console.log(this.employeesList);
+        
+        let employees = sort(this.employeesList, sortColumn, sortDirection);
+
+        // 2. filter
+        employees = employees.filter(country => matches(country, searchTerm, this.pipe));
+        const total = employees.length;
+
+        // 3. paginate
+        employees = employees.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        return of({ employees, total });
+    }
+
+    private __search():Observable<SearchResult> {
+        const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
         // 1. sort
+        console.log(this.employeedbService.getEmployees());
         let employees = sort(EMPLOYEES, sortColumn, sortDirection);
 
         // 2. filter
