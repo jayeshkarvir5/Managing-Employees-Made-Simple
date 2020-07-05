@@ -116,7 +116,7 @@ export class EmployeeService {
     }
 
     private loadData(){
-        this.employeedbService.getEmployees().pipe(map((x=>{
+        this.employeedbService.getAllEmployees().pipe(map((x=>{
             this.employeesList = x;
         }))).subscribe();
     }

@@ -17,6 +17,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeService } from './employees/services/employee.service';
 import { EmployeedbService } from './employees/services/employeedb.service';
 import { ProfileComponent } from './profile/profile.component';
+import { ProjectService } from './projects/project.service';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,9 @@ import { ProfileComponent } from './profile/profile.component';
     ],
     providers: [
         EmployeeService,
-        EmployeedbService
+        EmployeedbService,
+        ProjectService,
+    
     ],
     bootstrap: [AppComponent],
 })
