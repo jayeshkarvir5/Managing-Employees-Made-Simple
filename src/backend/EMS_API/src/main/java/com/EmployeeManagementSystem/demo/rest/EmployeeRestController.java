@@ -3,6 +3,8 @@ package com.EmployeeManagementSystem.demo.rest;
 import java.util.List;
 import java.util.Map;
 
+import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
+import com.EmployeeManagementSystem.demo.service.EmployeeMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,8 +52,12 @@ public class EmployeeRestController {
 		if (employee == null) {
 			throw new RuntimeException("Not found - " + employeeId);
 		}
-		
 		return employee;
+	}
+
+	@GetMapping("employees/{employeeId}/hierarchy")
+	public Map<Integer,List<Integer>> getEmployeeHierarchy(@PathVariable int employeeId){
+		return employeeservice.getEmployeeHierarchy(employeeId);
 	}
 	
 	@PostMapping("/employees")
@@ -92,11 +98,6 @@ public class EmployeeRestController {
 	public List<Employee> searchEmployees(@RequestParam("q") String query) {
 		
 		return employeeservice.getEmployeeByQuery(query);
-	}
-	
-	@GetMapping("employees/{employeeId}/hierarchy")
-	public Map<Integer,List<Integer>> getEmployeeHierarchy(@PathVariable int employeeId){
-		return employeeservice.getEmployeeHierarchy(employeeId);
 	}
 	
 }

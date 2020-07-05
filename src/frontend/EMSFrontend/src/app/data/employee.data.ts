@@ -1,52 +1,31 @@
-import { Employee, EmployeeDesignation } from '@app/models/employee.model';
+import { User } from '@modules/auth/models';
 
-export const EMPLOYEES: Employee[] = [
+export const USERS: User[] = [
     {
-        id: 1,
+        id: '1',
         firstName: 'John',
         lastName: 'Doe',
         address: 'Earth',
-        designation: EmployeeDesignation.DEVELOPER,
+        designation: 'developer',
         email: 'john_doe@g.c',
+        phoneNo: '1234567890',
     },
     {
-        id: 2,
+        id: '2',
         firstName: 'John 2',
-        lastName: 'Doe 2',
+        lastName: 'Doe',
         address: 'Earth',
-        designation: EmployeeDesignation.DEVELOPER,
-        email: 'john2_doe@g.c',
+        designation: 'developer',
+        email: 'john_doe2@g.c',
+        phoneNo: '1234567890',
     },
     {
-        id: 3,
+        id: '3',
         firstName: 'John 3',
-        lastName: 'Doe 3',
+        lastName: 'Doe',
         address: 'Earth',
-        designation: EmployeeDesignation.MANAGER,
-        email: 'john3_doe@g.c',
-    },
-    {
-        id: 4,
-        firstName: 'John 4',
-        lastName: 'Doe 4',
-        address: 'Earth',
-        designation: EmployeeDesignation.DEVELOPER,
-        email: 'john4_doe@g.c',
-    },
-    {
-        id: 5,
-        firstName: 'John 5',
-        lastName: 'Doe 5',
-        address: 'Earth',
-        designation: EmployeeDesignation.DEVELOPER,
-        email: 'john_doe5@g.c',
-    },
-    {
-        id: 6,
-        firstName: 'Marty',
-        lastName: 'Bird',
-        address: 'Earth',
-        designation: EmployeeDesignation.DEVELOPER,
-        email: 'marty_bird@g.c',
+        designation: 'developer',
+        email: 'john_doe3@g.c',
+        phoneNo: '1234567890',
     },
 ];

@@ -16,9 +16,15 @@ import { EmployeesTableComponent } from './employees/employees-table/employees-t
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeService } from './employees/services/employee.service';
 import { EmployeedbService } from './employees/services/employeedb.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent],
+    declarations: [
+        AppComponent,
+        EmployeesComponent,
+        EmployeesTableComponent,
+        ProfileComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,

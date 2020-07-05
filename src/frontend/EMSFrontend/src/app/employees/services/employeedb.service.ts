@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Employee } from '../../models/employee.model';
+import { USERS } from '@app/data/employee.data';
+import { User } from '@modules/auth/models';
 import { catchError, retry,map } from 'rxjs/operators';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class EmployeedbService {
     this.http = http;
   }
 
-  public getEmployees():Observable<Employee []>{
+  public getEmployees():Observable<User []>{
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -25,7 +26,7 @@ export class EmployeedbService {
     };
 
     let url:string = 'http://localhost:8080/employees';
-    return this.http.get<Employee []>(url,httpOptions);
+    return this.http.get<User []>(url,httpOptions);
   }
 
 }
