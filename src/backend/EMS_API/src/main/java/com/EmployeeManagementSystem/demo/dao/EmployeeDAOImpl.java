@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 
 import com.EmployeeManagementSystem.demo.entity.LeaveApplication;
+import com.EmployeeManagementSystem.demo.entity.Project;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		String nestedQuery = "from Employee where leaveApp = true AND id in" +
 							 "(select employee.id from EmployeeMapper where manager.id= :mangId)";
 
-//        String nestedQuery = "from EmployeeMapper where mang_id = :mangId";
 		Query<Employee> query = currentSession.createQuery(nestedQuery, Employee.class);
 		query.setParameter("mangId", managerId);
 
@@ -93,6 +93,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 		if(newEmployee.getLeaveApplications() == null){
 			newEmployee.setLeaveApplications(new ArrayList<LeaveApplication>());
+		}
+		if(newEmployee.getProjects() == null){
+			newEmployee.setProjects(new ArrayList<Project>());
 		}
 
 		currentSession.saveOrUpdate(newEmployee);
@@ -149,7 +152,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		 * levels not over and nor already mapped
 		 * call recursively for 3 levels
 		 * when empid and managerid matches CEO level is reached
-		 **/
+		 */
 
 		if(level>0 && !mappings.containsKey(empId)) {
 

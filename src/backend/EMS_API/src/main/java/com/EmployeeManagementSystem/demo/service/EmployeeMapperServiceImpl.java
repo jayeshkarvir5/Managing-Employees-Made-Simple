@@ -35,6 +35,12 @@ public class EmployeeMapperServiceImpl implements EmployeeMapperService{
 
     @Override
     @Transactional
+    public List<Integer> getById(int theId) {
+        return employeeMapperDAO.getById(theId);
+    }
+
+    @Override
+    @Transactional
     public void save(Employee employee, EmployeeMapper theEmployeeMapping) {
         employeeMapperDAO.save(employee, theEmployeeMapping);
     }

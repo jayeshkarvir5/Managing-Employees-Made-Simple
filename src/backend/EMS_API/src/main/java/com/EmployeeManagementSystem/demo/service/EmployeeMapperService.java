@@ -11,6 +11,8 @@ public interface EmployeeMapperService {
 
     public Map<Integer,List<Integer>> getRelation(int theId);
 
+    public List<Integer> getById(int theId);
+
     public void save(Employee employee, EmployeeMapper theEmployeeMapping);
 
     public void deleteById(int employee_id, int manager_id);

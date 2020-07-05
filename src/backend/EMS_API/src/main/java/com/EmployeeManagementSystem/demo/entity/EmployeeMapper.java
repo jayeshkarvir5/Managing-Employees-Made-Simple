@@ -1,10 +1,7 @@
 package com.EmployeeManagementSystem.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name="empmapper")

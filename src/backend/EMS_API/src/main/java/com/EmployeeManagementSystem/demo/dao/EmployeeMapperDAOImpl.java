@@ -50,6 +50,17 @@ public class EmployeeMapperDAOImpl implements EmployeeMapperDAO {
     }
 
     @Override
+    public List<Integer>  getById(int theId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        EmployeeMapper employeeMapper = currentSession.get(EmployeeMapper.class, theId);
+        List<Integer> ans = new ArrayList<Integer>();
+        ans.add(employeeMapper.getEmployee().getId());
+        ans.add(employeeMapper.getManager().getId());
+        return ans;
+    }
+
+    @Override
     public void save(Employee employee, EmployeeMapper theEmployeeMapping) {
         Session currentSession = entityManager.unwrap(Session.class);
 
