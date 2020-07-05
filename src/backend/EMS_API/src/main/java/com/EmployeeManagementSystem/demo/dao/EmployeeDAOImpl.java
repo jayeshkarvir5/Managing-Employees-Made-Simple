@@ -12,6 +12,7 @@ import com.EmployeeManagementSystem.demo.entity.Project;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.EmployeeManagementSystem.demo.entity.Employee;
@@ -21,10 +22,12 @@ import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
 	private EntityManager entityManager;
+	private final PasswordEncoder bcryptEncoder;
 	
 	@Autowired
-	public EmployeeDAOImpl(EntityManager entityManager) {
+	public EmployeeDAOImpl(EntityManager entityManager, PasswordEncoder passwordEncoder) {
 		this.entityManager = entityManager;
+		this.bcryptEncoder = passwordEncoder;
 	}
 	
 	
@@ -81,9 +84,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return employee;
 	}
 
+	@Override
+	public Employee getEmployeeByEmail(String emailId) {
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		Query<Employee> query = currentSession.createQuery("from Employee where email=:emailId", Employee.class);
+		query.setParameter("emailId", emailId);
+
+		Employee employee = query.getSingleResult();
+		return  employee;
+	}
+
 
 	@Override
 	public void save(Employee employee) {
+
+		// encrypt the password
+		employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
 
 		Session currentSession = entityManager.unwrap(Session.class);
 		Employee newEmployee = employee;

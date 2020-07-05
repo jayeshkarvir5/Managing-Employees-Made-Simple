@@ -12,6 +12,8 @@ public interface EmployeeService {
 	public List<Integer> empLeave(int theId);
 	
 	public Employee getEmployee(int theId);
+
+	public Employee getEmployeeByEmail(String email);
 	
 	public void save(Employee theEmployee);
 	

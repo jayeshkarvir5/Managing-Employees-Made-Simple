@@ -2,6 +2,7 @@ package com.EmployeeManagementSystem.demo.rest;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
 import com.EmployeeManagementSystem.demo.entity.Project;
@@ -82,7 +83,12 @@ public class EmployeeRestController {
 	@GetMapping("/employees")
 	@CrossOrigin(origins = "http://localhost:4200/")
 	public List<Employee> getAll(){
-		return employeeService.getAll();
+		// we don't need to show password here
+		return employeeService.getAll().stream()
+				.map(e -> {
+					e.setPassword("");
+					return e;
+				}).collect(Collectors.toList());
 	}
 
 	@GetMapping("/employeesleave/{managerId}")

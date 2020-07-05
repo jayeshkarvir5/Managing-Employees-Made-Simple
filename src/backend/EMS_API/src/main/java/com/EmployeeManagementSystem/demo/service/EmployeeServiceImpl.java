@@ -40,6 +40,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	@Override
 	@Transactional
+	public Employee getEmployeeByEmail(String email) {
+		return  employeeDAO.getEmployeeByEmail(email);
+	}
+
+	@Override
+	@Transactional
 	public void save(Employee employee) {
 		employeeDAO.save(employee);
 	}

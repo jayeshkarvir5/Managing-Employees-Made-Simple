@@ -30,6 +30,9 @@ public class Employee {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "password")
+	private  String password;
+
 	@Column(name = "leaveapp")
 	private boolean leaveApp;
 
@@ -183,6 +186,14 @@ public class Employee {
 			projects = new ArrayList<Project>();
 		}
 		projects.add(project);
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
