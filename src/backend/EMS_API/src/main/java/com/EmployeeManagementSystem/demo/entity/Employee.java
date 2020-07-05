@@ -1,21 +1,19 @@
 package com.EmployeeManagementSystem.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="employee")
 public class Employee {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
-	
-//	@Column(name="employee_id")
-//	private int employee_id;
 	
 	@Column(name = "designation")
 	private String designation;
@@ -41,7 +39,6 @@ public class Employee {
 	@Column(name = "techstack")
 	private String techstack;
 
-//	@JsonInclude()
 	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<EmployeeMapper> employeeMappers;
@@ -49,6 +46,14 @@ public class Employee {
 	@JsonIgnore
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	private List<LeaveApplication> leaveApplications;
+
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(name = "employee_project",
+			joinColumns = @JoinColumn(name = "emp_id"),
+			inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@JsonIgnoreProperties("employees")
+	private List<Project> projects;
 
 	public Employee() {
 		
@@ -163,6 +168,21 @@ public class Employee {
 
 	public void setLeaveApplications(List<LeaveApplication> leaveApplications) {
 		this.leaveApplications = leaveApplications;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
+	public void addProject(Project project){
+		if(projects == null){
+			projects = new ArrayList<Project>();
+		}
+		projects.add(project);
 	}
 
 	@Override

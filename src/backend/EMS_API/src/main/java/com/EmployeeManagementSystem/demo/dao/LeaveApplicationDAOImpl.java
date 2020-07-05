@@ -71,7 +71,9 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         Query query = currentSession.createQuery(hql);
 
         query.setParameter("theId",theId);
-
+        Employee employee = currentSession.get(Employee.class,theId);
+        employee.setLeaveApp(false);
+        currentSession.saveOrUpdate(employee);
         query.executeUpdate();
     }
 

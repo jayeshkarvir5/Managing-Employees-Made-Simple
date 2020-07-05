@@ -61,3 +61,29 @@ CREATE TABLE `leave_application`(
     ON UPDATE NO ACTION,
     PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- Projects table
+
+DROP TABLE IF EXISTS `project`;
+
+CREATE TABLE `project`(
+	`id` int(10) NOT NULL AUTO_INCREMENT,
+    `name` varchar(50) NOT NULL,
+    `description` varchar(300) NOT NULL,
+    `client_name` varchar(50)  NOT NULL,
+    `duration` int(10) DEFAULT 10,
+    PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1; 
+
+DROP TABLE IF EXISTS `employee_project`;
+CREATE TABLE `employee_project`(
+	`emp_id` int(10) NOT NULL,
+    `project_id` int(10) NOT NULL,
+    CONSTRAINT `FK_EMPLOYEE` FOREIGN KEY (`emp_id`) 
+	REFERENCES `employee` (`id`) 
+	ON DELETE NO ACTION ON UPDATE NO ACTION,
+  
+	CONSTRAINT `FK_PROJECT` FOREIGN KEY (`project_id`) 
+	REFERENCES `project` (`id`) 
+	ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;

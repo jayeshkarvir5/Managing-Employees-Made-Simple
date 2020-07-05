@@ -13,6 +13,32 @@ import java.util.Map;
 
 @RestController
 public class LeaveApplicationRestController {
+    /**
+     * Important Note: Use apis for inserting or deleting from leave table.
+     * Tips on using the api.
+     * 1.Get and delete apis are straight forward.
+     * 2.Post must be used for creating and put for updating.
+     * 3.For put and post field names should be corresponding hibernate mapping names.
+     * Use following format:-
+     * {    "id":id,
+     *      "employee":{"id":id},
+     *      "days":days
+     *      "approved":approved }
+     *  json data like above will work. Api will take care of
+     *  saving the correct employee.Any id for post will work but
+     *  it will saved according to the strategy followed. For put
+     *  the correct id needs to be specified.
+     *  If id does not exists for put then an error will be thrown.
+     *  for e.g.
+     *      {
+     *          "id":10,
+     *          "employee":{
+     *              "id":4
+     *          },
+     *          "days":2,
+     *          "approved":false
+     *      }
+     */
     private EmployeeService employeeservice;
     private LeaveApplicationService leaveApplicationService;
 
@@ -41,33 +67,12 @@ public class LeaveApplicationRestController {
     }
     @PostMapping("/leaveapplications")
     public LeaveApplication saveLeaveApplication(@RequestBody LeaveApplication leaveApplication) {
-        Employee employee = employeeservice.getEmployee(leaveApplication.getEmployee().getId());
-
-        if (employee == null) {
-//            throw new RuntimeException("Not found - ");
-            System.out.println("****************\nNot found\n****************");
-            return null;
-        }else{
-            leaveApplication.setId(0);
-            leaveApplication.setEmployee(employee);
-            leaveApplicationService.save(employee, leaveApplication);
-            return leaveApplication;
-        }
+        return postAndPutUtility(leaveApplication, true);
     }
 
     @PutMapping("/leaveapplications")
     public LeaveApplication updateLeaveApplication(@RequestBody LeaveApplication leaveApplication) {
-        Employee employee = employeeservice.getEmployee(leaveApplication.getEmployee().getId());
-
-        if (employee == null) {
-//            throw new RuntimeException("Not found - ");
-            System.out.println("****************\nNot found\n****************");
-            return null;
-        }else{
-            leaveApplication.setEmployee(employee);
-            leaveApplicationService.save(employee, leaveApplication);
-            return leaveApplication;
-        }
+        return postAndPutUtility(leaveApplication, false);
     }
 
     @DeleteMapping("/leaveapplications/{employeeId}")
@@ -81,6 +86,21 @@ public class LeaveApplicationRestController {
         }else{
             leaveApplicationService.delete(employeeId);
             return "Successfully Deleted "+employeeId;
+        }
+    }
+
+    public LeaveApplication postAndPutUtility(LeaveApplication leaveApplication, boolean post){
+        Employee employee = employeeservice.getEmployee(leaveApplication.getEmployee().getId());
+
+        if (employee == null) {
+//            throw new RuntimeException("Not found - ");
+            System.out.println("****************\nNot found\n****************");
+            return null;
+        }else{
+            if(post == true)leaveApplication.setId(0);
+            leaveApplication.setEmployee(employee);
+            leaveApplicationService.save(employee, leaveApplication);
+            return leaveApplication;
         }
     }
 }
