@@ -1,8 +1,10 @@
 package com.EmployeeManagementSystem.demo.rest;
 
 import com.EmployeeManagementSystem.demo.config.JwtTokenUtil;
+import com.EmployeeManagementSystem.demo.entity.Employee;
 import com.EmployeeManagementSystem.demo.entity.JwtRequest;
 import com.EmployeeManagementSystem.demo.entity.JwtResponse;
+import com.EmployeeManagementSystem.demo.service.EmployeeService;
 import com.EmployeeManagementSystem.demo.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
 public class JwtAuthenticationController {
 
 	@Autowired
@@ -28,18 +29,21 @@ public class JwtAuthenticationController {
 	private JwtUserDetailsService userDetailsService;
 
 	@Autowired
-	private PasswordEncoder encoder;
+	private EmployeeService employeeService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
+		System.out.println("In Crontroller");
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		final Employee employee = employeeService.getEmployeeByEmail(userDetails.getUsername());
+		employee.setPassword("");
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse(token, employee));
 	}
 
 //	@RequestMapping(value = "/register", method = RequestMethod.POST)

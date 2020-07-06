@@ -19,15 +19,18 @@ import * as authGuards from './guards';
 
 /* Services */
 import * as authServices from './services';
+import { HttpClientModule } from '@angular/common/http';
+import { CustomFormsModule } from 'ngx-custom-validators';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        ReactiveFormsModule,
         FormsModule,
         AppCommonModule,
         NavigationModule,
+        HttpClientModule,
+        CustomFormsModule,
     ],
     providers: [...authServices.services, ...authGuards.guards],
     declarations: [...authContainers.containers, ...authComponents.components],

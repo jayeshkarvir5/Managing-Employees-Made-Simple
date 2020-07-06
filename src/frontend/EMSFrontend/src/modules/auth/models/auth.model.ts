@@ -6,4 +6,8 @@ export interface User {
     phoneNo?: string;
     designation?: string;
     address?: string;
+    experience?: number;
+    leaveApp?: boolean;
+    projects?: Array<any>;
+    techstack?: string;
 }

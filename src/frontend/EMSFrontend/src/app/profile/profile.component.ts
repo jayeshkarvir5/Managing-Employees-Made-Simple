@@ -1,10 +1,9 @@
- import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { EmployeeService } from '@app/employees/services/employee.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeedbService } from '@app/employees/services/employeedb.service';
 import { User } from '@modules/auth/models';
-import { UserService } from '@modules/auth/services';
+import { AuthService } from '@modules/auth/services';
 import { Subscription } from 'rxjs';
-import { EmployeedbService } from '../employees/services/employeedb.service';
 
 @Component({
     selector: 'sb-profile',
@@ -16,8 +15,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     subscription: Subscription = new Subscription();
     constructor(
         public route: ActivatedRoute,
-        public userService: UserService,
-        public employeedbService: EmployeedbService
+        public authService: AuthService,
+        public employeedbService: EmployeedbService,
+        public router: Router
     ) {
         const userId = this.route.snapshot.paramMap.get('id');
 
@@ -30,7 +30,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 })
             );
         } else {
-            this.subscription.add(userService.user$.subscribe(user => (this.user = user)));
+            const authUser = authService.getAuthUser();
+            if (authUser) {
+                this.user = authUser;
+            } else {
+                router.navigate(['/auth/login']);
+            }
         }
     }
 

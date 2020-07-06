@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 import com.EmployeeManagementSystem.demo.service.JwtUserDetailsService;
 
@@ -30,8 +32,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
+//		if (CorsUtils.isPreFlightRequest(request)) {
+//			System.out.println("setting header");
+//			response.setStatus(HttpServletResponse.SC_OK);
+////			response.addHeader("Access-Control-Allow-Origin", "*");
+////			response.addHeader("Access-Control-Allow-Methods", "POST");
+////			response.addHeader("Content-Type", "application/json");
+//			return;
+//		}
+//		if (request.getMethod().equals("OPTIONS")) {
+//			response.setStatus(200);
+//			chain.doFilter(request, response);
+//			return;
+//		}
+//		System.out.println(request.getHeaderNames().toString());
 		final String requestTokenHeader = request.getHeader("Authorization");
-
+		System.out.println(requestTokenHeader);
 		String username = null;
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token

@@ -23,6 +23,11 @@ const routes: Routes = [
         component: ProfileComponent,
     },
     {
+        path: 'auth',
+        loadChildren: () =>
+            import('modules/auth/auth-routing.module').then(m => m.AuthRoutingModule),
+    },
+    {
         path: '**',
         pathMatch: 'full',
         loadChildren: () =>

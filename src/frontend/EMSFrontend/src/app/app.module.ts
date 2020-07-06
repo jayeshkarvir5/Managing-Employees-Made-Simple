@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppCommonModule } from '@common/app-common.module';
+import { AuthInterceptor } from '@modules/auth/auth.interceptor';
+import { AuthService } from '@modules/auth/services';
 import { ChartsModule } from '@modules/charts/charts.module';
 import { DashboardModule } from '@modules/dashboard/dashboard.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
@@ -20,12 +22,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        EmployeesComponent,
-        EmployeesTableComponent,
-        ProfileComponent,
-    ],
+    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -39,13 +36,13 @@ import { ProjectService } from './projects/project.service';
         NavigationModule,
         ChartsModule,
         TablesModule,
-        
     ],
     providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         EmployeeService,
         EmployeedbService,
         ProjectService,
-    
+        AuthService,
     ],
     bootstrap: [AppComponent],
 })

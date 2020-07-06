@@ -1,15 +1,15 @@
 import { DecimalPipe } from '@angular/common';
-import { Injectable, PipeTransform } from '@angular/core';
+import { Injectable, OnInit, PipeTransform } from '@angular/core';
 import { USERS } from '@app/data/employee.data';
 import { User } from '@modules/auth/models';
 import { SortDirection } from '@modules/tables/directives';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
+
 import { EmployeedbService } from './employeedb.service';
-import { catchError, retry,map } from 'rxjs/operators';
 
 interface SearchResult {
-    Users:User[];
+    Users: User[];
     total: number;
 }
 
@@ -51,7 +51,7 @@ export class EmployeeService {
     private _employees$ = new BehaviorSubject<User[]>([]);
     private _total$ = new BehaviorSubject<number>(0);
 
-    private employeesList:User[] = [];
+    private employeesList: User[] = [];
 
     private _state: State = {
         page: 1,
@@ -61,9 +61,13 @@ export class EmployeeService {
         sortDirection: '',
     };
 
-    constructor(private pipe: DecimalPipe,private employeedbService:EmployeedbService) {
-        
-        this.loadData();
+    constructor(private pipe: DecimalPipe, private employeedbService: EmployeedbService) {
+        this.employeedbService.getAllEmployees().subscribe(e => {
+            this._employees$.next(e);
+            this._total$.next(e.length);
+            this.employeesList = e;
+            this._search$.next();
+        });
 
         this._search$
             .pipe(
@@ -77,8 +81,6 @@ export class EmployeeService {
                 this._employees$.next(result.Users);
                 this._total$.next(result.total);
             });
-
-        this._search$.next();
     }
 
     get employees$() {
@@ -113,12 +115,6 @@ export class EmployeeService {
     }
     set sortDirection(sortDirection: SortDirection) {
         this._set({ sortDirection });
-    }
-
-    private loadData(){
-        this.employeedbService.getAllEmployees().pipe(map((x=>{
-            this.employeesList = x;
-        }))).subscribe();
     }
 
     private _set(patch: Partial<State>) {
