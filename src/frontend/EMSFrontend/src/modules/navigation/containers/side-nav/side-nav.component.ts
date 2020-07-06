@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '@modules/auth/services';
+import { AuthService, UserService } from '@modules/auth/services';
 import { SideNavItems, SideNavSection } from '@modules/navigation/models';
 import { NavigationService } from '@modules/navigation/services';
+import { User } from '@testing/mocks';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,7 +19,10 @@ export class SideNavComponent implements OnInit, OnDestroy {
     subscription: Subscription = new Subscription();
     routeDataSubscription!: Subscription;
 
-    constructor(public navigationService: NavigationService, public userService: UserService) {}
+    user: User | null;
+    constructor(public navigationService: NavigationService, public authService: AuthService) {
+        this.user = authService.getAuthUser();
+    }
 
     ngOnInit() {}
 

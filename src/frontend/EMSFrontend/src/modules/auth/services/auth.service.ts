@@ -55,6 +55,7 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+        localStorage.removeItem(CONSTANTS.AUTH_USER);
     }
 
     getAccessToken(): string | null {
