@@ -19,12 +19,18 @@ import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeService } from './employees/services/employee.service';
 import { EmployeedbService } from './employees/services/employeedb.service';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
-import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
-    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent],
+    declarations: [
+        AppComponent,
+        EmployeesComponent,
+        EmployeesTableComponent,
+        ProfileComponent,
+        LogoutComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
