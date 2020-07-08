@@ -19,12 +19,9 @@ import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeService } from './employees/services/employee.service';
 import { EmployeedbService } from './employees/services/employeedb.service';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
-import { LogoutComponent } from './logout/logout.component';
-import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
-import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
-import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 
 @NgModule({
     declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent, LeaveApplicationComponent, LeaveTrackerComponent, LeaveManagerComponent],

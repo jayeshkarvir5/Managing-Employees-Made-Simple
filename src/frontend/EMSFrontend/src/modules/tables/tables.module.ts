@@ -43,6 +43,10 @@ import * as tablesServices from './services';
         ...tablesComponents.components,
         ...tablesDirectives.directives,
     ],
-    exports: [...tablesContainers.containers, ...tablesComponents.components],
+    exports: [
+        ...tablesContainers.containers,
+        ...tablesComponents.components,
+        ...tablesDirectives.directives,
+    ],
 })
 export class TablesModule {}

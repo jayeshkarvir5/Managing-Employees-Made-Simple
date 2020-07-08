@@ -7,7 +7,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
                 <th scope="col" sbSortable="firstName" (sort)="onSort($event)"><span>FirstName</span><sb-sort-icon *ngIf='sortedColumn === "firstName"' [direction]="sortedDirection"></sb-sort-icon></th>
                 <th scope="col" sbSortable="lastName" (sort)="onSort($event)"><span>LastName</span><sb-sort-icon *ngIf='sortedColumn === "lastName"' [direction]="sortedDirection"></sb-sort-icon></th>
                 <th scope="col" sbSortable="email" (sort)="onSort($event)"><span>Email</span><sb-sort-icon *ngIf='sortedColumn === "email"' [direction]="sortedDirection"></sb-sort-icon></th>
