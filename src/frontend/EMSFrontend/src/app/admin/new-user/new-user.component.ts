@@ -5,6 +5,7 @@ import { ProjectService } from '@app/projects/project.service';
 import { User } from '@modules/auth/models';
 import { Project } from '@modules/auth/models/project.model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'sb-new-user',
@@ -36,7 +37,8 @@ export class NewUserComponent implements OnInit {
 
     constructor(
         private projectService: ProjectService,
-        private employeeService: EmployeedbService
+        private employeeService: EmployeedbService,
+        private router: Router
     ) {}
 
     async ngOnInit() {
@@ -103,5 +105,7 @@ export class NewUserComponent implements OnInit {
         console.log(newUser);
 
         this.employeeService.saveEmployee(newUser);
+
+        this.router.navigate(['/']);
     }
 }

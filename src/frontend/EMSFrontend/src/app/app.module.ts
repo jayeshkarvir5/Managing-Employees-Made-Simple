@@ -24,6 +24,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
+import { NewProjectComponent } from './admin/new-project/new-project.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { ProjectService } from './projects/project.service';
         ProfileComponent,
         LogoutComponent,
         NewUserComponent,
+        NewProjectComponent,
     ],
     imports: [
         BrowserModule,

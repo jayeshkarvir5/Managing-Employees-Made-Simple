@@ -30,10 +30,9 @@ export class EmployeedbService {
     }
 
     public saveEmployee(employeeData: any) {
-        console.log('in here-------', employeeData);
         this.http
             .post(this.url, employeeData, this.httpOptions)
-            .subscribe(e => console.log('response', e));
+            .subscribe(e => console.log('save employee result -> ', e));
     }
 
     public updateEmployee(employeeData: User) {
