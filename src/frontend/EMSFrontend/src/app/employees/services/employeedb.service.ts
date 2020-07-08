@@ -51,4 +51,9 @@ export class EmployeedbService {
     public leaveRequests(managerId: string) {
         return this.http.get(this.url + managerId, this.httpOptions);
     }
+
+    public getProjectStats(employeeId: string) {
+        const statsUrl = 'http://localhost:8080/employeestats';
+        return this.http.get(statsUrl + '/' + employeeId, this.httpOptions);
+    }
 }

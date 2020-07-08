@@ -32,4 +32,10 @@
             </div>
         </div>
     </sb-card>
+    <sb-card>
+        <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Project Statistics</div>
+        <div class="card-body">
+            <canvas #myPieChart></canvas>
+        </div>
+    </sb-card>
 </sb-layout-dashboard>
