@@ -11,7 +11,9 @@ import { ChartsModule } from '@modules/charts/charts.module';
 import { DashboardModule } from '@modules/dashboard/dashboard.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { NewUserComponent } from './admin/new-user/new-user.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeesTableComponent } from './employees/employees-table/employees-table.component';
@@ -41,6 +43,7 @@ import { LeaveManagerComponent } from './leave_components/leave-manager/leave-ma
         NavigationModule,
         ChartsModule,
         TablesModule,
+        NgMultiSelectDropDownModule.forRoot(),
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

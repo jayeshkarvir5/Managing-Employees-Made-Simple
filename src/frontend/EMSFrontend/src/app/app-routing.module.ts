@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NewUserComponent } from './admin/new-user/new-user.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { LogoutComponent } from './logout/logout.component';
@@ -14,6 +15,11 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: '/dashboard',
+    },
+    {
+        path: 'admin/new-user',
+        component: NewUserComponent,
+        canActivate: [AuthGuardService],
     },
     {
         path: 'employees',

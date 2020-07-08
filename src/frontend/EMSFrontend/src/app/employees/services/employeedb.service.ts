@@ -29,8 +29,11 @@ export class EmployeedbService {
         return this.http.get<User>(this.url + '/' + employeeId, this.httpOptions);
     }
 
-    public saveEmployee(employeeData: User) {
-        this.http.post(this.url, employeeData, this.httpOptions);
+    public saveEmployee(employeeData: any) {
+        console.log('in here-------', employeeData);
+        this.http
+            .post(this.url, employeeData, this.httpOptions)
+            .subscribe(e => console.log('response', e));
     }
 
     public updateEmployee(employeeData: User) {
