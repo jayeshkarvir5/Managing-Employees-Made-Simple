@@ -202,6 +202,16 @@ public class Employee {
 				"id=" + id +
 				", designation='" + designation + '\'' +
 				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", address='" + address + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", leaveApp=" + leaveApp +
+				", experience=" + experience +
+				", techstack='" + techstack + '\'' +
+				", employeeMappers=" + employeeMappers +
+				", leaveApplications=" + leaveApplications +
+				", projects=" + projects +
 				'}';
 	}
 }

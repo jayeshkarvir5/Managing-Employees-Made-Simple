@@ -21,7 +21,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 
     @Override
     @Transactional
-    public Map<Integer,List<Integer>> getAll() {
+    public List<LeaveApplication> getAll() {
         return leaveApplicationDAO.getAll();
     }
 

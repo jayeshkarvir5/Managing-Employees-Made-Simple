@@ -22,9 +22,12 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
 import { LogoutComponent } from './logout/logout.component';
+import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
+import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
+import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 
 @NgModule({
-    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent],
+    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent, LeaveApplicationComponent, LeaveTrackerComponent, LeaveManagerComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,

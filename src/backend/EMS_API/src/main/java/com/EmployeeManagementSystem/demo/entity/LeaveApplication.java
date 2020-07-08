@@ -1,5 +1,7 @@
 package com.EmployeeManagementSystem.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +19,7 @@ public class LeaveApplication {
     @Column(name = "approved")
     private boolean approved;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="emp_id")
     private Employee employee;
 
@@ -46,7 +48,7 @@ public class LeaveApplication {
         this.days = days;
     }
 
-    public boolean isApproved() {
+    public boolean getApproved() {
         return approved;
     }
 
@@ -62,11 +64,21 @@ public class LeaveApplication {
         this.employee = employee;
     }
 
+//    @Override
+//    public String toString() {
+//        return "LeaveApplication{" +
+//                "id=" + id +
+//                ", days=" + days +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "LeaveApplication{" +
                 "id=" + id +
                 ", days=" + days +
+                ", approved=" + approved +
+                ", employee=" + employee +
                 '}';
     }
 }

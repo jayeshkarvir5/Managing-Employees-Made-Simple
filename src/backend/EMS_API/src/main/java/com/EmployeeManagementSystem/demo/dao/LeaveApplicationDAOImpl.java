@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository("LeaveApplicationDAO")
 public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
@@ -24,15 +25,28 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
     }
 
     @Override
-    public Map<Integer,List<Integer>> getAll() {
+    public List<LeaveApplication> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
 
         Query<LeaveApplication> query = currentSession.createQuery("from LeaveApplication", LeaveApplication.class);
 
         List<LeaveApplication> leaves = query.getResultList();
-        Map<Integer,List<Integer>> ans = mapUtility(leaves);
-
-        return ans;
+//        Map<Integer,List<Integer>> ans = mapUtility(leaves);
+        for(int i=0;i<leaves.size();i++){
+            Employee e = leaves.get(i).getEmployee();
+            e.setProjects(null);
+            e.setLeaveApplications(null);
+            e.setEmployeeMappers(null);
+            e.setPassword("");
+            LeaveApplication la = new LeaveApplication();
+            la.setEmployee(e);
+            la.setId(leaves.get(i).getId());
+            la.setDays(leaves.get(i).getDays());
+            la.setApproved(leaves.get(i).getApproved());
+            leaves.set(i,la);
+        }
+        System.out.println(leaves);
+        return leaves;
     }
 
     @Override

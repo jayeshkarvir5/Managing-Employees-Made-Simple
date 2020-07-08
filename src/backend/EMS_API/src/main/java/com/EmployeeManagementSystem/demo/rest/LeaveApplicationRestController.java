@@ -49,7 +49,7 @@ public class LeaveApplicationRestController {
     }
 
     @GetMapping("/leaveapplications")
-    public Map<Integer,List<Integer>> getAll(){
+    public List<LeaveApplication> getAll(){
         return leaveApplicationService.getAll();
     }
 

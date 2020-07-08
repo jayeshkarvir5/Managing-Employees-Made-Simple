@@ -5,6 +5,9 @@ import { EmployeesComponent } from './employees/employees.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
+import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
+import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 
 const routes: Routes = [
     {
@@ -20,6 +23,21 @@ const routes: Routes = [
     {
         path: 'dashboard',
         component: ProfileComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
+        path: 'leaveapplication/apply',
+        component: LeaveApplicationComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
+        path: 'leaveapplication/track',
+        component: LeaveTrackerComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
+        path: 'leaveapplication/manage',
+        component: LeaveManagerComponent,
         canActivate: [AuthGuardService],
     },
     {

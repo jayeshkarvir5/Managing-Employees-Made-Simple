@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface LeaveApplicationService {
-    public Map<Integer,List<Integer>> getAll();
+    public List<LeaveApplication> getAll();
 
     public Map<Integer,List<Integer>> getById(int theId);
 
