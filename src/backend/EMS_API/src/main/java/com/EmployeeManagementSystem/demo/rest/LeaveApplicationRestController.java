@@ -54,7 +54,7 @@ public class LeaveApplicationRestController {
     }
 
     @GetMapping("/leaveapplications/{employeeId}")
-    public Map<Integer,List<Integer>> getById(@PathVariable int employeeId){
+    public List<LeaveApplication> getById(@PathVariable int employeeId){
         Employee employee = employeeservice.getEmployee(employeeId);
         if (employee == null) {
 //            throw new RuntimeException("Not found - ");
@@ -65,6 +65,13 @@ public class LeaveApplicationRestController {
         }
 
     }
+
+    @RequestMapping(value="leaveapplications/search", method = RequestMethod.GET)
+    public List<LeaveApplication> searchEmployees(@RequestParam("q") String query) {
+
+        return leaveApplicationService.getLeaveApplicationByQuery(query);
+    }
+
     @PostMapping("/leaveapplications")
     public LeaveApplication saveLeaveApplication(@RequestBody LeaveApplication leaveApplication) {
         return postAndPutUtility(leaveApplication, true);

@@ -1,10 +1,15 @@
 <sb-layout-dashboard>
         <sb-dashboard-head title="Apply for leave" [hideBreadcrumbs]="true"></sb-dashboard-head>
         <form>
+            <div class="form-group form-inline">
+                Search for Employees:
+                <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="leaveappService.searchTerm" />
+                <span class="ml-3" *ngIf="leaveappService.loading$ | async">Loading...</span>
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
                         <th scope="col" sbSortable="firstName" (sort)="onSort($event)"><span>FirstName</span><sb-sort-icon *ngIf='sortedColumn === "firstName"' [direction]="sortedDirection"></sb-sort-icon></th>
                         <th scope="col" sbSortable="lastName" (sort)="onSort($event)"><span>LastName</span><sb-sort-icon *ngIf='sortedColumn === "lastName"' [direction]="sortedDirection"></sb-sort-icon></th>
                         <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Days</span><sb-sort-icon *ngIf='sortedColumn === "days"' [direction]="sortedDirection"></sb-sort-icon>
@@ -16,16 +21,20 @@
                     <tr *ngFor="let leaveapp of leaveapps$ | async">
                         <th scope="row">{{ leaveapp.id }}</th>
                         <td><ngb-highlight
-                                [result]="leaveapp.employee.firstName">
+                            [result]="leaveapp.employee.firstName"
+                            [term]="leaveappService.searchTerm">
                         </ngb-highlight></td>
                         <td><ngb-highlight 
-                                [result]="leaveapp.employee.lastName" >
+                            [result]="leaveapp.employee.lastName" 
+                            [term]="leaveappService.searchTerm" >
                         </ngb-highlight></td>
                         <td><ngb-highlight
-                                [result]="leaveapp.days">
+                            [result]="leaveapp.days"
+                            [term]="leaveappService.searchTerm">
                         </ngb-highlight></td>
                         <td><ngb-highlight 
-                                [result]="leaveapp.approved" >
+                                [result]="leaveapp.approved" 
+                                [term]="leaveappService.searchTerm">
                         </ngb-highlight></td>
                     </tr>
                 </tbody>

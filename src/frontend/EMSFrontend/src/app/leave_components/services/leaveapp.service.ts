@@ -5,7 +5,7 @@ import { LeaveApplication } from '@modules/auth/models/leaveApplication.model';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { LeaveappdbService } from './leaveappdb.service';
-
+import { User } from '@modules/auth/models';
 
 interface State {
   page: number;
@@ -14,6 +14,12 @@ interface State {
   sortColumn: string;
   sortDirection: SortDirection;
 }
+
+interface SearchResult {
+    Leaves: LeaveApplication[];
+    total: number;
+}
+
 function compare(v1: number | string, v2: number | string) {
   return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 }
@@ -31,7 +37,7 @@ function sort(leaveapps: LeaveApplication[], column: string, direction: string):
 
 function matches(leaveapp: LeaveApplication, term: string, pipe: PipeTransform) {
   return (
-      leaveapp.employee.id.toLowerCase().includes(term.toLowerCase()) ||
+      leaveapp.employee.id.includes(term.toLowerCase()) ||
       leaveapp.employee.firstName.toLowerCase().includes(term.toLowerCase()) ||
       leaveapp.employee.lastName.toLowerCase().includes(term.toLowerCase())
   );
@@ -41,6 +47,7 @@ function matches(leaveapp: LeaveApplication, term: string, pipe: PipeTransform) 
 })
 export class LeaveappService {
   private _loading$ = new BehaviorSubject<boolean>(true);
+  private _search$ = new Subject<void>();
   private _leaveapps$ = new BehaviorSubject<LeaveApplication[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
@@ -54,14 +61,58 @@ export class LeaveappService {
       sortDirection: '',
   };
 
-  constructor(private pipe: DecimalPipe, private leaveappdbService: LeaveappdbService) {
+  constructor(private pipe: DecimalPipe, private leaveappdbService: LeaveappdbService) {}
+
+
+  
+  public getById(){
+    let id = localStorage.getItem('Auth-User-Id');
+      id = id==null? '999' : id;
+     
+      this.leaveappdbService.getById(id).subscribe(e => {
+          this._leaveapps$.next(e);
+          this._total$.next(e.length);
+          this.leaveappList = e;
+          this._search$.next();
+          console.log(e);
+      });
+      this._search$
+        .pipe(
+            tap(() => this._loading$.next(true)),
+            debounceTime(120),
+            switchMap(() => this._search()),
+            delay(120),
+            tap(() => this._loading$.next(false))
+        )
+        .subscribe(result => {
+            this._leaveapps$.next(result.Leaves);
+            this._total$.next(result.total);
+        });
+  }
+
+
+
+  public getAll(){
       this.leaveappdbService.getAll().subscribe(e => {
           this._leaveapps$.next(e);
           this._total$.next(e.length);
           this.leaveappList = e;
+          this._search$.next();
           console.log(e);
       });
-    }
+      this._search$
+        .pipe(
+            tap(() => this._loading$.next(true)),
+            debounceTime(120),
+            switchMap(() => this._search()),
+            delay(120),
+            tap(() => this._loading$.next(false))
+        )
+        .subscribe(result => {
+            this._leaveapps$.next(result.Leaves);
+            this._total$.next(result.total);
+        });
+  }
 
   get leaveapps$() {
       return this._leaveapps$.asObservable();
@@ -96,7 +147,20 @@ export class LeaveappService {
   set sortDirection(sortDirection: SortDirection) {
       this._set({ sortDirection });
   }
+  private _search(): Observable<SearchResult> {
+    const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
+    // 1. sort
+    let Leaves = sort(this.leaveappList, sortColumn, sortDirection);
+
+    // 2. filter
+    // Leaves  = Leaves.filter(country => matches(country, searchTerm, this.pipe));
+    const total = Leaves .length;
+
+    // 3. paginate
+    Leaves  = Leaves .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    return of({ Leaves , total });
+}
   private _set(patch: Partial<State>) {
       Object.assign(this._state, patch);
       // this._search$.next();

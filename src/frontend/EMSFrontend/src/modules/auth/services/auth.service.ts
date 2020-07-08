@@ -9,6 +9,7 @@ enum CONSTANTS {
     AUTH_URL = 'http://localhost:8080/authenticate',
     ACCESS_TOKEN = 'Access-Token',
     AUTH_USER = 'Auth-User',
+    AUTH_ID = 'Auth-User-Id'
 }
 
 @Injectable({
@@ -38,6 +39,7 @@ export class AuthService {
             if (response.token && response.employee) {
                 localStorage.setItem(CONSTANTS.ACCESS_TOKEN, response.token);
                 localStorage.setItem(CONSTANTS.AUTH_USER, JSON.stringify(response.employee));
+                localStorage.setItem(CONSTANTS.AUTH_ID, JSON.stringify(response.employee.id));
                 this.router.navigate(['/']);
             } else {
                 // TODO: Handle auth failure

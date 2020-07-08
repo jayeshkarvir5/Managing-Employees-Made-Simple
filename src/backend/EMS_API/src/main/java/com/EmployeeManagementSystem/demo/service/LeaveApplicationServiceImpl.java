@@ -27,8 +27,13 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
 
     @Override
     @Transactional
-    public Map<Integer,List<Integer>> getById(int theId) {
+    public List<LeaveApplication> getById(int theId) {
         return leaveApplicationDAO.getById(theId);
+    }
+
+    @Override
+    public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery) {
+        return leaveApplicationDAO.getLeaveApplicationByQuery(searchQuery);
     }
 
     @Override

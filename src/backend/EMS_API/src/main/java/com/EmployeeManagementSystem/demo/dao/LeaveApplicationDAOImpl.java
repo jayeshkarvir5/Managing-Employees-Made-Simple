@@ -32,34 +32,34 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
 
         List<LeaveApplication> leaves = query.getResultList();
 //        Map<Integer,List<Integer>> ans = mapUtility(leaves);
-        for(int i=0;i<leaves.size();i++){
-            Employee e = leaves.get(i).getEmployee();
-            e.setProjects(null);
-            e.setLeaveApplications(null);
-            e.setEmployeeMappers(null);
-            e.setPassword("");
-            LeaveApplication la = new LeaveApplication();
-            la.setEmployee(e);
-            la.setId(leaves.get(i).getId());
-            la.setDays(leaves.get(i).getDays());
-            la.setApproved(leaves.get(i).getApproved());
-            leaves.set(i,la);
-        }
-        System.out.println(leaves);
+        leaves = listUtility(leaves);
         return leaves;
     }
 
     @Override
-    public Map<Integer,List<Integer>> getById(int theId) {
+    public List<LeaveApplication> getById(int theId) {
         Session currentSession = entityManager.unwrap(Session.class);
 
         Query<LeaveApplication> query = currentSession.createQuery("from LeaveApplication where employee.id = :theId", LeaveApplication.class);
         query.setParameter("theId", theId);
 
         List<LeaveApplication> leaves = query.getResultList();
-        Map<Integer,List<Integer>> ans = mapUtility(leaves);
+        leaves = listUtility(leaves);
 
-        return ans;
+        return leaves;
+    }
+
+    @Override
+    public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<LeaveApplication> query = currentSession.createQuery("from LeaveApplication where employee.firstName like :searchQuery or employee.lastName like :searchQuery",LeaveApplication.class);
+
+        query.setParameter("searchQuery", "%"+searchQuery+"%");
+
+        List<LeaveApplication> leaves = query.getResultList();
+        leaves = listUtility(leaves);
+        return leaves;
     }
 
     @Override
@@ -85,9 +85,19 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         Query query = currentSession.createQuery(hql);
 
         query.setParameter("theId",theId);
-        Employee employee = currentSession.get(Employee.class,theId);
-        employee.setLeaveApp(false);
-        currentSession.saveOrUpdate(employee);
+
+        Query<LeaveApplication> query2 = currentSession.createQuery("from LeaveApplication where employee.id = :theId", LeaveApplication.class);
+        query2.setParameter("theId", theId);
+
+        List<LeaveApplication> leaves = query2.getResultList();
+        
+        if(leaves==null || leaves.size()==0){
+            Employee employee = currentSession.get(Employee.class,theId);
+
+            employee.setLeaveApp(false);
+            currentSession.saveOrUpdate(employee);
+        }
+
         query.executeUpdate();
     }
 
@@ -110,5 +120,23 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         System.out.println("\n***********************\n" + ans + "\n**********************\n" );
 
         return ans;
+    }
+
+    public List<LeaveApplication> listUtility(List<LeaveApplication> leaves){
+        for(int i=0;i<leaves.size();i++){
+            Employee e = leaves.get(i).getEmployee();
+            e.setProjects(null);
+            e.setLeaveApplications(null);
+            e.setEmployeeMappers(null);
+            e.setPassword("");
+            LeaveApplication la = new LeaveApplication();
+            la.setEmployee(e);
+            la.setId(leaves.get(i).getId());
+            la.setDays(leaves.get(i).getDays());
+            la.setApproved(leaves.get(i).getApproved());
+            leaves.set(i,la);
+        }
+        System.out.println(leaves);
+        return leaves;
     }
 }

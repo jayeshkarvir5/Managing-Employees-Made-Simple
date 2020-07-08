@@ -9,7 +9,9 @@ import java.util.Map;
 public interface LeaveApplicationService {
     public List<LeaveApplication> getAll();
 
-    public Map<Integer,List<Integer>> getById(int theId);
+    public List<LeaveApplication> getById(int theId);
+
+    public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery);
 
     public void save(Employee employee, LeaveApplication leaveApplication);
 

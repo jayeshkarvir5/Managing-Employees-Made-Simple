@@ -1,5 +1,12 @@
 <sb-layout-dashboard>
         <sb-dashboard-head title="Apply for leave" [hideBreadcrumbs]="true"></sb-dashboard-head>
-        <p>leave-application works!</p>
-    </sb-layout-dashboard>
+    <form  (ngSubmit)="submit()">
+        <div class="form-group">
+            <label for="days">Days</label>
+        <input
+            required  type="number" 
+            [(ngModel)]="days"
+            class="form-control" id="days">
+    </form>
+</sb-layout-dashboard>
 

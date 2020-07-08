@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { LeaveappService } from '../services/leaveapp.service';
 import { LeaveApplication } from '@modules/auth/models/leaveApplication.model';
-import { constants } from 'buffer';
 
 @Component({
   selector: 'sb-leave-tracker',
@@ -27,7 +26,8 @@ export class LeaveTrackerComponent implements OnInit {
       this.leaveappService.pageSize = this.pageSize;
       this.leaveapps$ = this.leaveappService.leaveapps$;
       this.total$ = this.leaveappService.total$;
-      console.log(localStorage.getItem('Auth-User'));
+      this.leaveappService.getById();
+      // console.log(localStorage.getItem('Auth-User'));
   }
 
   onSort({ column, direction }: SortEvent) {

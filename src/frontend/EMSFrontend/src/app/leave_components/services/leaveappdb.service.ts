@@ -19,7 +19,15 @@ export class LeaveappdbService {
    constructor(private http: HttpClient) {
     this.http = http;
    }
+   
   public getAll(): Observable<LeaveApplication[]> {
     return this.http.get<LeaveApplication[]>(this.url, this.httpOptions);
-}
+  }
+  public getById(id:string): Observable<LeaveApplication[]> {
+    return this.http.get<LeaveApplication[]>(this.url+'/'+id, this.httpOptions);
+  }
+  public saveLeave(leaveapp:LeaveApplication){
+    return this.http.post(this.url,leaveapp,this.httpOptions);
+  }
+  
 }
