@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-		// ---------- Proper ------------
+		// ---------- Proper ------------leaveapplications
 //		// We don't need CSRF for this example
 //		httpSecurity.csrf().disable().cors().and()
 //				// dont authenticate this particular request

@@ -3,11 +3,12 @@ export interface User {
     firstName: string;
     lastName: string;
     email: string;
-    phoneNo?: string;
+    // phoneNo?: string;
     designation?: string;
     address?: string;
     experience?: number;
     leaveApp?: boolean;
     projects?: Array<any>;
     techstack?: string;
+    password?:any;
 }

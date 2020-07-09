@@ -3,6 +3,8 @@ package com.EmployeeManagementSystem.demo.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
+
 import com.EmployeeManagementSystem.demo.entity.Employee;
 public interface EmployeeDAO {
 
@@ -13,6 +15,10 @@ public interface EmployeeDAO {
 	public Employee getEmployee(int theId);
 
 	public Employee getEmployeeByEmail(String email);
+	
+	public String getPassword(String employeeId);
+	
+	public ResponseEntity<?> resetPassword(String id,String oldPassword,String newPassword);
 	
 	public void save(Employee theEmployee);
 	

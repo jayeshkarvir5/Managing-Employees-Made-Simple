@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public Employee getEmployeeByEmail(String email) {
 		return  employeeDAO.getEmployeeByEmail(email);
 	}
+	
+	@Transactional
+	@Override
+	public String getPassword(String employeeId) {
+		return employeeDAO.getPassword(employeeId);
+	}
+
+	@Transactional
+	@Override
+	public ResponseEntity<?> resetPassword(String id, String oldPassword, String newPassword) {
+		return employeeDAO.resetPassword(id, oldPassword, newPassword);
+	}
 
 	@Override
 	@Transactional
@@ -64,6 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
+	@Transactional
 	public Map<Integer,List<Integer>> getEmployeeHierarchy(int employeeId) {
 		return employeeDAO.getEmployeeHierarchy(employeeId);
 	}

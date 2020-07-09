@@ -55,6 +55,14 @@ export class AuthService {
         return null;
     }
 
+    getAuthUserId(): string | null {
+        const authUser = localStorage.getItem(CONSTANTS.AUTH_USER);
+        if (authUser) {
+            return JSON.parse(authUser)["id"];
+        }
+        return null;
+    }
+
     logout() {
         localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
         localStorage.removeItem(CONSTANTS.AUTH_USER);

@@ -1,0 +1,33 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="Create a New Project" [hideBreadcrumbs]="true"></sb-dashboard-head>
+    <form #formDirective="ngForm"
+        (ngSubmit)="formDirective.form.valid && save(formDirective.value)">
+        <div class="form-group">
+            <label for="name">Name*</label>
+            <input #name="ngModel" [(ngModel)]="project.name" name="name" type="text" class="form-control" id="name" placeholder="Name of the Project" required>
+        </div>
+        <div class="form-group">
+            <label for="name">Description*</label>
+            <input #description="ngModel" [(ngModel)]="project.description" name="description" type="text" class="form-control" id="description" placeholder="Project's Description" required>
+        </div>
+        <div class="form-group">
+            <label for="clientName">Client Name*</label>
+            <input #clientName="ngModel" [(ngModel)]="project.clientName" name="clientName" type="text" class="form-control" id="clientName" placeholder="Client Name" required>
+        </div>
+        <div class="form-group">
+            <label for="duration">Duration*</label>
+            <input #duration="ngModel" [(ngModel)]="project.duration" name="duration" type="number" class="form-control" id="duration" placeholder="Project's Duration" required>
+        </div>
+        <div class="form-group">
+            <label for="projects">Assign Project Members</label>
+            <ng-multiselect-dropdown
+                name="projects"
+                [placeholder]="'Assign Project Members'"
+                [data]="userDropdownList"
+                [(ngModel)]="userSelectedItems"
+                [settings]="userDropdownSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Project</button>
+    </form>
+</sb-layout-dashboard>

@@ -1,35 +1,148 @@
 <sb-layout-dashboard>
+
     <sb-dashboard-head *ngIf='user && user.firstName' title="{{ user.firstName }}'s Profile" [hideBreadcrumbs]="true"></sb-dashboard-head>
     <sb-card>
         <div class="card-header">Personal Details</div>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <sb-card *ngIf='user && user.id'>
+                    
+                    <div *ngIf='user && user.id' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text w-100" id="inputGroup-sizing-sm">Employee Id:</span>
+                          </div>
+                        <input  [(ngModel)]="user.id"
+                                type="text" class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <!-- <sb-card *ngIf='user && user.id'>
                         <div class="card-body">Employee Id: {{ user.id }}</div>
-                    </sb-card>
-                    <sb-card *ngIf='user && user.firstName'>
+                        
+                    </sb-card> -->
+
+                    <div *ngIf='user && user.firstName' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text w-100" id="inputGroup-sizing-sm">First Name</span>
+                        </div>
+                        <input  [(ngModel)]="user.firstName"
+                                type="text" 
+                                class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <!-- <sb-card *ngIf='user && user.firstName'>
                         <div class="card-body">First Name: {{ user.firstName }}</div>
-                    </sb-card>
-                    <sb-card *ngIf='user && user.lastName'>
+                    </sb-card> -->
+
+                    <div *ngIf='user && user.lastName' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text w-100" id="inputGroup-sizing-sm">Last Name</span>
+                        </div>
+                        <input  [(ngModel)]="user.lastName"
+                                type="text" 
+                                class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <!-- <sb-card *ngIf='user && user.lastName'>
                         <div class="card-body">Last Name: {{ user.lastName }}</div>
-                    </sb-card>
-                    <sb-card *ngIf='user && user.email'>
+                    </sb-card> -->
+
+                    <div *ngIf='user && user.email' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text w-100" id="inputGroup-sizing-sm">Email</span>
+                        </div>
+                        <input  [(ngModel)]="user.email"
+                                type="text" 
+                                class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <!-- <sb-card *ngIf='user && user.email'>
                         <div class="card-body">Email: {{ user.email }}</div>
-                    </sb-card>
+                    </sb-card> -->
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <sb-card *ngIf='user && user.phoneNo'>
+
+                    <div *ngIf='user && user.phoneNo' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text w-100" id="inputGroup-sizing-sm">Phone</span>
+                        </div>
+                        <input  [(ngModel)]="user.phoneNo"
+                                type="text" 
+                                class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    
+                    <!-- <sb-card *ngIf='user && user.phoneNo'>
                         <div class="card-body">Phone: {{ user.phoneNo }}</div>
-                    </sb-card>
-                    <sb-card *ngIf='user && user.designation'>
+                    </sb-card> -->
+
+                    <div *ngIf='user && user.designation' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text w-100" id="inputGroup-sizing-sm">Designation</span>
+                        </div>
+                        <input  [(ngModel)]="user.designation"
+                                type="text" 
+                                class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <!-- <sb-card *ngIf='user && user.designation'>
                         <div class="card-body">Designation: {{ user.designation }}</div>
-                    </sb-card>
-                    <sb-card *ngIf='user && user.address'>
+                    </sb-card> -->
+
+                    <div *ngIf='user && user.address' class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text w-100" id="inputGroup-sizing-sm">Address</span>
+                        </div>
+                        <input  [(ngModel)]="user.address"
+                                type="text" 
+                                class="form-control" 
+                                aria-label="Sizing example input" 
+                                aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <!-- <sb-card *ngIf='user && user.address'>
                         <div class="card-body">Address: {{ user.address }}</div>
-                    </sb-card>
+                    </sb-card> -->
+
+                    <button *ngIf="myProfile()" (click)="save()" type="button" class="btn btn-secondary">Save</button>
+                    <button *ngIf="myProfile()" (click)="open(mymodal)" type="button" class="btn btn-secondary">change Password</button>
                 </div>
             </div>
+        </div>
+    </sb-card>
+    <ng-template #mymodal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Old Password:<input [(ngModel)]="password.oldPassword" type="text">
+          <br>
+          New Password:<input [(ngModel)]="password.newPassword" type="text">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+            <br>
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); resetPassword()">Reset Password</button>
+        </div>
+      </ng-template>
+      
+    <sb-card>
+        <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Project Statistics</div>
+        <div class="card-body">
+            <canvas #myPieChart></canvas>
         </div>
     </sb-card>
 </sb-layout-dashboard>

@@ -11,6 +11,7 @@ import { ChartsModule } from '@modules/charts/charts.module';
 import { DashboardModule } from '@modules/dashboard/dashboard.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { NewUserComponent } from './admin/new-user/new-user.component';
@@ -24,15 +25,22 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
-import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
-import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
-import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
+import { NewProjectComponent } from './admin/new-project/new-project.component';
 
 @NgModule({
-    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent, LeaveApplicationComponent, LeaveTrackerComponent, LeaveManagerComponent],
+    declarations: [
+        AppComponent,
+        EmployeesComponent,
+        EmployeesTableComponent,
+        ProfileComponent,
+        LogoutComponent,
+        NewUserComponent,
+        NewProjectComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
+        NgbModule,
         HttpClientModule,
         DashboardModule,
         CommonModule,

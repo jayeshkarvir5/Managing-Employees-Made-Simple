@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NewProjectComponent } from './admin/new-project/new-project.component';
 import { NewUserComponent } from './admin/new-user/new-user.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -19,6 +20,11 @@ const routes: Routes = [
     {
         path: 'admin/new-user',
         component: NewUserComponent,
+        canActivate: [AuthGuardService],
+    },
+    {
+        path: 'admin/new-project',
+        component: NewProjectComponent,
         canActivate: [AuthGuardService],
     },
     {

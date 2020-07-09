@@ -34,8 +34,10 @@ export class ProjectService {
         return this.http.get<Project>(this.url + '/' + projectId, this.httpOptions);
     }
 
-    public saveProject(projectData: Project) {
-        this.http.post(this.url, projectData, this.httpOptions);
+    public saveProject(projectData: any) {
+        this.http
+            .post(this.url, projectData, this.httpOptions)
+            .subscribe(e => console.log('Save Project result ->', e));
     }
 
     public updateProject(projectData: Project) {
