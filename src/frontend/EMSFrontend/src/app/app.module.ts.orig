@@ -11,7 +11,10 @@ import { ChartsModule } from '@modules/charts/charts.module';
 import { DashboardModule } from '@modules/dashboard/dashboard.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { NewUserComponent } from './admin/new-user/new-user.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeesTableComponent } from './employees/employees-table/employees-table.component';
@@ -23,7 +26,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
 <<<<<<< HEAD
-import { LogoutComponent } from './logout/logout.component';
 import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
 import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
 import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
@@ -31,6 +33,7 @@ import { LeaveManagerComponent } from './leave_components/leave-manager/leave-ma
 @NgModule({
     declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent, LeaveApplicationComponent, LeaveTrackerComponent, LeaveManagerComponent],
 =======
+import { NewProjectComponent } from './admin/new-project/new-project.component';
 
 @NgModule({
     declarations: [
@@ -39,11 +42,14 @@ import { LeaveManagerComponent } from './leave_components/leave-manager/leave-ma
         EmployeesTableComponent,
         ProfileComponent,
         LogoutComponent,
+        NewUserComponent,
+        NewProjectComponent,
     ],
->>>>>>> bf11406fe0315e11aa1e2deb169acf50d0399ff2
+>>>>>>> a55e83e53cefce44c21210d45cfce5d754ad390f
     imports: [
         BrowserModule,
         AppRoutingModule,
+        NgbModule,
         HttpClientModule,
         DashboardModule,
         CommonModule,
@@ -54,6 +60,7 @@ import { LeaveManagerComponent } from './leave_components/leave-manager/leave-ma
         NavigationModule,
         ChartsModule,
         TablesModule,
+        NgMultiSelectDropDownModule.forRoot(),
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
