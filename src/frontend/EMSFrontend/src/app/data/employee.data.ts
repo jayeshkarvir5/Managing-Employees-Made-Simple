@@ -8,7 +8,7 @@ export const USERS: User[] = [
         address: 'Earth',
         designation: 'developer',
         email: 'john_doe@g.c',
-        phoneNo: '1234567890',
+        //phoneNo: '1234567890',
     },
     {
         id: '2',
@@ -17,7 +17,7 @@ export const USERS: User[] = [
         address: 'Earth',
         designation: 'developer',
         email: 'john_doe2@g.c',
-        phoneNo: '1234567890',
+        //phoneNo: '1234567890',
     },
     {
         id: '3',
@@ -26,6 +26,6 @@ export const USERS: User[] = [
         address: 'Earth',
         designation: 'developer',
         email: 'john_doe3@g.c',
-        phoneNo: '1234567890',
+        //phoneNo: '1234567890',
     },
 ];

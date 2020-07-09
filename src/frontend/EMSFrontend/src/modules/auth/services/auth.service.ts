@@ -45,10 +45,10 @@ export class AuthService {
         });
     }
 
-    getAuthUser(): User | null {
+    getAuthUser(): string | null {
         const authUser = localStorage.getItem(CONSTANTS.AUTH_USER);
         if (authUser) {
-            return JSON.parse(authUser);
+            return JSON.parse(authUser)["id"];
         }
         return null;
     }

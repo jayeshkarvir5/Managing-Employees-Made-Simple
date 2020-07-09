@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '@modules/auth/models';
 import { AuthService } from '@modules/auth/services';
@@ -26,6 +26,7 @@ export class EmployeedbService {
     }
 
     public getEmployee(employeeId: string): Observable<User> {
+        console.log(this.http.get<User>(this.url + '/' + employeeId, this.httpOptions));
         return this.http.get<User>(this.url + '/' + employeeId, this.httpOptions);
     }
 
@@ -33,8 +34,17 @@ export class EmployeedbService {
         this.http.post(this.url, employeeData, this.httpOptions);
     }
 
-    public updateEmployee(employeeData: User) {
-        this.http.put(this.url, employeeData, this.httpOptions);
+    public updateEmployee(employeeData: any) {
+        console.log("PUT DATA BODY");
+        console.log(employeeData);
+        this.http.put(this.url, employeeData, this.httpOptions).subscribe(
+            res => {
+                console.log(res);
+              },
+              (err: HttpErrorResponse) => {
+                console.log(err);
+              }
+        );
     }
 
     public deleteEmployee(employeeId: string) {
@@ -48,5 +58,20 @@ export class EmployeedbService {
     // If i am a manager and i want the leave requests of employees under me
     public leaveRequests(managerId: string) {
         return this.http.get(this.url + managerId, this.httpOptions);
+    }
+
+    public resetPassword(employeeId:string,oldPassword:string,newPassword:string){
+        var body = {
+            "oldPassword":oldPassword,
+            "newPassword":newPassword
+        }
+        this.http.put(this.url+"/"+employeeId+"/resetpassword",body,this.httpOptions).subscribe(
+            res=>{
+                console.log(res);
+            },
+            err=>{
+                console.log(err);
+            }
+        );
     }
 }

@@ -11,6 +11,7 @@ import { ChartsModule } from '@modules/charts/charts.module';
 import { DashboardModule } from '@modules/dashboard/dashboard.module';
 import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { ProjectService } from './projects/project.service';
     imports: [
         BrowserModule,
         AppRoutingModule,
+        NgbModule,
         HttpClientModule,
         DashboardModule,
         CommonModule,

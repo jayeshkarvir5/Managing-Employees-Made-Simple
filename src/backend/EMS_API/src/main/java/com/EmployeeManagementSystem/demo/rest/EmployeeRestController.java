@@ -4,11 +4,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
 import com.EmployeeManagementSystem.demo.entity.Project;
+import com.EmployeeManagementSystem.demo.service.BcryptService;
 import com.EmployeeManagementSystem.demo.service.EmployeeMapperService;
 import com.EmployeeManagementSystem.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.EmployeeManagementSystem.demo.dao.EmployeeDAO;
@@ -101,9 +109,9 @@ public class EmployeeRestController {
 	
 	@GetMapping("/employees/{employeeId}")
 	public Employee getEmployee(@PathVariable int employeeId) {
-		
 		Employee employee = employeeUtility(employeeId);
-
+		employee.setPassword("");
+		System.out.println(employee.getPassword());
 		return employee;
 	}
 
@@ -117,12 +125,14 @@ public class EmployeeRestController {
 	
 	@PostMapping("/employees")
 	public Employee addEmployee(@RequestBody Employee employee) {
+		employee.setPassword(BcryptService.getEncoder().encode(employee.getPassword()));
 		return postAndPutUtility(employee, true);
 	}
 	
 	
 	@PutMapping("/employees")
 	public Employee updateEmployee(@RequestBody Employee employee) {
+		employee.setPassword(employeeService.getPassword(String.valueOf(employee.getId())));
 		return postAndPutUtility(employee, false);
 	}
 	
@@ -143,7 +153,6 @@ public class EmployeeRestController {
 	
 	@RequestMapping(value="employees/search", method = RequestMethod.GET)
 	public List<Employee> searchEmployees(@RequestParam("q") String query) {
-		
 		return employeeService.getEmployeeByQuery(query);
 	}
 
@@ -182,6 +191,14 @@ public class EmployeeRestController {
 			return employee;
 		}
 
+	}
+	
+	@PutMapping("employees/{employeeId}/resetpassword")
+	@ResponseBody
+	public ResponseEntity<?> resetPassword(@PathVariable int employeeId,@RequestBody Map<String,String> httpBody) {
+		System.out.println("---------------");
+		
+		return this.employeeService.resetPassword(String.valueOf(employeeId), httpBody.get("oldPassword"),httpBody.get("newPassword"));
 	}
 	
 }

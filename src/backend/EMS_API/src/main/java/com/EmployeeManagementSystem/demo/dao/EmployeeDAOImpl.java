@@ -9,14 +9,19 @@ import javax.persistence.EntityManager;
 
 import com.EmployeeManagementSystem.demo.entity.LeaveApplication;
 import com.EmployeeManagementSystem.demo.entity.Project;
+import com.EmployeeManagementSystem.demo.service.BcryptService;
+
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.EmployeeManagementSystem.demo.entity.Employee;
 import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
+import com.EmployeeManagementSystem.demo.entity.JwtResponse;
 
 @Repository("EmployeeDAO")
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -94,13 +99,53 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		Employee employee = query.getSingleResult();
 		return  employee;
 	}
+	
+	@Override
+	public String getPassword(String employeeId) {
+		Session currentSession = entityManager.unwrap(Session.class);
+		System.out.println(employeeId);
+
+		Query<Employee> query = currentSession.createQuery("from Employee where id=:id", Employee.class);
+		query.setParameter("id",Integer.valueOf(employeeId));
+		
+		Employee employee = query.getSingleResult();
+		System.out.println(employee);
+	
+		currentSession.clear();
+		
+		return employee.getPassword();
+	}
+
+	@Override
+	public ResponseEntity<?> resetPassword(String id,String oldPassword, String newPassword) {
+		
+		boolean match = BcryptService.getEncoder().matches(oldPassword, getPassword(id));
+		if(match) {
+			Employee employee  = getEmployee(Integer.valueOf(id));
+			System.out.println(employee.getPassword());
+			employee.setPassword(BcryptService.getEncoder().encode(newPassword));
+			System.out.println("After---------------------------------");
+			System.out.println(employee.getPassword());
+			System.out.println("SUCCESS");
+			Session currentSession = entityManager.unwrap(Session.class);
+			
+			currentSession.saveOrUpdate(employee);
+			
+			return ResponseEntity.ok("SUCCESS");
+		}
+		else {
+			System.out.println("FAILURE");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+		
+	}
 
 
 	@Override
 	public void save(Employee employee) {
 
 		// encrypt the password
-		employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+        // employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
 
 		Session currentSession = entityManager.unwrap(Session.class);
 		Employee newEmployee = employee;
@@ -116,6 +161,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 
 		currentSession.saveOrUpdate(newEmployee);
+		
 	}
 
 
