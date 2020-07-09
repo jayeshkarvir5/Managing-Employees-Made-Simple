@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     myProfile():boolean{
-        if(this.authUserId==this.user.id){
+        if(this.authUserId===this.userId){
             return true;
         }
         return false;
@@ -98,7 +98,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
     }
-      
+
       private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
           return 'by pressing ESC';
@@ -111,7 +111,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     async buildPieCharts() {
         const projectStats: any = await this.employeedbService
-            .getProjectStats(this.user.id)
+            .getProjectStats(this.userId)
             .toPromise();
         this.chart = new Chart(this.myPieChart.nativeElement, {
             type: 'pie',
