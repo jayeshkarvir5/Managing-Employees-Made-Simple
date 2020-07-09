@@ -11,9 +11,13 @@ public interface LeaveApplicationService {
 
     public List<LeaveApplication> getById(int theId);
 
+    public List<LeaveApplication> empLeave(int theId);
+
+    public LeaveApplication getLeaveById(int theId);
+
     public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery);
 
-    public void save(Employee employee, LeaveApplication leaveApplication);
+    public void save(LeaveApplication leaveApplication);
 
     public void delete(int id);
 }

@@ -5,7 +5,6 @@ import { LeaveApplication } from '@modules/auth/models/leaveApplication.model';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { LeaveappdbService } from './leaveappdb.service';
-import { User } from '@modules/auth/models';
 
 interface State {
   page: number;
@@ -37,7 +36,7 @@ function sort(leaveapps: LeaveApplication[], column: string, direction: string):
 
 function matches(leaveapp: LeaveApplication, term: string, pipe: PipeTransform) {
   return (
-      leaveapp.employee.id.includes(term.toLowerCase()) ||
+    //   leaveapp.employee.id.toLowerCase().includes(term.toLowerCase()) ||
       leaveapp.employee.firstName.toLowerCase().includes(term.toLowerCase()) ||
       leaveapp.employee.lastName.toLowerCase().includes(term.toLowerCase())
   );
@@ -65,8 +64,8 @@ export class LeaveappService {
 
 
   
-  public getById(){
-    let id = localStorage.getItem('Auth-User-Id');
+  getById(){
+      let id = localStorage.getItem('Auth-User-Id');
       id = id==null? '999' : id;
      
       this.leaveappdbService.getById(id).subscribe(e => {
@@ -92,8 +91,10 @@ export class LeaveappService {
 
 
 
-  public getAll(){
-      this.leaveappdbService.getAll().subscribe(e => {
+  getEmpLeave(){
+    let id = localStorage.getItem('Auth-User-Id');
+    id = id==null? '999' : id;
+      this.leaveappdbService.empLeave(id).subscribe(e => {
           this._leaveapps$.next(e);
           this._total$.next(e.length);
           this.leaveappList = e;
@@ -114,6 +115,24 @@ export class LeaveappService {
         });
   }
 
+  leave!:LeaveApplication;
+  getLeaveById(id:string){
+    this.leaveappdbService.getLeaveById(id).subscribe(la =>{
+        if(la){
+            this.leave = la;
+            console.log("in service "+this.leave.days);
+        }
+        
+    });
+    console.log("in service outside subscribe"+this.leave.days);
+    return this.leave;
+  }
+  saveLeave(leave:LeaveApplication){
+      this.leaveappdbService.saveLeave(leave);
+  }
+  deleteLeave(id:string){
+      this.leaveappdbService.delete(id);
+  }
   get leaveapps$() {
       return this._leaveapps$.asObservable();
   }
@@ -154,7 +173,7 @@ export class LeaveappService {
     let Leaves = sort(this.leaveappList, sortColumn, sortDirection);
 
     // 2. filter
-    // Leaves  = Leaves.filter(country => matches(country, searchTerm, this.pipe));
+    Leaves  = Leaves.filter(country => matches(country, searchTerm, this.pipe));
     const total = Leaves .length;
 
     // 3. paginate

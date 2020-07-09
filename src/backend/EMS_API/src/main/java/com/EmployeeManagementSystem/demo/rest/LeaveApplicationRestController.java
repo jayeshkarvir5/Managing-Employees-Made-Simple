@@ -66,8 +66,26 @@ public class LeaveApplicationRestController {
 
     }
 
+    @GetMapping("/leaveapplications/{employeeId}/leave")
+    public List<LeaveApplication> empLeave(@PathVariable int employeeId){
+        Employee employee = employeeservice.getEmployee(employeeId);
+        if (employee == null) {
+//            throw new RuntimeException("Not found - ");
+            System.out.println("****************\nNot found\n****************");
+            return null;
+        }else{
+            return leaveApplicationService.empLeave(employeeId);
+        }
+
+    }
+
+    @GetMapping("/leaveapplicationsbyid/{id}")
+    public LeaveApplication getLeave(@PathVariable int id){
+        return leaveApplicationService.getLeaveById(id);
+    }
+
     @RequestMapping(value="leaveapplications/search", method = RequestMethod.GET)
-    public List<LeaveApplication> searchEmployees(@RequestParam("q") String query) {
+    public List<LeaveApplication> searchLeaves(@RequestParam("q") String query) {
 
         return leaveApplicationService.getLeaveApplicationByQuery(query);
     }
@@ -105,8 +123,7 @@ public class LeaveApplicationRestController {
             return null;
         }else{
             if(post == true)leaveApplication.setId(0);
-            leaveApplication.setEmployee(employee);
-            leaveApplicationService.save(employee, leaveApplication);
+            leaveApplicationService.save(leaveApplication);
             return leaveApplication;
         }
     }

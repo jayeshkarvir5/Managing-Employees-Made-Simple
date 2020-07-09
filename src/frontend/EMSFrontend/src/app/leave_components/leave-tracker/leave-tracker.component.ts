@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { LeaveappService } from '../services/leaveapp.service';
 import { LeaveApplication } from '@modules/auth/models/leaveApplication.model';
+import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sb-leave-tracker',
@@ -17,10 +18,14 @@ export class LeaveTrackerComponent implements OnInit {
   total$!: Observable<number>;
   sortedColumn!: string;
   sortedDirection!: string;
+  days!:string;
+  closeResult!:string;
+  la!:string;
 
   @ViewChildren(SBSortableHeaderDirective) headers!: QueryList<SBSortableHeaderDirective>;
 
-  constructor(public leaveappService: LeaveappService) {}
+  constructor(public leaveappService: LeaveappService,
+                    private modalService:NgbModal) {}
 
   ngOnInit() {
       this.leaveappService.pageSize = this.pageSize;
@@ -37,4 +42,37 @@ export class LeaveTrackerComponent implements OnInit {
       this.leaveappService.sortDirection = direction;
   }
 
+  leave!:LeaveApplication;
+  open(content:any,leave:LeaveApplication) {
+    this.leave = leave;
+    console.log(leave.id);
+    this.la = leave.id;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+}
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  update(){
+    console.log("id of leave to be updated is" + this.leave.id);
+    console.log("days before update "+ this.leave.days);
+    console.log("days after update" + this.days);
+    this.leave.days = this.days;
+    this.leaveappService.saveLeave(this.leave);
+    
+  }
+  delete(id:string){
+    console.log("id of leave to be deleted is" + id);
+    this.leaveappService.deleteLeave(id);
+  }
 }

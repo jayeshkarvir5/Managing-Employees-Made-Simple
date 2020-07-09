@@ -32,14 +32,26 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
     }
 
     @Override
+    @Transactional
+    public List<LeaveApplication> empLeave(int theId) {
+        return leaveApplicationDAO.empLeave(theId);
+    }
+
+    @Override
+    @Transactional
+    public LeaveApplication getLeaveById(int theId) {
+        return leaveApplicationDAO.getLeaveById(theId);
+    }
+
+    @Override
     public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery) {
         return leaveApplicationDAO.getLeaveApplicationByQuery(searchQuery);
     }
 
     @Override
     @Transactional
-    public void save(Employee employee, LeaveApplication leaveApplication) {
-        leaveApplicationDAO.save(employee, leaveApplication);
+    public void save(LeaveApplication leaveApplication) {
+        leaveApplicationDAO.save(leaveApplication);
     }
 
     @Override

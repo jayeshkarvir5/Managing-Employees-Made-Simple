@@ -196,6 +196,25 @@ public class Employee {
 		this.password = password;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Employee{" +
+//				"id=" + id +
+//				", designation='" + designation + '\'' +
+//				", firstName='" + firstName + '\'' +
+//				", lastName='" + lastName + '\'' +
+//				", address='" + address + '\'' +
+//				", email='" + email + '\'' +
+//				", password='" + password + '\'' +
+//				", leaveApp=" + leaveApp +
+//				", experience=" + experience +
+//				", techstack='" + techstack + '\'' +
+//				", employeeMappers=" + employeeMappers +
+//				", leaveApplications=" + leaveApplications +
+//				", projects=" + projects +
+//				'}';
+//	}
+
 	@Override
 	public String toString() {
 		return "Employee{" +
@@ -203,15 +222,6 @@ public class Employee {
 				", designation='" + designation + '\'' +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
-				", address='" + address + '\'' +
-				", email='" + email + '\'' +
-				", password='" + password + '\'' +
-				", leaveApp=" + leaveApp +
-				", experience=" + experience +
-				", techstack='" + techstack + '\'' +
-				", employeeMappers=" + employeeMappers +
-				", leaveApplications=" + leaveApplications +
-				", projects=" + projects +
 				'}';
 	}
 }

@@ -9,11 +9,15 @@ import java.util.Map;
 public interface LeaveApplicationDAO {
     public List<LeaveApplication> getAll();
 
+    public List<LeaveApplication> empLeave(int theId);
+
     public List<LeaveApplication> getById(int theId);
+
+    public LeaveApplication getLeaveById(int theId);
 
     public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery);
 
-    public void save(Employee employee, LeaveApplication leaveApplication);
+    public void save(LeaveApplication leaveApplication);
 
     public void delete(int id);
 }
