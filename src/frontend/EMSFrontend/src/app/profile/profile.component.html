@@ -138,4 +138,11 @@
             <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); resetPassword()">Reset Password</button>
         </div>
       </ng-template>
+      
+    <sb-card>
+        <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Project Statistics</div>
+        <div class="card-body">
+            <canvas #myPieChart></canvas>
+        </div>
+    </sb-card>
 </sb-layout-dashboard>

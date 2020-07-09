@@ -1,0 +1,67 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="Create a New User" [hideBreadcrumbs]="true"></sb-dashboard-head>
+    <form #formDirective="ngForm"
+        (ngSubmit)="formDirective.form.valid && save(formDirective.value)">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="firstName">First Name*</label>
+              <input #firstName="ngModel" [(ngModel)]="user.firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lastName">Last Name*</label>
+              <input #lastName="ngModel" [(ngModel)]="user.lastName" type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name">
+            </div>
+          </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email*</label>
+            <input #email="ngModel" [(ngModel)]="user.email" type="email" name="email" class="form-control" id="email" placeholder="Email">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="password">Password*</label>
+            <input #password="ngModel" [(ngModel)]="user.password" type="password" name="password" class="form-control" id="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="designation">Designation</label>
+              <select #designation="ngModel" [(ngModel)]="user.designation" name="designation" id="designation" class="form-control" required>
+                <option *ngFor="let c of designations" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="experience">Experience</label>
+              <input #experience="ngModel" [(ngModel)]="user.experience" name="experience" type="number" class="form-control" id="experience" placeholder="Experience(Years)">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="phoneNo">Phone Number</label>
+                <input #phoneNo="ngModel" [(ngModel)]="user.phoneNo" name="phoneNo" type="number" class="form-control" id="phoneNo" placeholder="Phone Number">
+              </div>
+          </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input #address="ngModel" [(ngModel)]="user.address" name="address" type="text" class="form-control" id="address" placeholder="Address">
+        </div>
+        <div class="form-group">
+            <label for="projects">Assign Projects</label>
+            <ng-multiselect-dropdown
+                name="projects"
+                [placeholder]="'Assign Projects'"
+                [data]="projectDropdownList"
+                [(ngModel)]="projectSelectedItems"
+                [settings]="projectDropdownSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="form-group">
+            <label for="projects">Tech Stack</label>
+            <ng-multiselect-dropdown
+                name="techStack"
+                [placeholder]="'Tech Stack'"
+                [data]="techStackDropdownList"
+                [(ngModel)]="techStackSelectedItems"
+                [settings]="techStackDropdownSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <button type="submit" class="btn btn-primary">Create User</button>
+    </form>
+</sb-layout-dashboard>

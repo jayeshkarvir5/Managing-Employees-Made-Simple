@@ -30,8 +30,10 @@ export class EmployeedbService {
         return this.http.get<User>(this.url + '/' + employeeId, this.httpOptions);
     }
 
-    public saveEmployee(employeeData: User) {
-        this.http.post(this.url, employeeData, this.httpOptions);
+    public saveEmployee(employeeData: any) {
+        this.http
+            .post(this.url, employeeData, this.httpOptions)
+            .subscribe(e => console.log('save employee result -> ', e));
     }
 
     public updateEmployee(employeeData: any) {
@@ -73,5 +75,10 @@ export class EmployeedbService {
                 console.log(err);
             }
         );
+    }
+    
+    public getProjectStats(employeeId: string) {
+        const statsUrl = 'http://localhost:8080/employeestats';
+        return this.http.get(statsUrl + '/' + employeeId, this.httpOptions);
     }
 }

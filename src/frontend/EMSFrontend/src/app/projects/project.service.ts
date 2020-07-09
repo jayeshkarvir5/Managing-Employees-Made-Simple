@@ -1,45 +1,50 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Project } from '../../modules/auth/models/project.model';
 import { Observable } from 'rxjs';
 
+import { Project } from '../../modules/auth/models/project.model';
+
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class ProjectService {
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:8080',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+        }),
+    };
+    url = 'http://localhost:8080/projects';
 
-  httpOptions = {
-    headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin' : 'http://localhost:8080',
-    'Access-Control-Allow-Methods' : 'GET, POST, PUT, DELETE'
-    })
-  };
-  url:string = "http://localhost:8080/projects";
+    constructor(private http: HttpClient) {}
 
-  http:HttpClient;
-  constructor(http: HttpClient) {
-    this.http = http;
-  }
+    public async getAllProjects(): Promise<Project[] | undefined> {
+        try {
+            const projects: Project[] = await this.http
+                .get<Project[]>(this.url, this.httpOptions)
+                .toPromise();
+            return projects;
+        } catch (error) {
+            console.log('Error! ', error);
+        }
+    }
 
-  public getAllProjects():Observable<Project []>{
-    return this.http.get<Project []>(this.url,this.httpOptions);
-  }
+    public getProjectById(projectId: string): Observable<Project> {
+        return this.http.get<Project>(this.url + '/' + projectId, this.httpOptions);
+    }
 
-  public getProjectById(projectId:string):Observable<Project>{
-    return this.http.get<Project>(this.url+"/"+projectId,this.httpOptions);
-  }
+    public saveProject(projectData: any) {
+        this.http
+            .post(this.url, projectData, this.httpOptions)
+            .subscribe(e => console.log('Save Project result ->', e));
+    }
 
-  public saveProject(projectData:Project){
-    this.http.post(this.url,projectData,this.httpOptions);
-  }
+    public updateProject(projectData: Project) {
+        this.http.put(this.url, projectData, this.httpOptions);
+    }
 
-  public updateProject(projectData:Project){
-    this.http.put(this.url,projectData,this.httpOptions);
-  }
-
-  public deleteProjectById(projectId:string){
-    this.http.delete(this.url+"/"+projectId,this.httpOptions);
-  }
-
+    public deleteProjectById(projectId: string) {
+        this.http.delete(this.url + '/' + projectId, this.httpOptions);
+    }
 }

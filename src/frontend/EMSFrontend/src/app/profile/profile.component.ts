@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeedbService } from '@app/employees/services/employeedb.service';
 import { User } from '@modules/auth/models';
@@ -6,6 +6,7 @@ import { AuthService } from '@modules/auth/services';
 import { Subscription, Observable } from 'rxjs';
 //import { stringify } from 'querystring';
 import { NgbModal,ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import Chart from 'chart.js';
 
 @Component({
     selector: 'sb-profile',
@@ -21,6 +22,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         newPassword:String
     }
     subscription: Subscription = new Subscription();
+    @ViewChild('myPieChart') myPieChart!: ElementRef<HTMLCanvasElement>;
+    chart!: Chart;
+
     constructor(
         public route: ActivatedRoute,
         public authService: AuthService,
@@ -34,7 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         const paramId = this.route.snapshot.paramMap.get('id');
 
-        const authUserId = authService.getAuthUser();
+        const authUserId = authService.getAuthUserId();
         if(authUserId){
             this.authUserId = authUserId;
         }
@@ -54,6 +58,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 if(user){
                     this.user = user;
                     console.log(this.user);
+                    this.buildPieCharts();
                 }
             })
         );
@@ -84,7 +89,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-
     closeResult!: string;
 
     open(content:any) {
@@ -93,7 +97,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
-      }
+    }
       
       private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
@@ -103,5 +107,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
         } else {
           return  `with: ${reason}`;
         }
+    }
+
+    async buildPieCharts() {
+        const projectStats: any = await this.employeedbService
+            .getProjectStats(this.user.id)
+            .toPromise();
+        this.chart = new Chart(this.myPieChart.nativeElement, {
+            type: 'pie',
+            data: {
+                labels: projectStats.map((e: { projectName: any }) => e.projectName),
+                datasets: [
+                    {
+                        data: projectStats.map((e: { duration: any }) => e.duration),
+                        backgroundColor: projectStats.map((e: any) => this.generateRandomColor()),
+                    },
+                ],
+            },
+        });
+    }
+
+    generateRandomColor() {
+        // tslint:disable-next-line:no-bitwise
+        return '#' + (((1 << 24) * Math.random()) | 0).toString(16);
     }
 }

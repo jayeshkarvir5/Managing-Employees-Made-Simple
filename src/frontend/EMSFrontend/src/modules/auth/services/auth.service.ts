@@ -45,7 +45,15 @@ export class AuthService {
         });
     }
 
-    getAuthUser(): string | null {
+    getAuthUser(): User | null {
+        const authUser = localStorage.getItem(CONSTANTS.AUTH_USER);
+        if (authUser) {
+            return JSON.parse(authUser);
+        }
+        return null;
+    }
+
+    getAuthUserId(): string | null {
         const authUser = localStorage.getItem(CONSTANTS.AUTH_USER);
         if (authUser) {
             return JSON.parse(authUser)["id"];

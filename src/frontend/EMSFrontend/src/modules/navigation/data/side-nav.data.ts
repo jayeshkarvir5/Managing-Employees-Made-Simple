@@ -13,6 +13,10 @@ export const sideNavSections: SideNavSection[] = [
         text: 'Settings',
         items: ['accounts'],
     },
+    {
+        text: 'Admin',
+        items: ['newUser', 'newProject'],
+    },
     // {
     //     text: 'INTERFACE',
     //     items: ['layouts', 'pages'],
@@ -51,6 +55,16 @@ export const sideNavItems: SideNavItems = {
                 link: '/logout',
             },
         ],
+    },
+    newUser: {
+        icon: '',
+        text: 'Create a new User',
+        link: '/admin/new-user',
+    },
+    newProject: {
+        icon: '',
+        text: 'Create a new Project',
+        link: '/admin/new-project',
     },
     // layouts: {
     //     icon: 'columns',

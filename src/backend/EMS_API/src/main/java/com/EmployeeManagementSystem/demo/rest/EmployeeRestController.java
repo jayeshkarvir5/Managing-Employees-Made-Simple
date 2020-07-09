@@ -1,5 +1,6 @@
 package com.EmployeeManagementSystem.demo.rest;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,6 +11,9 @@ import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
 import com.EmployeeManagementSystem.demo.entity.Project;
 import com.EmployeeManagementSystem.demo.service.BcryptService;
 import com.EmployeeManagementSystem.demo.service.EmployeeMapperService;
+import com.EmployeeManagementSystem.demo.entity.Project;
+import com.EmployeeManagementSystem.demo.entity.ProjectStatistics;
+
 import com.EmployeeManagementSystem.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -29,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.EmployeeManagementSystem.demo.dao.EmployeeDAO;
 import com.EmployeeManagementSystem.demo.entity.Employee;
 import com.EmployeeManagementSystem.demo.service.EmployeeService;
 
@@ -106,6 +109,19 @@ public class EmployeeRestController {
 
 		return employee != null? employeeService.empLeave(managerId) : null;
 	}
+
+	@GetMapping("/employeestats/{employeeId}")
+	public List<ProjectStatistics> getEmployeeStats(@PathVariable int employeeId) {
+		Employee employee = employeeUtility(employeeId);
+
+		List<ProjectStatistics> stats = new LinkedList<>();
+
+		for(Project p : employee.getProjects()) {
+			stats.add(new ProjectStatistics(p.getName(), p.getDuration()));
+		}
+
+		return stats;
+	}
 	
 	@GetMapping("/employees/{employeeId}")
 	public Employee getEmployee(@PathVariable int employeeId) {
@@ -128,8 +144,7 @@ public class EmployeeRestController {
 		employee.setPassword(BcryptService.getEncoder().encode(employee.getPassword()));
 		return postAndPutUtility(employee, true);
 	}
-	
-	
+
 	@PutMapping("/employees")
 	public Employee updateEmployee(@RequestBody Employee employee) {
 		employee.setPassword(employeeService.getPassword(String.valueOf(employee.getId())));

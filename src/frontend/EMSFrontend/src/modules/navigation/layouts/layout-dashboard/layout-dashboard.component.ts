@@ -10,6 +10,7 @@ import {
 import { sideNavItems, sideNavSections } from '@modules/navigation/data';
 import { NavigationService } from '@modules/navigation/services';
 import { Subscription } from 'rxjs';
+import { AuthService } from '@modules/auth/services';
 
 @Component({
     selector: 'sb-layout-dashboard',
@@ -28,7 +29,8 @@ export class LayoutDashboardComponent implements OnInit, OnDestroy {
 
     constructor(
         public navigationService: NavigationService,
-        private changeDetectorRef: ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef,
+        private authService: AuthService
     ) {}
     ngOnInit() {
         if (this.light) {
@@ -40,6 +42,11 @@ export class LayoutDashboardComponent implements OnInit, OnDestroy {
                 this.changeDetectorRef.markForCheck();
             })
         );
+
+        if (this.authService.getAuthUser()?.designation !== 'Admin') {
+            // remove admin section
+            this.sideNavSections = this.sideNavSections.filter(e => e.text && e.text !== 'Admin');
+        }
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
