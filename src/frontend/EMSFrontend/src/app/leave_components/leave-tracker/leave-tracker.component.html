@@ -1,5 +1,6 @@
 <sb-layout-dashboard>
     <sb-dashboard-head title="My leaves" [hideBreadcrumbs]="true"></sb-dashboard-head>
+    <form>
         <div class="form-group form-inline">
             <button (click)="open(createmodal,leaveapp)" type="button" class="ml-2 btn btn-primary">New Leave Application</button>
         </div>
@@ -39,6 +40,7 @@
                 <option [ngValue]="6">6 items per page</option>
             </select>
         </div>
+    </form>
 </sb-layout-dashboard>
 
 <ng-template #createmodal let-modal>

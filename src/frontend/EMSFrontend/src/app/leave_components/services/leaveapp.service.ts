@@ -6,17 +6,17 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { LeaveappdbService } from './leaveappdb.service';
 
-interface State {
-  page: number;
-  pageSize: number;
-  searchTerm: string;
-  sortColumn: string;
-  sortDirection: SortDirection;
-}
-
 interface SearchResult {
     Leaves: LeaveApplication[];
     total: number;
+}
+
+interface State {
+    page: number;
+    pageSize: number;
+    searchTerm: string;
+    sortColumn: string;
+    sortDirection: SortDirection;
 }
 
 function compare(v1: number | string, v2: number | string) {
@@ -36,7 +36,6 @@ function sort(leaveapps: LeaveApplication[], column: string, direction: string):
 
 function matches(leaveapp: LeaveApplication, term: string, pipe: PipeTransform) {
   return (
-    //   leaveapp.employee.id.toLowerCase().includes(term.toLowerCase()) ||
       leaveapp.employee.firstName.toLowerCase().includes(term.toLowerCase()) ||
       leaveapp.employee.lastName.toLowerCase().includes(term.toLowerCase())
   );
@@ -176,11 +175,11 @@ export class LeaveappService {
     let Leaves = sort(this.leaveappList, sortColumn, sortDirection);
 
     // 2. filter
-    Leaves  = Leaves.filter(country => matches(country, searchTerm, this.pipe));
+    Leaves  = Leaves.filter(col => matches(col, searchTerm, this.pipe));
     const total = Leaves .length;
 
     // 3. paginate
-    Leaves  = Leaves .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    Leaves  = Leaves.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return of({ Leaves , total });
 }
   private _set(patch: Partial<State>) {
