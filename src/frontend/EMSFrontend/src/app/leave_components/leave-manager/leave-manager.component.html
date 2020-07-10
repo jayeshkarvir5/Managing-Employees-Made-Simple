@@ -37,7 +37,7 @@
                             [result]="leaveapp.approved" 
                             [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
-                    <button (click)="open(mymodal,leaveapp)" type="button" class="btn btn-primary">Approve Leave</button>
+                    <button (click)="open(mymodal,leaveapp)" type="button" class="btn btn-primary">Change Status</button>
                 </tr>
             </tbody>
         </table>
@@ -60,7 +60,7 @@
       </button>
     </div>
     <div class="modal-body">
-    <p>Are you sure you want to change the approved status of this leave request?</p> 
+    <p>Are you sure you want to change the status of this leave request?</p> 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>

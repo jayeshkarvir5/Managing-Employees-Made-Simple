@@ -26,6 +26,13 @@ export class LeaveappdbService {
   public getById(id:string): Observable<LeaveApplication[]> {
     return this.http.get<LeaveApplication[]>(this.url+'/'+id, this.httpOptions);
   }
+  public createLeave(leaveapp:LeaveApplication){
+    return this.http
+    .post(this.url,leaveapp,this.httpOptions)
+    .subscribe(la=>{
+      console.log('createLeave returned '+ la)
+    });
+  }
   public saveLeave(leaveapp:LeaveApplication){
     return this.http
     .put(this.url,leaveapp,this.httpOptions)
@@ -41,7 +48,11 @@ export class LeaveappdbService {
      this.httpOptions);
   }
   public delete(id:string){
-    this.http.delete(this.url+'/'+id,this.httpOptions);
+    console.log("in leavedb service "+this.url+'/'+id);
+    this.http.delete(this.url+'/'+id,this.httpOptions)
+    .subscribe(data=>{
+      // console.log("data returned by delete is "+data);
+  });;
   }
   
 }

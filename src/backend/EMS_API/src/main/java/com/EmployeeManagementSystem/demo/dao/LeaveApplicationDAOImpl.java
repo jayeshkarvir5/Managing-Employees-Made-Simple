@@ -3,10 +3,12 @@ package com.EmployeeManagementSystem.demo.dao;
 import com.EmployeeManagementSystem.demo.entity.Employee;
 import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
 import com.EmployeeManagementSystem.demo.entity.LeaveApplication;
+import com.EmployeeManagementSystem.demo.service.BcryptService;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository("LeaveApplicationDAO")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
     private EntityManager entityManager;
 
@@ -112,17 +115,7 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
     @Override
     public void save(LeaveApplication leaveApplication) {
         Session currentSession = entityManager.unwrap(Session.class);
-        int id = leaveApplication.getEmployee().getId();
-        Employee employee = currentSession.get(Employee.class,id);
-        List<LeaveApplication> leaves = employee.getLeaveApplications();
-        if(leaves == null){
-            leaves = new ArrayList<LeaveApplication>();
-        }
-        leaves.add(leaveApplication);
-        employee.setLeaveApplications(leaves);
-        employee.setLeaveApp(true);
-        leaveApplication.setEmployee(employee);
-        currentSession.saveOrUpdate(employee);
+
         currentSession.saveOrUpdate(leaveApplication);
     }
 
@@ -135,17 +128,17 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
 
         query.setParameter("theId",theId);
 
-        Query<LeaveApplication> query2 = currentSession.createQuery("from LeaveApplication where employee.id = :theId", LeaveApplication.class);
-        query2.setParameter("theId", theId);
-
-        List<LeaveApplication> leaves = query2.getResultList();
-        
-        if(leaves==null || leaves.size()==0){
-            Employee employee = currentSession.get(Employee.class,theId);
-
-            employee.setLeaveApp(false);
-            currentSession.saveOrUpdate(employee);
-        }
+//        Query<LeaveApplication> query2 = currentSession.createQuery(hql, LeaveApplication.class);
+//        query2.setParameter("theId", theId);
+//
+//        List<LeaveApplication> leaves = query2.getResultList();
+//
+//        if(leaves==null || leaves.size()==0){
+//            Employee employee = currentSession.get(Employee.class,theId);
+//
+//            employee.setLeaveApp(false);
+//            currentSession.saveOrUpdate(employee);
+//        }
 
         query.executeUpdate();
     }

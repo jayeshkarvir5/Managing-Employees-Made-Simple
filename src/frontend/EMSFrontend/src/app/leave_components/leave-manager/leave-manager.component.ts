@@ -70,7 +70,8 @@ export class LeaveManagerComponent implements OnInit {
     console.log("here "+this.la);
     // let leave = this.leaveappService.getLeaveById(this.la);
     console.log("in component "+this.leave.approved);
-    if(this.leave.approved == 'false'){
+    if(this.leave.approved === 'false'){
+      console.log("inside if");
       this.leave.approved = 'true';
     }else{
       this.leave.approved = 'false';

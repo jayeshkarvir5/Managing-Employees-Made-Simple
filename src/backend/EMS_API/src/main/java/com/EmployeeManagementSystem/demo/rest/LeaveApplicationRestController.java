@@ -8,6 +8,7 @@ import com.EmployeeManagementSystem.demo.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +123,19 @@ public class LeaveApplicationRestController {
             System.out.println("****************\nNot found\n****************");
             return null;
         }else{
-            if(post == true)leaveApplication.setId(0);
+            if(post == true){
+                leaveApplication.setId(0);
+                List<LeaveApplication> leaves = employee.getLeaveApplications();
+                if(leaves == null){
+                    leaves = new ArrayList<LeaveApplication>();
+                }
+                leaves.add(leaveApplication);
+                employee.setLeaveApplications(leaves);
+                employee.setLeaveApp(true);
+                employeeservice.save(employee);
+                leaveApplication.setEmployee(employee);
+            }
+            System.out.println("Inside controller Employee password is "+employee.getPassword());
             leaveApplicationService.save(leaveApplication);
             return leaveApplication;
         }

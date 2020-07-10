@@ -43,10 +43,20 @@ export class LeaveTrackerComponent implements OnInit {
   }
 
   leave!:LeaveApplication;
+  newleave: LeaveApplication ={
+    id:'0',
+    employee:JSON.parse(localStorage.getItem('Auth-User')!),
+    days:'0',
+    approved:'false'
+  };
   open(content:any,leave:LeaveApplication) {
     this.leave = leave;
-    console.log(leave.id);
-    this.la = leave.id;
+    if(this.leave==undefined){
+      console.log("here in create open model");
+    }else{
+      console.log(leave.id);
+      this.la = leave.id;
+    }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -63,6 +73,11 @@ export class LeaveTrackerComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+  create(){
+    console.log("days for leave"+ this.days);
+    this.newleave.days = this.days;
+    this.leaveappService.createLeave(this.newleave);
+  }
   update(){
     console.log("id of leave to be updated is" + this.leave.id);
     console.log("days before update "+ this.leave.days);
@@ -71,8 +86,8 @@ export class LeaveTrackerComponent implements OnInit {
     this.leaveappService.saveLeave(this.leave);
     
   }
-  delete(id:string){
-    console.log("id of leave to be deleted is" + id);
-    this.leaveappService.deleteLeave(id);
+  delete(){
+    console.log("id of leave to be deleted is" + this.leave.id);
+    this.leaveappService.deleteLeave(this.leave.id);
   }
 }

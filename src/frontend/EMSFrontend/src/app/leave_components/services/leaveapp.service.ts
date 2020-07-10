@@ -127,6 +127,9 @@ export class LeaveappService {
     console.log("in service outside subscribe"+this.leave.days);
     return this.leave;
   }
+  createLeave(leave:LeaveApplication){
+    this.leaveappdbService.createLeave(leave);
+}
   saveLeave(leave:LeaveApplication){
       this.leaveappdbService.saveLeave(leave);
   }
