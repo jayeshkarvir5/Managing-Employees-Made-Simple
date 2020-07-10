@@ -44,6 +44,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService{
     }
 
     @Override
+    @Transactional
     public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery) {
         return leaveApplicationDAO.getLeaveApplicationByQuery(searchQuery);
     }

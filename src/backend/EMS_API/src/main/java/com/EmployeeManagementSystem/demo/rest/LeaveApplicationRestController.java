@@ -125,17 +125,10 @@ public class LeaveApplicationRestController {
         }else{
             if(post == true){
                 leaveApplication.setId(0);
-                List<LeaveApplication> leaves = employee.getLeaveApplications();
-                if(leaves == null){
-                    leaves = new ArrayList<LeaveApplication>();
-                }
-                leaves.add(leaveApplication);
-                employee.setLeaveApplications(leaves);
-                employee.setLeaveApp(true);
-                employeeservice.save(employee);
-                leaveApplication.setEmployee(employee);
             }
-            System.out.println("Inside controller Employee password is "+employee.getPassword());
+            System.out.println("******************************\n Password inside controller " +
+                                employee.getPassword() +
+                                "\n******************************\n");
             leaveApplicationService.save(leaveApplication);
             return leaveApplication;
         }

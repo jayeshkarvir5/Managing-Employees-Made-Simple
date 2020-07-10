@@ -115,8 +115,23 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
     @Override
     public void save(LeaveApplication leaveApplication) {
         Session currentSession = entityManager.unwrap(Session.class);
+        int id = leaveApplication.getEmployee().getId();
+        Employee employee = currentSession.get(Employee.class, id);
 
+        List<LeaveApplication> leaves = employee.getLeaveApplications();
+        if(leaves == null){
+            leaves = new ArrayList<LeaveApplication>();
+        }
+        leaves.add(leaveApplication);
+        employee.setLeaveApplications(leaves);
+        employee.setLeaveApp(true);
+        leaveApplication.setEmployee(employee);
+
+        currentSession.saveOrUpdate(employee);
         currentSession.saveOrUpdate(leaveApplication);
+        System.out.println("******************************\n Password inside dao " +
+                            employee.getPassword() +
+                            "\n******************************\n");
     }
 
     @Override
