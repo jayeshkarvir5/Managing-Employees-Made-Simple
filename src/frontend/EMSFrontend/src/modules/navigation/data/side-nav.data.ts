@@ -21,7 +21,7 @@ export const sideNavSections: SideNavSection[] = [
         text: 'Admin',
         items: ['newUser', 'newProject'],
     },
-    
+
     // {
     //     text: 'INTERFACE',
     //     items: ['layouts', 'pages'],
@@ -63,11 +63,11 @@ export const sideNavItems: SideNavItems = {
         submenu: [
             {
                 text: 'View your Profile',
-                link: '/profile',
+                link: '/',
             },
             {
                 text: 'Update Profile',
-                link: '/profile?edit=true',
+                link: '/',
             },
             {
                 text: 'Logout',
