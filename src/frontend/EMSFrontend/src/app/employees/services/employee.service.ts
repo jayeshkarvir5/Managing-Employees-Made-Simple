@@ -62,13 +62,6 @@ export class EmployeeService {
     };
 
     constructor(private pipe: DecimalPipe, private employeedbService: EmployeedbService) {
-        this.employeedbService.getAllEmployees().subscribe(e => {
-            this._employees$.next(e);
-            this._total$.next(e.length);
-            this.employeesList = e;
-            this._search$.next();
-        });
-
         this._search$
             .pipe(
                 tap(() => this._loading$.next(true)),
@@ -81,6 +74,16 @@ export class EmployeeService {
                 this._employees$.next(result.Users);
                 this._total$.next(result.total);
             });
+        this.onInit();
+    }
+
+    onInit() {
+        this.employeedbService.getAllEmployees().subscribe(e => {
+            this._employees$.next(e);
+            this._total$.next(e.length);
+            this.employeesList = e;
+            this._search$.next();
+        });
     }
 
     get employees$() {

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { LeaveApplication } from '@modules/auth/models/leaveApplication.model';
 import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +13,11 @@ import { LeaveappService } from '../services/leaveapp.service';
     styleUrls: ['./leave-tracker.component.scss'],
 })
 export class LeaveTrackerComponent implements OnInit {
-    constructor(public leaveappService: LeaveappService, private modalService: NgbModal) {}
+    constructor(
+        public leaveappService: LeaveappService,
+        private modalService: NgbModal,
+        public router: Router
+    ) {}
     @Input() pageSize = 4;
 
     leaveapps$!: Observable<LeaveApplication[]>;
@@ -78,6 +83,7 @@ export class LeaveTrackerComponent implements OnInit {
         console.log('days for leave' + this.days);
         this.newleave.days = this.days;
         this.leaveappService.createLeave(this.newleave);
+        this.redirectTo('/leaveapplication/track');
     }
     update() {
         console.log('id of leave to be updated is' + this.leave.id);
@@ -90,5 +96,11 @@ export class LeaveTrackerComponent implements OnInit {
     delete() {
         console.log('id of leave to be deleted is' + this.leave.id);
         this.leaveappService.deleteLeave(this.leave.id);
+    }
+
+    redirectTo(uri: string) {
+        this.router
+            .navigateByUrl('/', { skipLocationChange: true })
+            .then(() => this.router.navigate([uri]));
     }
 }
