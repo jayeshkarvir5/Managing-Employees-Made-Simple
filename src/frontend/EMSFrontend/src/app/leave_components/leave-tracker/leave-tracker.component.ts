@@ -83,7 +83,10 @@ export class LeaveTrackerComponent implements OnInit {
         console.log('days for leave' + this.days);
         this.newleave.days = this.days;
         this.leaveappService.createLeave(this.newleave);
-        this.redirectTo('/leaveapplication/track');
+        // hack - auto refresh after 1.2 sec
+        setTimeout(() => {
+            this.redirectTo('/leaveapplication/track');
+        }, 1200);
     }
     update() {
         console.log('id of leave to be updated is' + this.leave.id);
@@ -93,9 +96,13 @@ export class LeaveTrackerComponent implements OnInit {
         this.leaveappService.saveLeave(this.leave);
     }
 
-    delete() {
+    async delete() {
         console.log('id of leave to be deleted is' + this.leave.id);
         this.leaveappService.deleteLeave(this.leave.id);
+        // hack - auto refresh after 1.2 sec
+        setTimeout(() => {
+            this.redirectTo('/leaveapplication/track');
+        }, 1200);
     }
 
     redirectTo(uri: string) {
