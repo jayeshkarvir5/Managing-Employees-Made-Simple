@@ -12,6 +12,7 @@
                             <span class="input-group-text w-100" id="inputGroup-sizing-sm">Employee Id:</span>
                           </div>
                         <input  [(ngModel)]="user.id"
+                                readonly
                                 type="text" class="form-control" 
                                 aria-label="Sizing example input" 
                                 aria-describedby="inputGroup-sizing-sm">
@@ -27,6 +28,7 @@
                           <span class="input-group-text w-100" id="inputGroup-sizing-sm">First Name</span>
                         </div>
                         <input  [(ngModel)]="user.firstName"
+                                [readonly]="!myProfile()"
                                 type="text" 
                                 class="form-control" 
                                 aria-label="Sizing example input" 
@@ -42,6 +44,7 @@
                           <span class="input-group-text w-100" id="inputGroup-sizing-sm">Last Name</span>
                         </div>
                         <input  [(ngModel)]="user.lastName"
+                                [readonly]="!myProfile()"
                                 type="text" 
                                 class="form-control" 
                                 aria-label="Sizing example input" 
@@ -57,6 +60,7 @@
                           <span class="input-group-text w-100" id="inputGroup-sizing-sm">Email</span>
                         </div>
                         <input  [(ngModel)]="user.email"
+                                [readonly]="!myProfile()"
                                 type="text" 
                                 class="form-control" 
                                 aria-label="Sizing example input" 
@@ -89,6 +93,7 @@
                           <span class="input-group-text w-100" id="inputGroup-sizing-sm">Designation</span>
                         </div>
                         <input  [(ngModel)]="user.designation"
+                                [readonly]="true"
                                 type="text" 
                                 class="form-control" 
                                 aria-label="Sizing example input" 
@@ -104,6 +109,7 @@
                           <span class="input-group-text w-100" id="inputGroup-sizing-sm">Address</span>
                         </div>
                         <input  [(ngModel)]="user.address"
+                                [readonly]="!myProfile()"
                                 type="text" 
                                 class="form-control" 
                                 aria-label="Sizing example input" 

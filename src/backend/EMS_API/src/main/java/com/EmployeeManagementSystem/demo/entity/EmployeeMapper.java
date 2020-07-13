@@ -50,17 +50,17 @@ public class EmployeeMapper{
 		this.manager = manager;
 	}
 
-	@Override
-	public String toString() {
-		return "EmployeeMapper{" +
-				"id=" + id +
-				", employee=" + employee +
-				", manager=" + manager +
-				'}';
-	}
-
 //	@Override
 //	public String toString() {
-//		return "id=" + id;
+//		return "EmployeeMapper{" +
+//				"id=" + id +
+//				", employee=" + employee +
+//				", manager=" + manager +
+//				'}';
 //	}
+
+	@Override
+	public String toString() {
+		return "id=" + id;
+	}
 }

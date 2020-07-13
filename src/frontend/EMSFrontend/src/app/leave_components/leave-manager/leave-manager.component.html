@@ -1,0 +1,76 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="Manage Employee Leaves" [hideBreadcrumbs]="true">
+    </sb-dashboard-head>
+    <form>
+        <div class="form-group form-inline">
+            Search for Employees:
+            <input class="form-control ml-2" type="text" name="searchTerm" 
+            [(ngModel)]="leaveappService.searchTerm" />
+            <span class="ml-3" *ngIf="leaveappService.loading$ | async">Loading...</span>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col" sbSortable="firstName" (sort)="onSort($event)"><span>FirstName</span><sb-sort-icon *ngIf='sortedColumn === "firstName"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col" sbSortable="lastName" (sort)="onSort($event)"><span>LastName</span><sb-sort-icon *ngIf='sortedColumn === "lastName"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Days</span><sb-sort-icon *ngIf='sortedColumn === "days"' [direction]="sortedDirection"></sb-sort-icon>
+                    </th>
+                    <th scope="col" sbSortable="Approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "Approved"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let leaveapp of leaveapps$ | async">
+                    <th scope="row">{{ leaveapp.id }}</th>
+                    <td><ngb-highlight
+                        [result]="leaveapp.employee.firstName"
+                        [term]="leaveappService.searchTerm">
+                    </ngb-highlight></td>
+                    <td><ngb-highlight 
+                        [result]="leaveapp.employee.lastName" 
+                        [term]="leaveappService.searchTerm" >
+                    </ngb-highlight></td>
+                    <td><ngb-highlight
+                        [result]="leaveapp.days"
+                        [term]="leaveappService.searchTerm">
+                    </ngb-highlight></td>
+                    <td><ngb-highlight 
+                            [result]="leaveapp.approved" 
+                            [term]="leaveappService.searchTerm">
+                    </ngb-highlight></td>
+                    <td>
+                        <button (click)="open(mymodal,leaveapp)" type="button" class="btn btn-primary">Change Status</button>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="total$ | async" [(page)]="leaveappService.page" [pageSize]="leaveappService.pageSize"></ngb-pagination>
+            <select class="custom-select" style="width: auto;" name="pageSize" [(ngModel)]="leaveappService.pageSize">
+                <option [ngValue]="2">2 items per page</option>
+                <option [ngValue]="4">4 items per page</option>
+                <option [ngValue]="6">6 items per page</option>
+            </select>
+        </div>
+    </form>
+</sb-layout-dashboard>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Leave Approval</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+    <p>Are you sure you want to change the status of this leave request?</p> 
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+        <br>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); approve()">Change</button>
+    </div>
+  </ng-template>
+

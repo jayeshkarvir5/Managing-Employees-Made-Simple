@@ -31,7 +31,7 @@ public class Employee {
 	private String email;
 
 	@Column(name = "password")
-	private  String password;
+	private String password;
 
 	@Column(name = "leaveapp")
 	private boolean leaveApp;
@@ -62,16 +62,20 @@ public class Employee {
 		
 	}
 
-	public Employee(int id, String designation, String firstName, String lastName, String address, String email, boolean leaveApp, int experience, String techstack) {
+	public Employee(int id, String designation, String firstName, String lastName, String address, String email, String password, boolean leaveApp, int experience, String techstack, List<EmployeeMapper> employeeMappers, List<LeaveApplication> leaveApplications, List<Project> projects) {
 		this.id = id;
 		this.designation = designation;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.email = email;
+		this.password = password;
 		this.leaveApp = leaveApp;
 		this.experience = experience;
 		this.techstack = techstack;
+		this.employeeMappers = employeeMappers;
+		this.leaveApplications = leaveApplications;
+		this.projects = projects;
 	}
 
 	public int getId() {
@@ -196,12 +200,32 @@ public class Employee {
 		this.password = password;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Employee{" +
+//				"id=" + id +
+//				", designation='" + designation + '\'' +
+//				", firstName='" + firstName + '\'' +
+//				", lastName='" + lastName + '\'' +
+//				", address='" + address + '\'' +
+//				", email='" + email + '\'' +
+//				", password='" + password + '\'' +
+//				", leaveApp=" + leaveApp +
+//				", experience=" + experience +
+//				", techstack='" + techstack + '\'' +
+//				", employeeMappers=" + employeeMappers +
+//				", leaveApplications=" + leaveApplications +
+//				", projects=" + projects +
+//				'}';
+//	}
+
 	@Override
 	public String toString() {
 		return "Employee{" +
 				"id=" + id +
 				", designation='" + designation + '\'' +
 				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
 				'}';
 	}
 }

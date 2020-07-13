@@ -8,6 +8,7 @@ import com.EmployeeManagementSystem.demo.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,12 +50,12 @@ public class LeaveApplicationRestController {
     }
 
     @GetMapping("/leaveapplications")
-    public Map<Integer,List<Integer>> getAll(){
+    public List<LeaveApplication> getAll(){
         return leaveApplicationService.getAll();
     }
 
     @GetMapping("/leaveapplications/{employeeId}")
-    public Map<Integer,List<Integer>> getById(@PathVariable int employeeId){
+    public List<LeaveApplication> getById(@PathVariable int employeeId){
         Employee employee = employeeservice.getEmployee(employeeId);
         if (employee == null) {
 //            throw new RuntimeException("Not found - ");
@@ -65,6 +66,31 @@ public class LeaveApplicationRestController {
         }
 
     }
+
+    @GetMapping("/leaveapplications/{employeeId}/leave")
+    public List<LeaveApplication> empLeave(@PathVariable int employeeId){
+        Employee employee = employeeservice.getEmployee(employeeId);
+        if (employee == null) {
+//            throw new RuntimeException("Not found - ");
+            System.out.println("****************\nNot found\n****************");
+            return null;
+        }else{
+            return leaveApplicationService.empLeave(employeeId);
+        }
+
+    }
+
+    @GetMapping("/leaveapplicationsbyid/{id}")
+    public LeaveApplication getLeave(@PathVariable int id){
+        return leaveApplicationService.getLeaveById(id);
+    }
+
+    @RequestMapping(value="leaveapplications/search", method = RequestMethod.GET)
+    public List<LeaveApplication> searchLeaves(@RequestParam("q") String query) {
+
+        return leaveApplicationService.getLeaveApplicationByQuery(query);
+    }
+
     @PostMapping("/leaveapplications")
     public LeaveApplication saveLeaveApplication(@RequestBody LeaveApplication leaveApplication) {
         return postAndPutUtility(leaveApplication, true);
@@ -97,9 +123,13 @@ public class LeaveApplicationRestController {
             System.out.println("****************\nNot found\n****************");
             return null;
         }else{
-            if(post == true)leaveApplication.setId(0);
-            leaveApplication.setEmployee(employee);
-            leaveApplicationService.save(employee, leaveApplication);
+            if(post == true){
+                leaveApplication.setId(0);
+            }
+            System.out.println("******************************\n Password inside controller " +
+                                employee.getPassword() +
+                                "\n******************************\n");
+            leaveApplicationService.save(leaveApplication);
             return leaveApplication;
         }
     }

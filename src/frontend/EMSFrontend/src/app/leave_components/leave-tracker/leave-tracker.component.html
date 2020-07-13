@@ -1,0 +1,111 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="My leaves" [hideBreadcrumbs]="true"></sb-dashboard-head>
+    <form>
+        <div class="form-group form-inline">
+            <button (click)="open(createmodal,leaveapp)" type="button" class="ml-2 btn btn-primary">New Leave Application</button>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Days</span><sb-sort-icon *ngIf='sortedColumn === "days"' [direction]="sortedDirection"></sb-sort-icon>
+                    </th>
+                    <th scope="col" sbSortable="Approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "Approved"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let leaveapp of leaveapps$ | async">
+                    <th scope="row">{{ leaveapp.id }}</th>
+                    <td><ngb-highlight
+                        [result]="leaveapp.days"
+                        [term]="leaveappService.searchTerm">
+                    </ngb-highlight></td>
+                    <td><ngb-highlight 
+                            [result]="leaveapp.approved" 
+                            [term]="leaveappService.searchTerm">
+                    </ngb-highlight></td>
+                    <td>
+                        <button (click)="open(updatemodal,leaveapp)" type="button" class="btn btn-primary">Change</button>
+                        <button (click)="open(deletemodal,leaveapp)" type="button" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="total$ | async" [(page)]="leaveappService.page" [pageSize]="leaveappService.pageSize"></ngb-pagination>
+            <select class="custom-select" style="width: auto;" name="pageSize" [(ngModel)]="leaveappService.pageSize">
+                <option [ngValue]="2">2 items per page</option>
+                <option [ngValue]="4">4 items per page</option>
+                <option [ngValue]="6">6 items per page</option>
+            </select>
+        </div>
+    </form>
+</sb-layout-dashboard>
+
+<ng-template #createmodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Leave</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="days">Number of Days:</label>
+            <input 
+            [(ngModel)]="days" 
+            type="text" class="form-control" id="days"/>
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+        <br>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); create()">Add</button>
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #updatemodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Leave Approval</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="days">Number of Days:</label>
+            <input 
+            [(ngModel)]="days" 
+            type="text" class="form-control" id="days"/>
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+        <br>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); update()">Change</button>
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #deletemodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Leave</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>Do you want to delete this leave application?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+        <br>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click'); delete()">Delete</button>
+    </div>
+  </ng-template>

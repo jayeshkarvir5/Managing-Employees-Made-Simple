@@ -13,9 +13,6 @@ import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { CdkTreeModule } from '@angular/cdk/tree';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon';
 
 import { NewUserComponent } from './admin/new-user/new-user.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,13 +25,15 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
-import { NewProjectComponent } from './admin/new-project/new-project.component';
-
-import { HeirarcyComponent } from './heirarchy/heirarcy.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
+<<<<<<< HEAD
+import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
 import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
+import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 
+@NgModule({
+    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent, LeaveApplicationComponent, LeaveTrackerComponent, LeaveManagerComponent],
+=======
+import { NewProjectComponent } from './admin/new-project/new-project.component';
 
 @NgModule({
     declarations: [
@@ -45,10 +44,8 @@ import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tr
         LogoutComponent,
         NewUserComponent,
         NewProjectComponent,
-        HeirarcyComponent,
-        LeaveManagerComponent,
-        LeaveTrackerComponent
     ],
+>>>>>>> a55e83e53cefce44c21210d45cfce5d754ad390f
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -63,12 +60,7 @@ import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tr
         NavigationModule,
         ChartsModule,
         TablesModule,
-        CdkTreeModule,
-        MatTreeModule,
-        MatIconModule,
         NgMultiSelectDropDownModule.forRoot(),
-        
-        BrowserAnimationsModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

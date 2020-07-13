@@ -7,11 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface LeaveApplicationDAO {
-    public Map<Integer,List<Integer>> getAll();
+    public List<LeaveApplication> getAll();
 
-    public Map<Integer,List<Integer>> getById(int theId);
+    public List<LeaveApplication> empLeave(int theId);
 
-    public void save(Employee employee, LeaveApplication leaveApplication);
+    public List<LeaveApplication> getById(int theId);
+
+    public LeaveApplication getLeaveById(int theId);
+
+    public List<LeaveApplication> getLeaveApplicationByQuery(String searchQuery);
+
+    public void save(LeaveApplication leaveApplication);
 
     public void delete(int id);
 }

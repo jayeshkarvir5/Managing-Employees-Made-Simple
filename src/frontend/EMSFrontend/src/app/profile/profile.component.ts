@@ -77,7 +77,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     myProfile():boolean{
-        if(this.authUserId===this.userId){
+        // console.log(this.userId);
+        // console.log(this.authUserId);
+        // console.log(this.userId==this.authUserId);
+        if(this.authUserId==this.userId){
+            console.log("my profile it is");
             return true;
         }
         return false;

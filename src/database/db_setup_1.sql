@@ -27,6 +27,7 @@ CREATE TABLE `employee` (
   `leaveapp` bit DEFAULT 0,
   `experience` int(10) DEFAULT 1,
   `techstack` varchar(250) DEFAULT "java,spring",
+  `password` varchar(600) DEFAULT '$2a$10$sIXF5FwShSZD.FCjyIF0Te5qy3lD3SKrZVOsYMOCevU0gmQkOtcRS',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 

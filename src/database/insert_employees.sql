@@ -14,4 +14,5 @@ INSERT INTO `employee`(`id`, `designation`, `first_name`, `last_name`, `address`
     (11,'Senior Associate','Alireza','Firouja','Iran','af@gmail.com'),
     (12,'Senior Associate','Parham','Maghsoodlu','Iran','pm@gmail.com'),
     (13,'Associate','Yu','Yanghi','China','yy@gmail.com'),
-    (14,'Associate','Wesley','So','Usa','ws@gmail.com');
+    (14,'Associate','Wesley','So','Usa','ws@gmail.com'),
+    (15,'Admin','Jackie','Chan','Hong Kong','jchan@gmail.com');

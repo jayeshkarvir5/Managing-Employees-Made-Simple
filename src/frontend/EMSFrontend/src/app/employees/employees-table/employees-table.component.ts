@@ -26,6 +26,7 @@ export class EmployeesTableComponent implements OnInit {
         this.employeeService.pageSize = this.pageSize;
         this.employees$ = this.employeeService.employees$;
         this.total$ = this.employeeService.total$;
+        this.employeeService.onInit();
     }
 
     onSort({ column, direction }: SortEvent) {
