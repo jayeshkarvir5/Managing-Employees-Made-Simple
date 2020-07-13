@@ -67,6 +67,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		List<Employee> employeesbelow = query.getResultList();
 		if (employeesbelow.size()>0){
+			for (int i = 0; i < employeesbelow.size(); i++) {
+				employeesbelow.get(i).setPassword("");
+			}
 			ans.put(managerId, employeesbelow);
 			for (int i = 0; i < employeesbelow.size(); i++) {
 				int empId = employeesbelow.get(i).getId();
