@@ -49,6 +49,36 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
+	public Map<Integer, List<Employee>> getFullHierarchy() {
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		Map<Integer, List<Employee>> ans = new HashMap<>();
+		ans = getFullHierarchyUtility(currentSession, ans,1);
+		return ans;
+	}
+
+	public Map<Integer, List<Employee>> getFullHierarchyUtility(Session currentSession, Map<Integer, List<Employee>> ans, int managerId){
+
+		String nestedQuery = "from Employee where id in" +
+				"(select employee.id from EmployeeMapper where manager.id= :mangId)";
+
+		Query<Employee> query = currentSession.createQuery(nestedQuery, Employee.class);
+		query.setParameter("mangId", managerId);
+
+		List<Employee> employeesbelow = query.getResultList();
+		if (employeesbelow.size()>0){
+			for (int i = 0; i < employeesbelow.size(); i++) {
+				employeesbelow.get(i).setPassword("");
+			}
+			ans.put(managerId, employeesbelow);
+			for (int i = 0; i < employeesbelow.size(); i++) {
+				int empId = employeesbelow.get(i).getId();
+				ans = getFullHierarchyUtility(currentSession, ans, empId);
+			}
+		}
+		return ans;
+	}
+	@Override
 	public List<Integer> empLeave(int managerId) {
 
 		Session currentSession = entityManager.unwrap(Session.class);

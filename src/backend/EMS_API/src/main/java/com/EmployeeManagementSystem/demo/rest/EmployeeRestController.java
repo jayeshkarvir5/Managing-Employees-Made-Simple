@@ -131,13 +131,19 @@ public class EmployeeRestController {
 		return employee;
 	}
 
-	@GetMapping("employees/{employeeId}/heirarchy")
+	@GetMapping("/employees/{employeeId}/hierarchy")
 	public Map<Integer,List<Integer>> getEmployeeHierarchy(@PathVariable int employeeId){
 
 		Employee employee = employeeUtility(employeeId);
 
 		return employee != null ? employeeService.getEmployeeHierarchy(employeeId) : null;
 	}
+
+    @GetMapping("/employeesfullhierarchy")
+    public Map<Integer,List<Employee>> getFullHierarchy(){
+
+        return employeeService.getFullHierarchy();
+    }
 	
 	@PostMapping("/employees")
 	public Employee addEmployee(@RequestBody Employee employee) {
