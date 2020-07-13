@@ -13,6 +13,9 @@ import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NewUserComponent } from './admin/new-user/new-user.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +29,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
 import { NewProjectComponent } from './admin/new-project/new-project.component';
+import { HeirarcyComponent } from './heirarchy/heirarcy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -36,6 +41,7 @@ import { NewProjectComponent } from './admin/new-project/new-project.component';
         LogoutComponent,
         NewUserComponent,
         NewProjectComponent,
+        HeirarcyComponent,
     ],
     imports: [
         BrowserModule,
@@ -51,7 +57,12 @@ import { NewProjectComponent } from './admin/new-project/new-project.component';
         NavigationModule,
         ChartsModule,
         TablesModule,
+        CdkTreeModule,
+        MatTreeModule,
+        MatIconModule,
         NgMultiSelectDropDownModule.forRoot(),
+        
+        BrowserAnimationsModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

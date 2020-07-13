@@ -115,11 +115,14 @@
                     </sb-card> -->
 
                     <button *ngIf="myProfile()" (click)="save()" type="button" class="btn btn-secondary">Save</button>
+                    <br><br>
                     <button *ngIf="myProfile()" (click)="open(mymodal)" type="button" class="btn btn-secondary">change Password</button>
                 </div>
             </div>
         </div>
     </sb-card>
+
+    <!-- Code for Modal -->
     <ng-template #mymodal let-modal>
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
@@ -138,11 +141,15 @@
             <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); resetPassword()">Reset Password</button>
         </div>
       </ng-template>
-      
+
     <sb-card>
         <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Project Statistics</div>
         <div class="card-body">
             <canvas #myPieChart></canvas>
         </div>
     </sb-card>
+    <div id="heirarchy">
+      <sb-heirarcy></sb-heirarcy>
+    </div>
+
 </sb-layout-dashboard>
