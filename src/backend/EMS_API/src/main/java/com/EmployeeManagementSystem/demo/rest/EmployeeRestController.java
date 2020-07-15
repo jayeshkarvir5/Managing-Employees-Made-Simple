@@ -221,5 +221,10 @@ public class EmployeeRestController {
 		
 		return this.employeeService.resetPassword(String.valueOf(employeeId), httpBody.get("oldPassword"),httpBody.get("newPassword"));
 	}
-	
+
+	@GetMapping("/employees/{employeeId}/getUpHierarchy")
+	public Map<Integer,Employee> getUpHierarchy(@PathVariable int employeeId){
+	    return this.employeeService.getUpHierarchy(employeeId);
+    }
+
 }

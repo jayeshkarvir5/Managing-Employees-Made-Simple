@@ -148,14 +148,28 @@
         </div>
       </ng-template>
 
-    <sb-card>
-        <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Project Statistics</div>
+      <sb-card>
+        <div class="card-header">Additional Details</div>
         <div class="card-body">
-            <canvas #myPieChart></canvas>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <sb-card>
+                    <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Project Statistics</div>
+                    <div class="card-body">
+                        <canvas #myPieChart></canvas>
+                    </div>
+                  </sb-card>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <sb-card>
+                    <div class="card-header" *ngIf='user && user.firstName'>{{ user.firstName }}'s Hierarchy</div>
+                    <div class="card-body" id="heirarchy" style="overflow: auto;">
+                      <sb-heirarcy [currentEmployee]="user"></sb-heirarcy>
+                    </div>
+                  </sb-card>
+                </div>
+            </div>
         </div>
-    </sb-card>
-    <div id="heirarchy">
-      <sb-heirarcy></sb-heirarcy>
-    </div>
+      </sb-card>
 
 </sb-layout-dashboard>

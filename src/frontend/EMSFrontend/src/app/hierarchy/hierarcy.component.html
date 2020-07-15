@@ -13,6 +13,11 @@
           {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
         </mat-icon>
       </button>
-      {{node.name}}
+      <div *ngIf="amICurrentUser(node); then currentUser else other"></div>
+      <ng-template #currentUser>
+        <p style="font-weight: 550;">{{node.name}}</p>
+      </ng-template>
+      <ng-template #other>{{node.name}}</ng-template>
+      
     </mat-tree-node>
 </mat-tree>

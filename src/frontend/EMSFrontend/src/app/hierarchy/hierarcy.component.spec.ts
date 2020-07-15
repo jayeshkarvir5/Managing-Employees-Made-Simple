@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HierarcyComponent } from './hierarcy.component';
 
-import { HeirarcyComponent } from './heirarcy.component';
 
 describe('HeirarcyComponent', () => {
-  let component: HeirarcyComponent;
-  let fixture: ComponentFixture<HeirarcyComponent>;
+  let component: HierarcyComponent;
+  let fixture: ComponentFixture<HierarcyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeirarcyComponent ]
+      declarations: [ HierarcyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeirarcyComponent);
+    fixture = TestBed.createComponent(HierarcyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

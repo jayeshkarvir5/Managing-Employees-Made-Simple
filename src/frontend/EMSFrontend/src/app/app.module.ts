@@ -30,7 +30,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
 import { NewProjectComponent } from './admin/new-project/new-project.component';
 
-import { HeirarcyComponent } from './heirarchy/heirarcy.component';
+import { HierarcyComponent } from './hierarchy/hierarcy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
@@ -45,7 +45,7 @@ import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tr
         LogoutComponent,
         NewUserComponent,
         NewProjectComponent,
-        HeirarcyComponent,
+        HierarcyComponent,
         LeaveManagerComponent,
         LeaveTrackerComponent
     ],

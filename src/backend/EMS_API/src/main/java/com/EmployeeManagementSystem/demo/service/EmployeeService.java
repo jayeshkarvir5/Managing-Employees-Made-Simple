@@ -31,4 +31,6 @@ public interface EmployeeService {
 
 	public Map<Integer, List<Employee>> getFullHierarchy();
 
+	public Map<Integer,Employee> getUpHierarchy(int empId);
+
 }

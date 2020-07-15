@@ -81,7 +81,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         // console.log(this.authUserId);
         // console.log(this.userId==this.authUserId);
         if(this.authUserId==this.userId){
-            console.log("my profile it is");
             return true;
         }
         return false;
@@ -117,6 +116,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         const projectStats: any = await this.employeedbService
             .getProjectStats(this.userId)
             .toPromise();
+        console.log(projectStats);
         this.chart = new Chart(this.myPieChart.nativeElement, {
             type: 'pie',
             data: {
