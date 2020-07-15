@@ -88,4 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeDAO.getFullHierarchy();
 	}
 
+	@Override
+	@Transactional
+	public Map<Integer, Employee> getUpHierarchy(int empId) { return employeeDAO.getUpHierarchy(empId); }
 }

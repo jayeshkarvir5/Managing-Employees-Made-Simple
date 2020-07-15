@@ -2,7 +2,12 @@ import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { User } from '@modules/auth/models';
 import { AuthService } from '@modules/auth/services';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
+
+interface HeirarchyMap{
+    id:number;
+    child:User[];
+}
 
 @Injectable({
     providedIn: 'root',
@@ -54,7 +59,16 @@ export class EmployeedbService {
     }
 
     public getEmployeeHeirarcy(employeeId: string) {
-        return this.http.get(this.url + '/' + employeeId + '/heirarchy', this.httpOptions);
+        return this.http.get(this.url + '/' + employeeId + '/hierarchy', this.httpOptions);
+    }
+
+    public getEmployeesFullHierarchy():Observable<Map<string,User[]>>{
+        return this.http.get<Map<string,User[]>>("http://localhost:8080/employeesfullhierarchy",this.httpOptions);
+    }
+
+    public getEmployeeUpHierarchy(employeeId:string):Observable<Map<string,User>>{
+        console.log(employeeId);
+        return this.http.get<Map<string,User>>(this.url+"/"+employeeId+"/getUpHierarchy");
     }
 
     // If i am a manager and i want the leave requests of employees under me

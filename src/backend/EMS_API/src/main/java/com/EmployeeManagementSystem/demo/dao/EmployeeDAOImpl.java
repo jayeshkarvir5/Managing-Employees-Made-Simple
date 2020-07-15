@@ -21,7 +21,6 @@ import org.springframework.stereotype.Repository;
 
 import com.EmployeeManagementSystem.demo.entity.Employee;
 import com.EmployeeManagementSystem.demo.entity.EmployeeMapper;
-import com.EmployeeManagementSystem.demo.entity.JwtResponse;
 
 @Repository("EmployeeDAO")
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -54,6 +53,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		Map<Integer, List<Employee>> ans = new HashMap<>();
 		ans = getFullHierarchyUtility(currentSession, ans,1);
+
+		currentSession.flush();
+		currentSession.clear();
+
+		for(Integer i:ans.keySet()){
+			for(int j=0;j<ans.get(i).size();j++){
+				ans.get(i).get(j).setPassword("");
+			}
+		}
+
 		return ans;
 	}
 
@@ -67,9 +76,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		List<Employee> employeesbelow = query.getResultList();
 		if (employeesbelow.size()>0){
-			for (int i = 0; i < employeesbelow.size(); i++) {
-				employeesbelow.get(i).setPassword("");
-			}
+
 			ans.put(managerId, employeesbelow);
 			for (int i = 0; i < employeesbelow.size(); i++) {
 				int empId = employeesbelow.get(i).getId();
@@ -154,8 +161,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			Employee employee  = getEmployee(Integer.valueOf(id));
 			System.out.println(employee.getPassword());
 			employee.setPassword(BcryptService.getEncoder().encode(newPassword));
-			System.out.println("After---------------------------------");
-			System.out.println(employee.getPassword());
+
 			System.out.println("SUCCESS");
 			Session currentSession = entityManager.unwrap(Session.class);
 			
@@ -222,7 +228,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return employees;
 		
 	}
-	
+
 	@Override
 	public Map<Integer,List<Integer>> getEmployeeHierarchy(int employeeId) {
 		
@@ -277,6 +283,44 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			}
 		}
 		return mappings;
+	}
+
+	@Override
+	public Map<Integer, Employee> getUpHierarchy(int empId) {
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		Map<Integer,Employee> ans = new HashMap<>();
+		ans = getUpHierarchyUtility(currentSession, ans,empId);
+
+		currentSession.flush();
+		currentSession.clear();
+		for(Integer i:ans.keySet()){
+			ans.get(i).setPassword("");
+		}
+		return ans;
+	}
+
+	public Map<Integer,Employee> getUpHierarchyUtility(Session currentSession, Map<Integer, Employee> ans, int empId){
+
+		String getManagerQuery = "from EmployeeMapper where employee.id= :empId";
+		Query<EmployeeMapper> query = currentSession.createQuery(getManagerQuery, EmployeeMapper.class);
+		query.setParameter("empId", empId);
+
+		String getEmployeeObjectQuery = "from Employee where id= :empId";
+		Query<Employee> anotherquery = currentSession.createQuery(getEmployeeObjectQuery,Employee.class);
+		anotherquery.setParameter("empId", empId);
+		Employee emp = anotherquery.getSingleResult();
+
+		List<EmployeeMapper> upEmployees = query.getResultList();
+		if (upEmployees.size()>0){
+
+			ans.put(upEmployees.get(0).getManager().getId(),emp);
+			int id = upEmployees.get(0).getManager().getId();
+			ans = getUpHierarchyUtility(currentSession, ans, id);
+
+		}
+
+		return ans;
 	}
 	
 }

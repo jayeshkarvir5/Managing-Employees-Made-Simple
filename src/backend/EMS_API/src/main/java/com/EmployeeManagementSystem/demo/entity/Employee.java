@@ -56,6 +56,7 @@ public class Employee {
 			joinColumns = @JoinColumn(name = "emp_id"),
 			inverseJoinColumns = @JoinColumn(name = "project_id"))
 	@JsonIgnoreProperties("employees")
+	@JsonIgnore
 	private List<Project> projects;
 
 	public Employee() {

@@ -13,6 +13,9 @@ import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NewUserComponent } from './admin/new-user/new-user.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +29,9 @@ import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
 import { NewProjectComponent } from './admin/new-project/new-project.component';
+
+import { HierarcyComponent } from './hierarchy/hierarcy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,9 +50,9 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
         LogoutComponent,
         NewUserComponent,
         NewProjectComponent,
+        HierarcyComponent,
         LeaveManagerComponent,
         LeaveTrackerComponent
-        
     ],
     imports: [
         BrowserModule,
@@ -62,14 +68,11 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
         NavigationModule,
         ChartsModule,
         TablesModule,
+        CdkTreeModule,
+        MatTreeModule,
+        MatIconModule,
         NgMultiSelectDropDownModule.forRoot(),
         BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        DemoMaterialModule,
-        MatNativeDateModule,
-        ReactiveFormsModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

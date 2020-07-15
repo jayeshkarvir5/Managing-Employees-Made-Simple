@@ -29,5 +29,7 @@ public interface EmployeeDAO {
 	public Map<Integer,List<Integer>> getEmployeeHierarchy(int employeeId);
 
 	public Map<Integer, List<Employee>> getFullHierarchy();
+
+	public Map<Integer,Employee> getUpHierarchy(int empId);
 	
 }

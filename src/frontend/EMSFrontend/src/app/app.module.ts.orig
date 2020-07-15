@@ -13,6 +13,9 @@ import { NavigationModule } from '@modules/navigation/navigation.module';
 import { TablesModule } from '@modules/tables/tables.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NewUserComponent } from './admin/new-user/new-user.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,17 +28,21 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectService } from './projects/project.service';
-<<<<<<< HEAD
-import { LeaveApplicationComponent } from './leave_components/leave-application/leave-application.component';
-import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
-import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
-
-@NgModule({
-    declarations: [AppComponent, EmployeesComponent, EmployeesTableComponent, ProfileComponent, LogoutComponent, LeaveApplicationComponent, LeaveTrackerComponent, LeaveManagerComponent],
-=======
 import { NewProjectComponent } from './admin/new-project/new-project.component';
 
+import { HierarcyComponent } from './hierarchy/hierarcy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
+import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoMaterialModule } from './material-module';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+
+
+
 @NgModule({
+    entryComponents: [LeaveTrackerComponent],
     declarations: [
         AppComponent,
         EmployeesComponent,
@@ -44,8 +51,10 @@ import { NewProjectComponent } from './admin/new-project/new-project.component';
         LogoutComponent,
         NewUserComponent,
         NewProjectComponent,
+        HierarcyComponent,
+        LeaveManagerComponent,
+        LeaveTrackerComponent
     ],
->>>>>>> a55e83e53cefce44c21210d45cfce5d754ad390f
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -60,10 +69,26 @@ import { NewProjectComponent } from './admin/new-project/new-project.component';
         NavigationModule,
         ChartsModule,
         TablesModule,
+        CdkTreeModule,
+        MatTreeModule,
+        MatIconModule,
         NgMultiSelectDropDownModule.forRoot(),
+<<<<<<< HEAD
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        DemoMaterialModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+=======
+        
+        BrowserAnimationsModule,
+>>>>>>> b7b7b30005c11e5e3dccc3a771ec32e547ddf509
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
         EmployeeService,
         EmployeedbService,
         ProjectService,
@@ -73,3 +98,4 @@ import { NewProjectComponent } from './admin/new-project/new-project.component';
     bootstrap: [AppComponent],
 })
 export class AppModule {}
+
