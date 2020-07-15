@@ -5,7 +5,9 @@ import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
+import {FormGroup, FormControl} from '@angular/forms';
 import { LeaveappService } from '../services/leaveapp.service';
+
 
 @Component({
     selector: 'sb-leave-tracker',
@@ -20,11 +22,17 @@ export class LeaveTrackerComponent implements OnInit {
     ) {}
     @Input() pageSize = 4;
 
+    // range = new FormGroup({
+    //     start: new FormControl(),
+    //     end: new FormControl()
+    // });
+
     leaveapps$!: Observable<LeaveApplication[]>;
     total$!: Observable<number>;
     sortedColumn!: string;
     sortedDirection!: string;
-    days!: string;
+    startdate!: any;
+    enddate!:string;
     closeResult!: string;
     la!: string;
 
@@ -34,7 +42,8 @@ export class LeaveTrackerComponent implements OnInit {
     newleave: LeaveApplication = {
         id: '0',
         employee: JSON.parse(localStorage.getItem('Auth-User')!),
-        days: '0',
+        startDate: '',
+        endDate:'',
         approved: 'false',
     };
 
@@ -79,9 +88,21 @@ export class LeaveTrackerComponent implements OnInit {
             return `with: ${reason}`;
         }
     }
+    updatestart(dateObject:any) {
+        const stringified = JSON.stringify(dateObject.value);
+        const sd = stringified.substring(1, 11);
+        this.startdate = sd;
+    }
+    updateend(dateObject:any) {
+        const stringified = JSON.stringify(dateObject.value);
+        const ed = stringified.substring(1, 11);
+        this.enddate = ed;
+    }
     create() {
-        console.log('days for leave' + this.days);
-        this.newleave.days = this.days;
+        console.log('Start date ' + this.startdate);
+        console.log('End date ' + this.enddate);
+        this.newleave.startDate = this.startdate;
+        this.newleave.endDate = this.enddate;
         this.leaveappService.createLeave(this.newleave);
         // hack - auto refresh after 1.2 sec
         setTimeout(() => {
@@ -90,9 +111,11 @@ export class LeaveTrackerComponent implements OnInit {
     }
     update() {
         console.log('id of leave to be updated is' + this.leave.id);
-        console.log('days before update ' + this.leave.days);
-        console.log('days after update' + this.days);
-        this.leave.days = this.days;
+        // console.log('days before update ' + this.leave.days);
+        console.log('Start date ' + this.startdate);
+        console.log('End date ' + this.enddate);
+        this.leave.startDate = this.startdate;
+        this.leave.endDate = this.enddate;
         this.leaveappService.saveLeave(this.leave);
     }
 

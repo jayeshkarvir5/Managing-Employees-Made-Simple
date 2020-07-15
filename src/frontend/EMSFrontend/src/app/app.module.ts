@@ -28,8 +28,14 @@ import { ProjectService } from './projects/project.service';
 import { NewProjectComponent } from './admin/new-project/new-project.component';
 import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoMaterialModule } from './material-module';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+
 
 @NgModule({
+    entryComponents: [LeaveTrackerComponent],
     declarations: [
         AppComponent,
         EmployeesComponent,
@@ -57,9 +63,17 @@ import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tr
         ChartsModule,
         TablesModule,
         NgMultiSelectDropDownModule.forRoot(),
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        DemoMaterialModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
         EmployeeService,
         EmployeedbService,
         ProjectService,
@@ -69,3 +83,4 @@ import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tr
     bootstrap: [AppComponent],
 })
 export class AppModule {}
+

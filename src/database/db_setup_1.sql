@@ -55,7 +55,9 @@ DROP TABLE IF EXISTS `leave_application`;
 CREATE TABLE `leave_application`(
 	`id` int(10) NOT NULL AUTO_INCREMENT,
     `emp_id` int(10) NOT NULL,
-    `days` int(10) NOT NULL,
+    `start_date` DATE NOT NULL,
+    `end_date` DATE NOT NULL,
+    -- `days` int(10) NOT NULL,
     `approved` bit DEFAULT 0,
     CONSTRAINT `FK_emp_id_la` FOREIGN KEY (`emp_id`) REFERENCES `employee`(`id`)
     ON DELETE CASCADE

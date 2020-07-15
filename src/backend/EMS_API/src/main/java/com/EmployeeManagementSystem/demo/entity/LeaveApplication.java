@@ -3,6 +3,7 @@ package com.EmployeeManagementSystem.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name="leave_application")
@@ -13,8 +14,14 @@ public class LeaveApplication {
     @Column(name="id")
     private int id;
 
-    @Column(name="days")
-    private int days;
+//    @Column(name="days")
+//    private int days;
+
+    @Column(name = "start_date")
+    private Date startDate;
+
+    @Column(name = "end_date")
+    private Date endDate;
 
     @Column(name = "approved")
     private boolean approved;
@@ -26,10 +33,12 @@ public class LeaveApplication {
     public LeaveApplication() {
     }
 
-    public LeaveApplication(int id, int days, boolean approved) {
+    public LeaveApplication(int id, Date startDate, Date endDate, boolean approved, Employee employee) {
         this.id = id;
-        this.days = days;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.approved = approved;
+        this.employee = employee;
     }
 
     public int getId() {
@@ -40,12 +49,24 @@ public class LeaveApplication {
         this.id = id;
     }
 
-    public int getDays() {
-        return days;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDays(int days) {
-        this.days = days;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isApproved() {
+        return approved;
     }
 
     public boolean getApproved() {
@@ -64,19 +85,12 @@ public class LeaveApplication {
         this.employee = employee;
     }
 
-//    @Override
-//    public String toString() {
-//        return "LeaveApplication{" +
-//                "id=" + id +
-//                ", days=" + days +
-//                '}';
-//    }
-
     @Override
     public String toString() {
         return "LeaveApplication{" +
                 "id=" + id +
-                ", days=" + days +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", approved=" + approved +
                 ", employee=" + employee +
                 '}';

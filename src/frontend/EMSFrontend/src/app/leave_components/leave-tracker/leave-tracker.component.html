@@ -1,14 +1,23 @@
 <sb-layout-dashboard>
     <sb-dashboard-head title="My leaves" [hideBreadcrumbs]="true"></sb-dashboard-head>
+    <style>
+       ::ng-deep .cdk-overlay-container {
+            z-index: 1200 !important;
+            }
+    </style>
     <form>
+
         <div class="form-group form-inline">
             <button (click)="open(createmodal,leaveapp)" type="button" class="ml-2 btn btn-primary">New Leave Application</button>
+            
         </div>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Days</span><sb-sort-icon *ngIf='sortedColumn === "days"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startdate"' [direction]="sortedDirection"></sb-sort-icon>
+                    </th>
+                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "enddate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
                     <th scope="col" sbSortable="Approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "Approved"' [direction]="sortedDirection"></sb-sort-icon></th>
                     <th scope="col"></th>
@@ -18,7 +27,11 @@
                 <tr *ngFor="let leaveapp of leaveapps$ | async">
                     <th scope="row">{{ leaveapp.id }}</th>
                     <td><ngb-highlight
-                        [result]="leaveapp.days"
+                        [result]="leaveapp.startDate"
+                        [term]="leaveappService.searchTerm">
+                    </ngb-highlight></td>
+                    <td><ngb-highlight
+                        [result]="leaveapp.endDate"
                         [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
                     <td><ngb-highlight 
@@ -41,30 +54,39 @@
             </select>
         </div>
     </form>
-</sb-layout-dashboard>
 
-<ng-template #createmodal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Create Leave</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <label for="days">Number of Days:</label>
-            <input 
-            [(ngModel)]="days" 
-            type="text" class="form-control" id="days"/>
-            
+
+    <ng-template #createmodal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Create Leave</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
-        <br>
-        <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); create()">Add</button>
-    </div>
-  </ng-template>
+        <div class="modal-body">
+            <mat-form-field id="datepicker1"  appearance="fill">
+                <mat-label>Choose a start date</mat-label>
+                <input matInput (dateChange)="updatestart($event)" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker" >
+                    </mat-datepicker-toggle >
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <br/>
+              <mat-form-field id="datepicker2"  appearance="fill">
+                <mat-label>Choose a end date</mat-label>
+                <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2" >
+                    </mat-datepicker-toggle >
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
+            <br>
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); create()">Add</button>
+        </div>
+      </ng-template>
+</sb-layout-dashboard>
 
 
 
@@ -76,18 +98,26 @@
       </button>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <label for="days">Number of Days:</label>
-            <input 
-            [(ngModel)]="days" 
-            type="text" class="form-control" id="days"/>
-            
-        </div>
+        <mat-form-field id="datepicker1"  appearance="fill">
+            <mat-label>Choose a start date</mat-label>
+            <input matInput (dateChange)="updatestart($event)" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker" >
+                </mat-datepicker-toggle >
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <br/>
+          <mat-form-field id="datepicker2"  appearance="fill">
+            <mat-label>Choose a end date</mat-label>
+            <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2">
+            <mat-datepicker-toggle matSuffix [for]="picker2" >
+                </mat-datepicker-toggle >
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>
         <br>
-        <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); update()">Change</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click'); update()">Update</button>
     </div>
   </ng-template>
 

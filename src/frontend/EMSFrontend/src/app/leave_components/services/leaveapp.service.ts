@@ -152,10 +152,10 @@ export class LeaveappService {
         this.leaveappdbService.getLeaveById(id).subscribe(la => {
             if (la) {
                 this.leave = la;
-                console.log('in service ' + this.leave.days);
+                console.log('in service ' + this.leave.startDate);
             }
         });
-        console.log('in service outside subscribe' + this.leave.days);
+        console.log('in service outside subscribe' + this.leave.startDate);
         return this.leave;
     }
     createLeave(leave: LeaveApplication) {

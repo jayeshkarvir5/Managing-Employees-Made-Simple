@@ -38,12 +38,13 @@ public class Project {
     public Project() {
     }
 
-    public Project(int id, String name, String description, String client_name, int duration) {
+    public Project(int id, String name, String description, String client_name, int duration, List<Employee> employees) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.client_name = client_name;
         this.duration = duration;
+        this.employees = employees;
     }
 
     public int getId() {

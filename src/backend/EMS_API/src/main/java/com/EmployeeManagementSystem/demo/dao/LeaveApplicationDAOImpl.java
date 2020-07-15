@@ -163,14 +163,14 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         Map<Integer,List<Integer>> ans = new HashMap<Integer, List<Integer>>();
         for(int i=0;i<leaveApplications.size();i++){
             int employee = leaveApplications.get(i).getEmployee().getId();
-            int days = leaveApplications.get(i).getDays();
+//            int days = leaveApplications.get(i).getDays();
             List<Integer> list;
             if(!ans.containsKey(employee)){
                 list = new ArrayList<Integer>();
             }else{
                 list = ans.get(employee);
             }
-            list.add(days);
+//            list.add(days);
             ans.put(employee, list);
         }
 
@@ -189,7 +189,9 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
             LeaveApplication la = new LeaveApplication();
             la.setEmployee(e);
             la.setId(leaves.get(i).getId());
-            la.setDays(leaves.get(i).getDays());
+//            la.setDays(leaves.get(i).getDays());
+            la.setStartDate(leaves.get(i).getStartDate());
+            la.setEndDate(leaves.get(i).getEndDate());
             la.setApproved(leaves.get(i).getApproved());
             leaves.set(i,la);
         }
