@@ -132,6 +132,7 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         System.out.println("******************************\n Password inside dao " +
                             employee.getPassword() +
                             "\n******************************\n");
+
     }
 
     @Override
@@ -156,6 +157,8 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
 //        }
 
         query.executeUpdate();
+        currentSession.flush();
+        currentSession.clear();
     }
 
     public Map<Integer,List<Integer>> mapUtility(List<LeaveApplication> leaveApplications){

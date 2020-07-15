@@ -31,12 +31,12 @@ import { ProjectService } from './projects/project.service';
 import { NewProjectComponent } from './admin/new-project/new-project.component';
 
 import { HierarcyComponent } from './hierarchy/hierarcy.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaveManagerComponent } from './leave_components/leave-manager/leave-manager.component';
 import { LeaveTrackerComponent } from './leave_components/leave-tracker/leave-tracker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material-module';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 
@@ -52,7 +52,8 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
         NewProjectComponent,
         HierarcyComponent,
         LeaveManagerComponent,
-        LeaveTrackerComponent
+        LeaveTrackerComponent,
+        
     ],
     imports: [
         BrowserModule,
@@ -73,10 +74,16 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
         MatIconModule,
         NgMultiSelectDropDownModule.forRoot(),
         BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        DemoMaterialModule,
+        MatNativeDateModule,
     ],
+    exports:[ MatMomentDateModule],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+        { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
         EmployeeService,
         EmployeedbService,
         ProjectService,
