@@ -64,16 +64,16 @@ export class LeaveManagerComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    approve() {
+        if (eval(this.leave.approved)) {
+            this.leave.approved = "false";
+        } else {
+            this.leave.approved = "true";
+        }
+        this.subscription.add(this.leaveappService.saveLeave(this.leave));
     }
 
-    approve() {
-        if ((this.leave.approved as any) === false) {
-            this.leave.approved = 'true';
-        } else {
-            this.leave.approved = 'false';
-        }
-        this.leaveappService.saveLeave(this.leave);
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

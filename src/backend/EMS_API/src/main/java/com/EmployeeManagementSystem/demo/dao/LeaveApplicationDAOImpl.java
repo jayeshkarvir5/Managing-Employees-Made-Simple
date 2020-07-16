@@ -54,9 +54,13 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
             queryla.setParameter("theId", empId);
 
             List<LeaveApplication> leaves = queryla.getResultList();
-            leaves = listUtility(leaves);
+
+//            leaves = listUtility(leaves);
             ans.addAll(leaves);
         }
+        currentSession.flush();
+        currentSession.clear();
+        ans = listUtility(ans);
         return ans;
     }
 
@@ -68,6 +72,8 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
 
         List<LeaveApplication> leaves = query.getResultList();
 //        Map<Integer,List<Integer>> ans = mapUtility(leaves);
+        currentSession.flush();
+        currentSession.clear();
         leaves = listUtility(leaves);
         return leaves;
     }
@@ -80,6 +86,8 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         query.setParameter("theId", theId);
 
         List<LeaveApplication> leaves = query.getResultList();
+        currentSession.flush();
+        currentSession.clear();
         leaves = listUtility(leaves);
 
         return leaves;
@@ -90,6 +98,8 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 
         LeaveApplication leave = currentSession.get(LeaveApplication.class, theId);
+        currentSession.flush();
+        currentSession.clear();
         Employee e = leave.getEmployee();
         e.setProjects(null);
         e.setLeaveApplications(null);
@@ -108,6 +118,8 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
         query.setParameter("searchQuery", "%"+searchQuery+"%");
 
         List<LeaveApplication> leaves = query.getResultList();
+        currentSession.flush();
+        currentSession.clear();
         leaves = listUtility(leaves);
         return leaves;
     }
@@ -157,8 +169,6 @@ public class LeaveApplicationDAOImpl implements LeaveApplicationDAO {
 //        }
 
         query.executeUpdate();
-        currentSession.flush();
-        currentSession.clear();
     }
 
     public Map<Integer,List<Integer>> mapUtility(List<LeaveApplication> leaveApplications){

@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LeaveApplication } from '@modules/auth/models/leaveApplication.model';
 import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
-import {FormGroup, FormControl} from '@angular/forms';
 import { LeaveappService } from '../services/leaveapp.service';
 
 
@@ -14,7 +13,7 @@ import { LeaveappService } from '../services/leaveapp.service';
     templateUrl: './leave-tracker.component.html',
     styleUrls: ['./leave-tracker.component.scss'],
 })
-export class LeaveTrackerComponent implements OnInit {
+export class LeaveTrackerComponent implements OnInit, OnDestroy {
     constructor(
         public leaveappService: LeaveappService,
         private modalService: NgbModal,
@@ -35,6 +34,7 @@ export class LeaveTrackerComponent implements OnInit {
     enddate!:string;
     closeResult!: string;
     la!: string;
+    subscription: Subscription = new Subscription();
 
     @ViewChildren(SBSortableHeaderDirective) headers!: QueryList<SBSortableHeaderDirective>;
 
@@ -51,7 +51,7 @@ export class LeaveTrackerComponent implements OnInit {
         this.leaveappService.pageSize = this.pageSize;
         this.leaveapps$ = this.leaveappService.leaveapps$;
         this.total$ = this.leaveappService.total$;
-        this.leaveappService.getById();
+        this.subscription.add(this.leaveappService.getById());
         // console.log(localStorage.getItem('Auth-User'));
     }
 
@@ -103,7 +103,7 @@ export class LeaveTrackerComponent implements OnInit {
         console.log('End date ' + this.enddate);
         this.newleave.startDate = this.startdate;
         this.newleave.endDate = this.enddate;
-        this.leaveappService.createLeave(this.newleave);
+        this.subscription.add(this.leaveappService.createLeave(this.newleave));
         // hack - auto refresh after 1.2 sec
         setTimeout(() => {
             this.redirectTo('/leaveapplication/track');
@@ -116,12 +116,12 @@ export class LeaveTrackerComponent implements OnInit {
         console.log('End date ' + this.enddate);
         this.leave.startDate = this.startdate;
         this.leave.endDate = this.enddate;
-        this.leaveappService.saveLeave(this.leave);
+        this.subscription.add(this.leaveappService.saveLeave(this.leave));
     }
 
     async delete() {
         console.log('id of leave to be deleted is' + this.leave.id);
-        this.leaveappService.deleteLeave(this.leave.id);
+        this.subscription.add(this.leaveappService.deleteLeave(this.leave.id));
         // hack - auto refresh after 1.2 sec
         setTimeout(() => {
             this.redirectTo('/leaveapplication/track');
@@ -132,5 +132,9 @@ export class LeaveTrackerComponent implements OnInit {
         this.router
             .navigateByUrl('/', { skipLocationChange: true })
             .then(() => this.router.navigate([uri]));
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

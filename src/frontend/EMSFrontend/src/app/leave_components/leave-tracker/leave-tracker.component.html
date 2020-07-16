@@ -15,9 +15,9 @@
             <thead>
                 <tr>
                     <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startdate"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startDate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "enddate"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "endDate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
                     <th scope="col" sbSortable="Approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "Approved"' [direction]="sortedDirection"></sb-sort-icon></th>
                     <th scope="col"></th>

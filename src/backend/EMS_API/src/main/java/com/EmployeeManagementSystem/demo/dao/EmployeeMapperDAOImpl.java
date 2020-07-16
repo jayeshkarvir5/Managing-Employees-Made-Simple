@@ -30,6 +30,8 @@ public class EmployeeMapperDAOImpl implements EmployeeMapperDAO {
         Query<EmployeeMapper> query = currentSession.createQuery("from EmployeeMapper", EmployeeMapper.class);
 
         List<EmployeeMapper> employeeMappers = query.getResultList();
+        currentSession.flush();
+        currentSession.clear();
         Map<Integer,List<Integer>> ans = mapUtility(employeeMappers);
 
         return ans;
@@ -44,6 +46,8 @@ public class EmployeeMapperDAOImpl implements EmployeeMapperDAO {
         query.setParameter("theId", theId);
 
         List<EmployeeMapper> employeeMappers = query.getResultList();
+        currentSession.flush();
+        currentSession.clear();
         Map<Integer,List<Integer>> ans = mapUtility(employeeMappers);
 
         return ans;
