@@ -9,17 +9,17 @@
 
         <div class="form-group form-inline">
             <button (click)="open(createmodal,leaveapp)" type="button" class="ml-2 btn btn-primary">New Leave Application</button>
-            
+
         </div>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startDate"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="startDate" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startDate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "endDate"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="endDate" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "endDate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
-                    <th scope="col" sbSortable="Approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "Approved"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col" sbSortable="approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "approved"' [direction]="sortedDirection"></sb-sort-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -34,8 +34,8 @@
                         [result]="leaveapp.endDate"
                         [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
-                    <td><ngb-highlight 
-                            [result]="leaveapp.approved" 
+                    <td><ngb-highlight
+                            [result]="leaveapp.approved"
                             [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
                     <td>

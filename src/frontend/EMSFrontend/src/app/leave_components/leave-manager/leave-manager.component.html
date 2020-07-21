@@ -4,7 +4,7 @@
     <form>
         <div class="form-group form-inline">
             Search for Employees:
-            <input class="form-control ml-2" type="text" name="searchTerm" 
+            <input class="form-control ml-2" type="text" name="searchTerm"
             [(ngModel)]="leaveappService.searchTerm" />
             <span class="ml-3" *ngIf="leaveappService.loading$ | async">Loading...</span>
         </div>
@@ -14,11 +14,11 @@
                     <th scope="col" sbSortable="id" (sort)="onSort($event)"><span>#</span><sb-sort-icon *ngIf='sortedColumn === "id"' [direction]="sortedDirection"></sb-sort-icon></th>
                     <th scope="col" sbSortable="firstName" (sort)="onSort($event)"><span>FirstName</span><sb-sort-icon *ngIf='sortedColumn === "firstName"' [direction]="sortedDirection"></sb-sort-icon></th>
                     <th scope="col" sbSortable="lastName" (sort)="onSort($event)"><span>LastName</span><sb-sort-icon *ngIf='sortedColumn === "lastName"' [direction]="sortedDirection"></sb-sort-icon></th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startDate"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="startDate" (sort)="onSort($event)"><span>Start Date</span><sb-sort-icon *ngIf='sortedColumn === "startDate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
-                    <th scope="col" sbSortable="days" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "endDate"' [direction]="sortedDirection"></sb-sort-icon>
+                    <th scope="col" sbSortable="endDate" (sort)="onSort($event)"><span>End Date</span><sb-sort-icon *ngIf='sortedColumn === "endDate"' [direction]="sortedDirection"></sb-sort-icon>
                     </th>
-                    <th scope="col" sbSortable="Approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "Approved"' [direction]="sortedDirection"></sb-sort-icon></th>
+                    <th scope="col" sbSortable="approved" (sort)="onSort($event)"><span>Approved</span><sb-sort-icon *ngIf='sortedColumn === "approved"' [direction]="sortedDirection"></sb-sort-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -29,8 +29,8 @@
                         [result]="leaveapp.employee.firstName"
                         [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
-                    <td><ngb-highlight 
-                        [result]="leaveapp.employee.lastName" 
+                    <td><ngb-highlight
+                        [result]="leaveapp.employee.lastName"
                         [term]="leaveappService.searchTerm" >
                     </ngb-highlight></td>
                     <td><ngb-highlight
@@ -41,14 +41,14 @@
                         [result]="leaveapp.endDate"
                         [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
-                    <td><ngb-highlight 
-                            [result]="leaveapp.approved" 
+                    <td><ngb-highlight
+                            [result]="leaveapp.approved"
                             [term]="leaveappService.searchTerm">
                     </ngb-highlight></td>
                     <td>
                         <button (click)="open(mymodal,leaveapp)" type="button" class="btn btn-primary">Change Status</button>
                     </td>
-                    
+
                 </tr>
             </tbody>
         </table>
@@ -71,7 +71,7 @@
       </button>
     </div>
     <div class="modal-body">
-    <p>Are you sure you want to change the status of this leave request?</p> 
+    <p>Are you sure you want to change the status of this leave request?</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">Close</button>

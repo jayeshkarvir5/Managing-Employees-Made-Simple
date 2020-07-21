@@ -21,10 +21,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
 
     user!: User | null;
     constructor(public navigationService: NavigationService, public authService: AuthService) {
-        var authUser:string|null = localStorage.getItem("AUTH_USER");
-        if(authUser){
-            this.user = JSON.parse(authUser);
-        }
+        this.user = authService.getAuthUser();
     }
 
     ngOnInit() {}

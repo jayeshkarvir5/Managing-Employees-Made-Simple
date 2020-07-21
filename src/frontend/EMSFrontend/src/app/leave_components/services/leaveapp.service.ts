@@ -33,6 +33,10 @@ function sort(
         return leaveapps;
     } else {
         return [...leaveapps].sort((a: any, b: any) => {
+            if (column === 'firstName' || column === 'lastName') {
+                const res = compare(a['employee'][column], b['employee'][column]);
+                return direction === 'asc' ? res : -res;
+            }
             const res = compare(a[column], b[column]);
             return direction === 'asc' ? res : -res;
         });
