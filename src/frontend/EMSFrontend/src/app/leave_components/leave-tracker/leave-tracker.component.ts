@@ -68,6 +68,9 @@ export class LeaveTrackerComponent implements OnInit, OnDestroy {
         } else {
             console.log(leave.id);
             this.la = leave.id;
+            this.startdate = leave.startDate;
+            this.enddate = leave.endDate;
+            console.log("in update modal open event " + this.startdate + " " + this.enddate);
         }
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
             result => {

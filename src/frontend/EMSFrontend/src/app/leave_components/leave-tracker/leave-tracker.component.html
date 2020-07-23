@@ -74,7 +74,7 @@
               <br/>
               <mat-form-field id="datepicker2"  appearance="fill">
                 <mat-label>Choose a end date</mat-label>
-                <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2">
+                <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2" value="{{startdate}}">
                 <mat-datepicker-toggle matSuffix [for]="picker2" >
                     </mat-datepicker-toggle >
                 <mat-datepicker #picker2></mat-datepicker>
@@ -100,7 +100,7 @@
     <div class="modal-body">
         <mat-form-field id="datepicker1"  appearance="fill">
             <mat-label>Choose a start date</mat-label>
-            <input matInput (dateChange)="updatestart($event)" [matDatepicker]="picker">
+            <input matInput (dateChange)="updatestart($event)" [matDatepicker]="picker" value="{{startdate}}">
             <mat-datepicker-toggle matSuffix [for]="picker" >
                 </mat-datepicker-toggle >
             <mat-datepicker #picker></mat-datepicker>
@@ -108,7 +108,7 @@
           <br/>
           <mat-form-field id="datepicker2"  appearance="fill">
             <mat-label>Choose a end date</mat-label>
-            <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2">
+            <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2" value="{{enddate}}">
             <mat-datepicker-toggle matSuffix [for]="picker2" >
                 </mat-datepicker-toggle >
             <mat-datepicker #picker2></mat-datepicker>
