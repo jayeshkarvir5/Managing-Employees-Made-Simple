@@ -74,7 +74,7 @@
               <br/>
               <mat-form-field id="datepicker2"  appearance="fill">
                 <mat-label>Choose a end date</mat-label>
-                <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2" value="{{startdate}}">
+                <input matInput (dateChange)="updateend($event)" [matDatepicker]="picker2">
                 <mat-datepicker-toggle matSuffix [for]="picker2" >
                     </mat-datepicker-toggle >
                 <mat-datepicker #picker2></mat-datepicker>

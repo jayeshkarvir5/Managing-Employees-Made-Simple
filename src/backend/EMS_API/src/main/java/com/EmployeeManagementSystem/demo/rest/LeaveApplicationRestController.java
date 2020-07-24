@@ -101,17 +101,17 @@ public class LeaveApplicationRestController {
         return postAndPutUtility(leaveApplication, false);
     }
 
-    @DeleteMapping("/leaveapplications/{employeeId}")
-    public String deleteById(@PathVariable int employeeId) {
+    @DeleteMapping("/leaveapplications/{Id}")
+    public String deleteById(@PathVariable int Id) {
 
-        Employee tempEmployee = employeeservice.getEmployee(employeeId);
+        LeaveApplication leaveApplication = leaveApplicationService.getLeaveById(Id);
 
-        if (tempEmployee == null) {
+        if (leaveApplication == null) {
             System.out.println("****************\nNot found\n****************");
             return null;
         }else{
-            leaveApplicationService.delete(employeeId);
-            return "Successfully Deleted "+employeeId;
+            leaveApplicationService.delete(Id);
+            return "Successfully Deleted "+Id;
         }
     }
 
