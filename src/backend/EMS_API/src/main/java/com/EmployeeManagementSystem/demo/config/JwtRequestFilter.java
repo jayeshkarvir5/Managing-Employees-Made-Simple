@@ -31,23 +31,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-
-//		if (CorsUtils.isPreFlightRequest(request)) {
-//			System.out.println("setting header");
-//			response.setStatus(HttpServletResponse.SC_OK);
-////			response.addHeader("Access-Control-Allow-Origin", "*");
-////			response.addHeader("Access-Control-Allow-Methods", "POST");
-////			response.addHeader("Content-Type", "application/json");
-//			return;
-//		}
-//		if (request.getMethod().equals("OPTIONS")) {
-//			response.setStatus(200);
-//			chain.doFilter(request, response);
-//			return;
-//		}
-//		System.out.println(request.getHeaderNames().toString());
 		final String requestTokenHeader = request.getHeader("Authorization");
-		System.out.println(requestTokenHeader);
+		System.out.println("Request Token Header" + requestTokenHeader);
 		String username = null;
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
